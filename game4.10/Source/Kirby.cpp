@@ -42,8 +42,6 @@ namespace game_framework {
 		const int Y_POS = 400;
 		x = X_POS;
 		y = Y_POS;
-		sx = 0;
-		sy = 0;
 		flyDelay = 46;
 		isMovingLeft = isMovingRight = isMovingUp = isMovingDown = isSpace = isFly = false;
 		is_alive = RightOrLeft = true;
@@ -102,12 +100,10 @@ namespace game_framework {
 		FlyLeft.AddBitmap(IDB_KB_U_L_10, RGB(255, 255, 255));
 		FlyLeft.AddBitmap(IDB_KB_U_L_11, RGB(255, 255, 255));
 		FlyLeft.AddBitmap(IDB_KB_U_L_12, RGB(255, 255, 255));
-		background.LoadBitmap(IDB_MAP);
 	}
 
 	void Kirby::OnMove()
 	{
-		background.ShowBitmap();
 		const int STEP_SIZE = 2;
 		if (isMovingLeft)
 		{
@@ -175,7 +171,6 @@ namespace game_framework {
 
 	void Kirby::OnShow()
 	{
-		background.SetTopLeft(sx, sy);
 		if (is_alive) {
 			originR.SetTopLeft(x, y);
 			originL.SetTopLeft(x, y);

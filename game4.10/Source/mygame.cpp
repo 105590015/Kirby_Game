@@ -110,8 +110,8 @@ void CGameStateInit::OnShow()
 	//
 	// 貼上logo
 	//
-	logo.SetTopLeft((SIZE_X - logo.Width())/2, SIZE_Y/8);
-	logo.ShowBitmap();
+	/*logo.SetTopLeft((SIZE_X - logo.Width())/2, SIZE_Y/8);
+	logo.ShowBitmap();*/
 	//
 	// Demo螢幕字型的使用，不過開發時請盡量避免直接使用字型，改用CMovingBitmap比較好
 	//
@@ -216,8 +216,9 @@ void CGameStateRun::OnBeginState()
 		ball[i].SetIsAlive(true);
 	}
 	eraser.Initialize();
+	map.Initialize();
 	kirby.Initialize();
-	background.SetTopLeft(BACKGROUND_X,0);				// 設定背景的起始座標
+	//background.SetTopLeft(BACKGROUND_X,0);				// 設定背景的起始座標
 	help.SetTopLeft(0, SIZE_Y - help.Height());			// 設定說明圖的起始座標
 	hits_left.SetInteger(HITS_LEFT);					// 指定剩下的撞擊數
 	hits_left.SetTopLeft(HITS_LEFT_X,HITS_LEFT_Y);		// 指定剩下撞擊數的座標
@@ -235,9 +236,9 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 	//
 	// 移動背景圖的座標
 	//
-	if (background.Top() > SIZE_Y)
+	/*if (background.Top() > SIZE_Y)
 		background.SetTopLeft(60 ,-background.Height());
-	background.SetTopLeft(background.Left(),background.Top()+1);
+	background.SetTopLeft(background.Left(),background.Top()+1);*/
 	//
 	// 移動球
 	//
@@ -248,6 +249,7 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 	// 移動擦子
 	//
 	eraser.OnMove();
+	map.OnMove();
 	kirby.OnMove();
 	//
 	// 判斷擦子是否碰到球
@@ -286,8 +288,9 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	for (i = 0; i < NUMBALLS; i++)	
 		ball[i].LoadBitmap();								// 載入第i個球的圖形
 	eraser.LoadBitmap();
+	map.LoadBitmap();
 	kirby.LoadBitmap();
-	background.LoadBitmap(IDB_BACKGROUND);					// 載入背景的圖形
+	//background.LoadBitmap(IDB_BACKGROUND);					// 載入背景的圖形
 	//
 	// 完成部分Loading動作，提高進度
 	//
@@ -298,7 +301,7 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	//
 	help.LoadBitmap(IDB_HELP,RGB(255,255,255));				// 載入說明的圖形
 	corner.LoadBitmap(IDB_CORNER);							// 載入角落圖形
-	corner.ShowBitmap(background);							// 將corner貼到background
+	//corner.ShowBitmap(background);							// 將corner貼到background
 	bball.LoadBitmap();										// 載入圖形
 	hits_left.LoadBitmap();									
 	CAudio::Instance()->Load(AUDIO_DING,  "sounds\\ding.wav");	// 載入編號0的聲音ding.wav
@@ -317,13 +320,25 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 	const char KEY_DOWN  = 0x28; // keyboard下箭頭
 	const char KEY_SPACE = ' ';  // keyboard空白鍵
 	if (nChar == KEY_LEFT)
+	{
 		kirby.SetMovingLeft(true);
+		map.SetMovingLeft(true);
+	}
 	if (nChar == KEY_RIGHT)
+	{
 		kirby.SetMovingRight(true);
+		map.SetMovingRight(true);
+	}
 	if (nChar == KEY_UP)
+	{
 		kirby.SetMovingUp(true);
+		map.SetMovingUp(true);
+	}
 	if (nChar == KEY_DOWN)
+	{
 		kirby.SetMovingDown(true);
+		map.SetMovingDown(true);
+	}
 	if (nChar == KEY_SPACE)
 		kirby.SetSpace(true);
 }
@@ -336,13 +351,25 @@ void CGameStateRun::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 	const char KEY_DOWN  = 0x28; // keyboard下箭頭
 	const char KEY_SPACE = ' ';  // keyboard空白鍵
 	if (nChar == KEY_LEFT)
+	{
 		kirby.SetMovingLeft(false);
+		map.SetMovingLeft(false);
+	}
 	if (nChar == KEY_RIGHT)
+	{
 		kirby.SetMovingRight(false);
+		map.SetMovingRight(false);
+	}
 	if (nChar == KEY_UP)
+	{
 		kirby.SetMovingUp(false);
+		map.SetMovingUp(false);
+	}
 	if (nChar == KEY_DOWN)
+	{
 		kirby.SetMovingDown(false);
+		map.SetMovingDown(false);
+	}
 	if (nChar == KEY_SPACE)
 		kirby.SetSpace(false);
 }
@@ -357,13 +384,14 @@ void CGameStateRun::OnShow()
 	//
 	//  貼上背景圖、撞擊數、球、擦子、彈跳的球
 	//
-	background.ShowBitmap();			// 貼上背景圖
+	//background.ShowBitmap();			// 貼上背景圖
 	help.ShowBitmap();					// 貼上說明圖
 	hits_left.ShowBitmap();
-	for (int i=0; i < NUMBALLS; i++)
+	/*for (int i=0; i < NUMBALLS; i++)
 		ball[i].OnShow();				// 貼上第i號球
 	bball.OnShow();						// 貼上彈跳的球
-	eraser.OnShow();					// 貼上擦子
+	eraser.OnShow();*/					// 貼上擦子
+	map.OnShow();
 	kirby.OnShow();
 	//
 	//  貼上左上及右下角落的圖
