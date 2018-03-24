@@ -21,6 +21,7 @@ namespace game_framework {
 		void SetMovingUp(bool flag);	// 設定是否正在往上移動
 	protected:
 		CMovingBitmap background;			// 地圖
+		CMovingBitmap foreground;
 	private:
 		int sx, sy;							// 左上角座標
 		int map[10][10];

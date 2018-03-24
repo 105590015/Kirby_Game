@@ -45,6 +45,7 @@ namespace game_framework {
 	void Map::LoadBitmap()
 	{
 		background.LoadBitmap(IDB_MAP);
+		foreground.LoadBitmap(IDB_FOREGROUND);
 	}
 
 	void Map::OnMove()
@@ -56,7 +57,7 @@ namespace game_framework {
 
 			}
 		}
-		const int STEP_SIZE = 2;
+
 		if (isMovingLeft)
 			sx -= STEP_SIZE;
 		if (isMovingRight)

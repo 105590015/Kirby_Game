@@ -327,6 +327,8 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
+    <Image Include="res\bitmap3.bmp" />
+    <Image Include="RES\foreground.bmp" />
     <Image Include="RES\KB_L_0.bmp" />
     <Image Include="RES\KB_L_1.bmp" />
     <Image Include="RES\KB_L_10.bmp" />

@@ -195,6 +195,20 @@ void CAnimation::OnMove()
 	}
 }
 
+void CAnimation::OnMove(bool dir)
+{
+	GAME_ASSERT(bmp.size() != 0, "CAnimation: Bitmaps must be loaded first.");
+	if (--delay_counter <= 0) {
+		delay_counter = delay_count;
+		bmp_iter++;
+		bmp_counter++;
+		if (bmp_iter == bmp.end()) {
+			bmp_iter = bmp.begin();
+			bmp_counter = 0;
+		}
+	}
+}
+
 void CAnimation::Reset()
 {
 	GAME_ASSERT(bmp.size() != 0,"CAnimation: Bitmaps must be loaded first.");

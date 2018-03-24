@@ -389,8 +389,8 @@ void CGameStateRun::OnShow()
 	hits_left.ShowBitmap();
 	/*for (int i=0; i < NUMBALLS; i++)
 		ball[i].OnShow();				// 貼上第i號球
-	bball.OnShow();						// 貼上彈跳的球
-	eraser.OnShow();*/					// 貼上擦子
+	bball.OnShow();	*/					// 貼上彈跳的球
+	eraser.OnShow();				// 貼上擦子
 	map.OnShow();
 	kirby.OnShow();
 	//

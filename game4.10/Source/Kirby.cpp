@@ -104,8 +104,8 @@ namespace game_framework {
 
 	void Kirby::OnMove()
 	{
-		const int STEP_SIZE = 2;
-		if (isMovingLeft)
+		
+		if (isMovingLeft&& !isMovingRight)
 		{
 			RightOrLeft = false;        //設定面向左邊
 			if(isMovingUp&&flyDelay<1)  //向左飛行中
@@ -113,11 +113,10 @@ namespace game_framework {
 			else if(!isMovingUp)        //正常向左走
 			{
 				x -= STEP_SIZE;
-				GoLeft.OnShow();
-				GoLeft.OnMove();
+
 			}
 		}
-		if (isMovingRight)
+		if (isMovingRight && !isMovingLeft)
 		{
 			RightOrLeft = true;          //設定面向右邊
 			if(isMovingUp&&flyDelay<1)   //向右飛行中
@@ -125,8 +124,7 @@ namespace game_framework {
 			else if (!isMovingUp)        //正常向右走
 			{
 				x += STEP_SIZE;
-				GoRight.OnShow();
-				GoRight.OnMove();
+
 			}
 		}
 		if (isMovingUp&&RightOrLeft)      //面相右按上
@@ -140,23 +138,20 @@ namespace game_framework {
 			else
 			{
 				y -= STEP_SIZE;
-				FlyRight.OnShow();
-				FlyRight.OnMove();
+
 			}
 		}
 		if (isMovingUp&&!RightOrLeft)       //面相左按上
 		{
 			if (flyDelay > 0)               //飛行前倒數
 			{
-				PrepareFlyLeft.OnShow();
-				PrepareFlyLeft.OnMove();
+
 				flyDelay--;
 			}
 			else
 			{
 				y -= STEP_SIZE;
-				FlyLeft.OnShow();
-				FlyLeft.OnMove();
+
 			}
 		}
 		if (isMovingDown)
@@ -180,6 +175,45 @@ namespace game_framework {
 			PrepareFlyLeft.SetTopLeft(x, y);
 			FlyRight.SetTopLeft(x, y);
 			FlyLeft.SetTopLeft(x, y);
+		}
+
+		if (isMovingLeft)
+		{
+			GoLeft.OnShow();
+			GoLeft.OnMove();
+		}
+		if (isMovingRight)
+		{
+			GoRight.OnShow();
+			GoRight.OnMove();
+		}
+		if (isMovingUp&&RightOrLeft)      //面相右按上
+		{
+			if (flyDelay > 0)             //飛行前的倒數
+			{
+				PrepareFlyRight.OnShow();
+				PrepareFlyRight.OnMove();
+				flyDelay--;
+			}
+			else
+			{
+				FlyRight.OnShow();
+				FlyRight.OnMove();
+			}
+		}
+		if (isMovingUp && !RightOrLeft)       //面相左按上
+		{
+			if (flyDelay > 0)               //飛行前倒數
+			{
+				PrepareFlyLeft.OnShow();
+				PrepareFlyLeft.OnMove();
+				flyDelay--;
+			}
+			else
+			{
+				FlyLeft.OnShow();
+				FlyLeft.OnMove();
+			}
 		}
 		if(!(isMovingDown|| isMovingLeft|| isMovingRight|| isMovingUp)&&RightOrLeft)         //面相右不動
 			originR.ShowBitmap();
