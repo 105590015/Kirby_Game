@@ -27,8 +27,8 @@ namespace game_framework {
 
 	void Map::Initialize()
 	{
-		const int X_POS = -280;
-		const int Y_POS = -400;
+		const int X_POS = -320;
+		const int Y_POS = -240;
 		sx = X_POS;
 		sy = Y_POS;
 		isMovingLeft = isMovingRight = isMovingUp = isMovingDown = false;
@@ -58,9 +58,10 @@ namespace game_framework {
 
 	bool Map::isEmpty(int x, int y) // (x, y) 為地圖的點座標
 	{
-		int gx = x / 160; // 轉換為格座標(整數除法)
-		int gy = y / 120; // 轉換為格座標(整數除法)
-		return map[gx][gy] == 0; // 假設 0 代表空的
+		int gx = x / 64; // 轉換為X軸格座標(整數除法)
+		int gy = y / 48; // 轉換為Y軸格座標(整數除法)
+		//map[x][y]中的y表示X軸的格數，x表示Y軸
+		return map[gy][gx] == 0; // 假設 0 代表空的
 	}
 
 	void Map::SetMovingDown(bool flag)

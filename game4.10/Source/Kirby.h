@@ -16,7 +16,7 @@ namespace game_framework {
 		void Initialize();				// 設定為初始值
 		bool IsAlive();					// 是否活著
 		void LoadBitmap();				// 載入圖形
-		void OnMove();					// 移動
+		void OnMove(Map *m);					// 移動
 		void OnShow(Map *m);					// 將圖形貼到畫面
 		void SetMovingDown(bool flag);	// 設定是否正在往下移動
 		void SetMovingLeft(bool flag);	// 設定是否正在往左移動

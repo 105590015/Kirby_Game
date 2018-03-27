@@ -102,61 +102,34 @@ namespace game_framework {
 		FlyLeft.AddBitmap(IDB_KB_U_L_12, RGB(255, 255, 255));
 	}
 
-	void Kirby::OnMove()
+	void Kirby::OnMove(Map *m)
 	{
 		
-		if (isMovingLeft&& !isMovingRight)
+		if (isMovingLeft)
 		{
 			RightOrLeft = false;        //設定面向左邊
-			if(isMovingUp&&flyDelay<1)  //向左飛行中
-				x -= STEP_SIZE;
-			else if(!isMovingUp)        //正常向左走
-			{
-				x -= STEP_SIZE;
-
-			}
+			if((isMovingUp&&flyDelay<1) || !isMovingUp)  //向左飛行中或正常向左走
+				if(m->isEmpty(x + 320 - 1, y + 240))//判斷左邊是否可走
+					x -= STEP_SIZE;
 		}
-		if (isMovingRight && !isMovingLeft)
+		if (isMovingRight)
 		{
 			RightOrLeft = true;          //設定面向右邊
-			if(isMovingUp&&flyDelay<1)   //向右飛行中
-				x += STEP_SIZE;
-			else if (!isMovingUp)        //正常向右走
-			{
-				x += STEP_SIZE;
-
-			}
+			if((isMovingUp&&flyDelay<1) || !isMovingUp)   //向右飛行中或正常向右走
+				if (m->isEmpty(x + 320 + 1, y + 240))   //判斷右邊是否可走
+					x += STEP_SIZE;
 		}
-		if (isMovingUp&&RightOrLeft)      //面相右按上
+		if (isMovingUp)
 		{
 			if (flyDelay > 0)             //飛行前的倒數
-			{
-				PrepareFlyRight.OnShow();
-				PrepareFlyRight.OnMove();
 				flyDelay--;
-			}
-			else
-			{
+			else if (m->isEmpty(x + 320, y + 240 - 1))  //判斷上面是否可走
 				y -= STEP_SIZE;
-
-			}
-		}
-		if (isMovingUp&&!RightOrLeft)       //面相左按上
-		{
-			if (flyDelay > 0)               //飛行前倒數
-			{
-
-				flyDelay--;
-			}
-			else
-			{
-				y -= STEP_SIZE;
-
-			}
 		}
 		if (isMovingDown)
-			y += STEP_SIZE;
-		if (isSpace)                  //按下空白鍵
+			if (m->isEmpty(x + 320, y + 240 + 1))   //判斷左邊是否可走
+				y += STEP_SIZE;
+		if (isSpace)
 		{
 			PrepareFlyRight.Reset();
 			PrepareFlyLeft.Reset();
@@ -177,12 +150,12 @@ namespace game_framework {
 			FlyLeft.SetTopLeft(x, y);
 		}
 
-		if (isMovingLeft)
+		if (isMovingLeft && !isMovingUp)
 		{
 			GoLeft.OnShow();
 			GoLeft.OnMove();
 		}
-		if (isMovingRight)
+		if (isMovingRight && !isMovingUp && !isMovingLeft)
 		{
 			GoRight.OnShow();
 			GoRight.OnMove();
