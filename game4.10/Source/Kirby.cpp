@@ -164,7 +164,7 @@ namespace game_framework {
 		}
 	}
 
-	void Kirby::OnShow()
+	void Kirby::OnShow(Map *m)
 	{
 		if (is_alive) {
 			originR.SetTopLeft(x, y);

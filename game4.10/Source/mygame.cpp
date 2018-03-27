@@ -392,7 +392,7 @@ void CGameStateRun::OnShow()
 	bball.OnShow();	*/					// 貼上彈跳的球
 	eraser.OnShow();				// 貼上擦子
 	map.OnShow();
-	kirby.OnShow();
+	kirby.OnShow(&map);
 	//
 	//  貼上左上及右下角落的圖
 	//

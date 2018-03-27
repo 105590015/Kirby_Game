@@ -1,3 +1,5 @@
+#pragma once
+#include "Map.h"
 namespace game_framework {
 	/////////////////////////////////////////////////////////////////////////////
 	// 卡比的所有資料
@@ -15,7 +17,7 @@ namespace game_framework {
 		bool IsAlive();					// 是否活著
 		void LoadBitmap();				// 載入圖形
 		void OnMove();					// 移動
-		void OnShow();					// 將圖形貼到畫面
+		void OnShow(Map *m);					// 將圖形貼到畫面
 		void SetMovingDown(bool flag);	// 設定是否正在往下移動
 		void SetMovingLeft(bool flag);	// 設定是否正在往左移動
 		void SetMovingRight(bool flag); // 設定是否正在往右移動
