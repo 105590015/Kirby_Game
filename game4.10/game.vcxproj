@@ -375,6 +375,7 @@
     <Image Include="RES\KB_U_L_7.bmp" />
     <Image Include="RES\KB_U_L_8.bmp" />
     <Image Include="RES\KB_U_L_9.bmp" />
+    <Image Include="RES\map.bmp" />
     <Image Include="RES\startmap.bmp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

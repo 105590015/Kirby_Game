@@ -27,16 +27,8 @@ namespace game_framework {
 
 	void Map::Initialize()
 	{
-		for (int i = 0; i < 10; i++)
-		{
-			for (int j = 0; j < 10; j++)
-			{
-				map[i][j] = 0;
-			}
-		}
-		map[5][5] = 10;
-		const int X_POS = 280;
-		const int Y_POS = 400;
+		const int X_POS = -280;
+		const int Y_POS = -400;
 		sx = X_POS;
 		sy = Y_POS;
 		isMovingLeft = isMovingRight = isMovingUp = isMovingDown = false;
@@ -45,42 +37,17 @@ namespace game_framework {
 	void Map::LoadBitmap()
 	{
 		background.LoadBitmap(IDB_MAP);
-		foreground.LoadBitmap(IDB_FOREGROUND);
 	}
 
 	void Map::OnMove()
 	{
-		for (int i = 0; i < 10; i++)
-		{
-			for (int j = 0; j < 10; j++)
-			{
 
-			}
-		}
-
-		if (isMovingLeft)
-			sx -= STEP_SIZE;
-		if (isMovingRight)
-			sx += STEP_SIZE;
-		if (isMovingUp)
-			sy -= STEP_SIZE;
-		if (isMovingDown)
-			sy += STEP_SIZE;
 	}
 
 	void Map::OnShow()
 	{
-		for (int i = 0; i < 10; i++) {
-			for (int j = 0; j < 10; j++) {
-				int x = i * 80 - sx; // 算出第(i, j)這一格的 x 螢幕座標
-				int y = j * 80 - sy; // 算出第(i, j)這一格的 y 螢幕座標
-				switch (map[i][j]/10) {
-				case 1:
-					background.SetTopLeft(x, y); // 指定第(i, j)這一格的座標
-					background.ShowBitmap();
-				}
-			}
-		}
+		background.SetTopLeft(sx, sy); // 指定第(i, j)這一格的座標
+		background.ShowBitmap();
 	}
 
 	void Map::SetXY(int nx, int ny)
