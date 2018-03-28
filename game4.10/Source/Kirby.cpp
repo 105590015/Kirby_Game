@@ -107,27 +107,28 @@ namespace game_framework {
 		
 		if (isMovingLeft)
 		{
+			//以下算式的x + 320與y + 240是補地圖移動的位子;卡比的圖大小大多為20 * 20, x + 10與y + 10是將判斷碰撞的點設在卡比中心
 			RightOrLeft = false;        //設定面向左邊
 			if((isMovingUp&&flyDelay<1) || !isMovingUp)  //向左飛行中或正常向左走
-				if(m->isEmpty(x + 319 - 1, y + 239))//判斷左邊是否可走
+				if(m->isEmpty(x + 320 + 10 - STEP_SIZE, y + 240 + 10))  //判斷左邊是否可走
 					x -= STEP_SIZE;
 		}
 		if (isMovingRight)
 		{
 			RightOrLeft = true;          //設定面向右邊
 			if((isMovingUp&&flyDelay<1) || !isMovingUp)   //向右飛行中或正常向右走
-				if (m->isEmpty(x + 319 + 1, y + 239))   //判斷右邊是否可走
+				if (m->isEmpty(x + 320 + 10 + STEP_SIZE, y + 240 + 10))   //判斷右邊是否可走
 					x += STEP_SIZE;
 		}
 		if (isMovingUp)
 		{
 			if (flyDelay > 0)             //飛行前的倒數
 				flyDelay--;
-			else if (m->isEmpty(x + 319, y + 239 - 1))  //判斷上面是否可走
+			else if (m->isEmpty(x + 320 + 10, y + 240 + 10 - STEP_SIZE))  //判斷上面是否可走
 				y -= STEP_SIZE;
 		}
 		if (isMovingDown)
-			if (m->isEmpty(x + 319, y + 239 + 1))   //判斷左邊是否可走
+			if (m->isEmpty(x + 320 + 10, y + 240 + 10 + STEP_SIZE))   //判斷左邊是否可走
 				y += STEP_SIZE;
 		if (isSpace)
 		{

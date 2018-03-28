@@ -58,8 +58,8 @@ namespace game_framework {
 
 	bool Map::isEmpty(int x, int y) // (x, y) 為地圖的點座標
 	{
-		int gx = x / 64; // 轉換為X軸格座標(整數除法)
-		int gy = y / 48; // 轉換為Y軸格座標(整數除法)
+		int gx = x / 20; // 轉換為X軸格座標(整數除法)
+		int gy = y / 20; // 轉換為Y軸格座標(整數除法)
 		//map[x][y]中的y表示X軸的格數，x表示Y軸
 		return map[gy][gx] == 0; // 假設 0 代表空的
 	}
