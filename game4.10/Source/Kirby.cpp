@@ -121,7 +121,7 @@ namespace game_framework {
 		{
 			//以下算式的x + 320與y + 240是補地圖移動的位子;卡比的圖大小大多為20 * 20, x + 10與y + 10是將判斷碰撞的點設在卡比中心
 			RightOrLeft = false;        //設定面向左邊
-			if (m->isEmpty(x + 10 - STEP_SIZE, y + 10) && !isMovingDown && ((isMovingUp&&flyDelay < 1) || !isMovingUp))  //先判斷左邊是否可走且沒有按Down，狀態要是向左飛行中或正常向左走
+			if (m->isEmpty(x - STEP_SIZE, y + 10) && !isMovingDown && ((isMovingUp&&flyDelay < 1) || !isMovingUp))  //先判斷左邊是否可走且沒有按Down，狀態要是向左飛行中或正常向左走
 			{
 				if (x <= 0) //邊界
 					x = 0;
@@ -132,7 +132,7 @@ namespace game_framework {
 		if (isMovingRight)
 		{
 			RightOrLeft = true;          //設定面向右邊
-			if (m->isEmpty(x + 10 + STEP_SIZE, y + 10) && !isMovingDown && ((isMovingUp&&flyDelay < 1) || !isMovingUp))   //先判斷右邊是否可走且沒有按Down，狀態要是向右飛行中或正常向右走
+			if (m->isEmpty(x + 20 + STEP_SIZE, y + 10) && !isMovingDown && ((isMovingUp&&flyDelay < 1) || !isMovingUp))   //先判斷右邊是否可走且沒有按Down，狀態要是向右飛行中或正常向右走
 			{
 				if (x >= m->GetWidth() - GoRight.Width())  //邊界
 					x = m->GetWidth() - GoRight.Width();
@@ -144,7 +144,7 @@ namespace game_framework {
 		{
 			if (flyDelay > 0)             //飛行前的倒數
 				flyDelay--;
-			else if (m->isEmpty(x + 10, y + 10 - STEP_SIZE))  //判斷上面是否可走
+			else if (m->isEmpty(x + 10, y - STEP_SIZE))  //判斷上面是否可走
 			{
 				if (y <= 0)  //邊界
 					y = 0;
@@ -162,7 +162,7 @@ namespace game_framework {
 		if (isJump)
 		{
 			JumpDelay--;
-			if(m->isEmpty(x + 10, y + 10 - 4))  //會不會撞到頭
+			if(m->isEmpty(x + 10, y - 4))  //會不會撞到頭
 				y -= 4;
 			if (JumpDelay == 0)
 			{
