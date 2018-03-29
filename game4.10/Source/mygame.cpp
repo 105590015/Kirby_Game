@@ -249,9 +249,8 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 	// 移動擦子
 	//
 	eraser.OnMove();
-	
-	kirby.OnMove(&map);
 	map.OnMove(kirby.GetX1(),kirby.GetY1());
+	kirby.OnMove(&map);
 	//
 	// 判斷擦子是否碰到球
 	//
@@ -322,28 +321,16 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 	const char KEY_SPACE = ' ';  // keyboard空白鍵
 	const char KEY_Jump = 0x58;  // keyboard X鍵
 	if (nChar == KEY_LEFT)
-	{
 		kirby.SetMovingLeft(true);
-		map.SetMovingLeft(true);
-	}
 	if (nChar == KEY_RIGHT)
-	{
 		kirby.SetMovingRight(true);
-		map.SetMovingRight(true);
-	}
 	if (nChar == KEY_UP)
-	{
 		kirby.SetMovingUp(true);
-		map.SetMovingUp(true);
-	}
 	if (nChar == KEY_DOWN)
-	{
 		kirby.SetMovingDown(true);
-		map.SetMovingDown(true);
-	}
 	if (nChar == KEY_SPACE)
 		kirby.SetSpace(true);
-	if (nChar == KEY_Jump && !kirby.IsFly() && !map.isEmpty(kirby.GetX1()+320,kirby.GetY1()+240+20+1)) //按下X,卡比不是在飛行且落地才可跳躍(320.240是地圖補償20是卡比的身高)
+	if (nChar == KEY_Jump && !kirby.IsFly() && !map.isEmpty(kirby.GetX1() + 10, kirby.GetY1() + 20 + 1)) //按下X,卡比不是在飛行且落地才可跳躍(320.240是地圖補償20是卡比的身高)
 		kirby.SetJump(true);
 }
 
@@ -355,25 +342,13 @@ void CGameStateRun::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 	const char KEY_DOWN  = 0x28; // keyboard下箭頭
 	const char KEY_SPACE = ' ';  // keyboard空白鍵
 	if (nChar == KEY_LEFT)
-	{
 		kirby.SetMovingLeft(false);
-		map.SetMovingLeft(false);
-	}
 	if (nChar == KEY_RIGHT)
-	{
 		kirby.SetMovingRight(false);
-		map.SetMovingRight(false);
-	}
 	if (nChar == KEY_UP)
-	{
 		kirby.SetMovingUp(false);
-		map.SetMovingUp(false);
-	}
 	if (nChar == KEY_DOWN)
-	{
 		kirby.SetMovingDown(false);
-		map.SetMovingDown(false);
-	}
 }
 
 void CGameStateRun::OnShow()

@@ -15,7 +15,7 @@ namespace game_framework {
 		Initialize();
 	}
 
-	int Map::GetWidth(){
+	int Map::GetWidth() {
 		return background.Width();
 	}
 
@@ -39,7 +39,6 @@ namespace game_framework {
 		const int Y_POS = 240;
 		sx = X_POS;
 		sy = Y_POS;
-		isMovingLeft = isMovingRight = isMovingUp = isMovingDown = false;
 	}
 
 	void Map::LoadBitmap()
@@ -49,7 +48,6 @@ namespace game_framework {
 
 	void Map::OnMove(int x, int y)
 	{
-
 		sx = x - SIZE_X / 2;
 		sy = y - SIZE_Y / 2;
 
@@ -68,10 +66,6 @@ namespace game_framework {
 		if (y >= background.Height() - SIZE_Y / 2) {
 			sy = background.Height() - SIZE_Y;
 		}
-
-
-
-
 	}
 
 	void Map::OnShow()
@@ -92,25 +86,5 @@ namespace game_framework {
 		int gy = y / 20; // 锣传Y禸畒夹(俱计埃猭)
 		//map[x][y]いyボX禸计xボY禸
 		return map[gy][gx] == 0; // 安砞 0 
-	}
-
-	void Map::SetMovingDown(bool flag)
-	{
-		isMovingDown = flag;
-	}
-
-	void Map::SetMovingLeft(bool flag)
-	{
-		isMovingLeft = flag;
-	}
-
-	void Map::SetMovingRight(bool flag)
-	{
-		isMovingRight = flag;
-	}
-
-	void Map::SetMovingUp(bool flag)
-	{
-		isMovingUp = flag;
 	}
 }

@@ -121,32 +121,22 @@ namespace game_framework {
 		{
 			//以下算式的x + 320與y + 240是補地圖移動的位子;卡比的圖大小大多為20 * 20, x + 10與y + 10是將判斷碰撞的點設在卡比中心
 			RightOrLeft = false;        //設定面向左邊
-<<<<<<< HEAD
-			if(m->isEmpty(x + 320 + 10 - STEP_SIZE, y + 240 + 10) && !isMovingDown && ((isMovingUp&&flyDelay<1) || !isMovingUp))  //先判斷左邊是否可走且沒有按Down，狀態要是向左飛行中或正常向左走
+			if (m->isEmpty(x + 10 - STEP_SIZE, y + 10) && !isMovingDown && ((isMovingUp&&flyDelay < 1) || !isMovingUp))  //先判斷左邊是否可走且沒有按Down，狀態要是向左飛行中或正常向左走
+			{
+				if (x <= 0) //邊界
+					x = 0;
+				else
 					x -= STEP_SIZE;
-=======
-			if((isMovingUp&&flyDelay<1) || !isMovingUp)  //向左飛行中或正常向左走
-				if(m->isEmpty(x + 10 - STEP_SIZE, y  + 10))  //判斷左邊是否可走
-				{
-					if (x <= 0)
-						x = 0;
-					else
-						x -= STEP_SIZE;
-				}
->>>>>>> 94612b5000514bec4d4f6df3283e17d647551676
+			}
 		}
 		if (isMovingRight)
 		{
 			RightOrLeft = true;          //設定面向右邊
-<<<<<<< HEAD
-			if(m->isEmpty(x + 320 + 10 + STEP_SIZE, y + 240 + 10) && !isMovingDown && ((isMovingUp&&flyDelay<1) || !isMovingUp))   //先判斷右邊是否可走且沒有按Down，狀態要是向右飛行中或正常向右走
-=======
-			if((isMovingUp&&flyDelay<1) || !isMovingUp)   //向右飛行中或正常向右走
+			if (m->isEmpty(x + 10 + STEP_SIZE, y + 10) && !isMovingDown && ((isMovingUp&&flyDelay < 1) || !isMovingUp))   //先判斷右邊是否可走且沒有按Down，狀態要是向右飛行中或正常向右走
 			{
-				if (x >= m->GetWidth() - GoRight.Width())
+				if (x >= m->GetWidth() - GoRight.Width())  //邊界
 					x = m->GetWidth() - GoRight.Width();
 				else
->>>>>>> 94612b5000514bec4d4f6df3283e17d647551676
 					x += STEP_SIZE;
 			}
 		}
@@ -154,25 +144,14 @@ namespace game_framework {
 		{
 			if (flyDelay > 0)             //飛行前的倒數
 				flyDelay--;
-			else if (m->isEmpty(x  + 10, y  + 10 - STEP_SIZE))  //判斷上面是否可走
+			else if (m->isEmpty(x + 10, y + 10 - STEP_SIZE))  //判斷上面是否可走
 			{
-				if (y <= 0)
+				if (y <= 0)  //邊界
 					y = 0;
 				else
 					y -= STEP_SIZE;
 			}
 		}
-<<<<<<< HEAD
-=======
-		if (isMovingDown)
-			if (m->isEmpty(x  + 10, y + 10 + STEP_SIZE))   //判斷左邊是否可走
-			{
-				if (y >= m->GetHeight() - originR.Height())
-					y = m->GetHeight() - originR.Height();
-				else
-					y += STEP_SIZE;
-			}
->>>>>>> 94612b5000514bec4d4f6df3283e17d647551676
 		if (isSpace)
 		{
 			PrepareFlyRight.Reset();
@@ -180,11 +159,10 @@ namespace game_framework {
 			flyDelay = 46;
 			isFly = false;
 		}
-<<<<<<< HEAD
 		if (isJump)
 		{
 			JumpDelay--;
-			if(m->isEmpty(x + 320 + 10, y + 240 + 10 - 4))  //會不會撞到頭
+			if(m->isEmpty(x + 10, y + 10 - 4))  //會不會撞到頭
 				y -= 4;
 			if (JumpDelay == 0)
 			{
@@ -192,34 +170,14 @@ namespace game_framework {
 				isJump = false;
 			}
 		}
-		if(!(isMovingUp || isJump) && m->isEmpty(x + 320 + 10, y + 240 + 10 + 1)) //地吸引力
-=======
-		if(!(isMovingDown || isMovingUp) && m->isEmpty(x + 10, y  + 10 + 1)) //地吸引力
->>>>>>> 94612b5000514bec4d4f6df3283e17d647551676
+		if(!(isMovingUp || isJump) && m->isEmpty(x + 10, y + 20 + 1)) //地吸引力
 			y += 1;
 	}
 
 	void Kirby::OnShow(Map *m)
 	{
-<<<<<<< HEAD
 		if (is_alive) {    //全部動畫位子設定
-			originR.SetTopLeft(x, y);
-			originL.SetTopLeft(x, y);
-			GoLeft.SetTopLeft(x, y);
-			GoRight.SetTopLeft(x, y);
-			PrepareFlyRight.SetTopLeft(x, y);
-			PrepareFlyLeft.SetTopLeft(x, y);
-			FlyRight.SetTopLeft(x, y);
-			FlyLeft.SetTopLeft(x, y);
-			ExhaleRight.SetTopLeft(x, y);
-			ExhaleLeft.SetTopLeft(x, y);
-			JumpRight.SetTopLeft(x, y);
-			JumpLeft.SetTopLeft(x, y);
-			DownRight.SetTopLeft(x, y);
-			DownLeft.SetTopLeft(x, y);
-=======
-		if (is_alive) {    //全部動畫位子初始化
-			originR.SetTopLeft(m->ScreenX(x),m->ScreenY(y));
+			originR.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
 			originL.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
 			GoLeft.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
 			GoRight.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
@@ -227,8 +185,12 @@ namespace game_framework {
 			PrepareFlyLeft.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
 			FlyRight.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
 			FlyLeft.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
-			Exhale.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
->>>>>>> 94612b5000514bec4d4f6df3283e17d647551676
+			ExhaleRight.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
+			ExhaleLeft.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
+			JumpRight.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
+			JumpLeft.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
+			DownRight.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
+			DownLeft.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
 		}
 		if (isJump && RightOrLeft)
 			JumpRight.ShowBitmap();
@@ -294,9 +256,9 @@ namespace game_framework {
 			FlyLeft.OnShow();
 			FlyLeft.OnMove();
 		}
-		else if (isMovingDown && RightOrLeft && !m->isEmpty(x + 320 + 10, y + 240 + 10 + 1))
+		else if (isMovingDown && RightOrLeft && !m->isEmpty(x + 10, y + 20 + 1))  //面向右縮小
 			DownRight.ShowBitmap();
-		else if (isMovingDown && !RightOrLeft && !m->isEmpty(x + 320 + 10, y + 240 + 10 + 1))
+		else if (isMovingDown && !RightOrLeft && !m->isEmpty(x + 10, y + 20 + 1))  //面向左縮小
 			DownLeft.ShowBitmap();
 		else if (isMovingLeft && !isFly)  //一般向左走
 		{
@@ -312,6 +274,11 @@ namespace game_framework {
 			originR.ShowBitmap();
 		else if (!RightOrLeft)  //面相左
 			originL.ShowBitmap();
+		if (!isMovingUp)   //沒吸氣就要reset吸氣動畫
+		{
+			PrepareFlyRight.Reset();
+			PrepareFlyLeft.Reset();
+		}
 	}
 
 	void Kirby::SetMovingDown(bool flag)

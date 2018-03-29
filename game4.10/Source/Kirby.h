@@ -15,10 +15,10 @@ namespace game_framework {
 		int  GetY2();					// 右下角 y 座標
 		void Initialize();				// 設定為初始值
 		bool IsAlive();					// 是否活著
-		bool IsFly();
+		bool IsFly();                   // 是否在飛
 		void LoadBitmap();				// 載入圖形
-		void OnMove(Map *m);					// 移動
-		void OnShow(Map *m);					// 將圖形貼到畫面
+		void OnMove(Map *m);		    // 移動
+		void OnShow(Map *m);			// 將圖形貼到畫面
 		void SetMovingDown(bool flag);	// 設定是否正在往下移動
 		void SetMovingLeft(bool flag);	// 設定是否正在往左移動
 		void SetMovingRight(bool flag); // 設定是否正在往右移動
