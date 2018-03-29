@@ -50,10 +50,7 @@ namespace game_framework {
 	/////////////////////////////////////////////////////////////////////////////
 
 	enum AUDIO_ID {				// 定義各種音效的編號
-		AUDIO_DING,				// 0
-		AUDIO_LAKE,				// 1
-		AUDIO_NTUT,				// 2
-		AUDIO_BACKGROUND
+		AUDIO_BACKGROUND        // 0
 	};
 
 	/////////////////////////////////////////////////////////////////////////////
@@ -70,8 +67,6 @@ namespace game_framework {
 		void OnLButtonDown(UINT nFlags, CPoint point);  // 處理滑鼠的動作
 	protected:
 		void OnShow();									// 顯示這個狀態的遊戲畫面
-	private:
-		CMovingBitmap logo;								// csie的logo
 	};
 
 	/////////////////////////////////////////////////////////////////////////////
@@ -91,14 +86,6 @@ namespace game_framework {
 		void OnMove();									// 移動遊戲元素
 		void OnShow();									// 顯示這個狀態的遊戲畫面
 	private:
-		const int		NUMBALLS;	// 球的總數
-		CMovingBitmap	background;	// 背景圖
-		CMovingBitmap	help;		// 說明圖
-		CBall			*ball;		// 球的陣列
-		CMovingBitmap	corner;		// 角落圖
-		CEraser			eraser;		// 拍子
-		CInteger		hits_left;	// 剩下的撞擊數
-		CBouncingBall   bball;		// 反覆彈跳的球
 		Kirby kirby;                // 卡比
 		Map map;                    // 地圖
 	};
