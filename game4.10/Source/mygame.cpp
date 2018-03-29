@@ -249,8 +249,9 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 	// 移動擦子
 	//
 	eraser.OnMove();
-	map.OnMove();
+	
 	kirby.OnMove(&map);
+	map.OnMove(kirby.GetX1(),kirby.GetY1());
 	//
 	// 判斷擦子是否碰到球
 	//

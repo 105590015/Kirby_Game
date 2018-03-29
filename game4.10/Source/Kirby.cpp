@@ -38,8 +38,8 @@ namespace game_framework {
 
 	void Kirby::Initialize()
 	{
-		const int X_POS = 280;
-		const int Y_POS = 400;
+		const int X_POS = 640;
+		const int Y_POS = 480;
 		x = X_POS;
 		y = Y_POS;
 		flyDelay = 46;
@@ -121,22 +121,58 @@ namespace game_framework {
 		{
 			//以下算式的x + 320與y + 240是補地圖移動的位子;卡比的圖大小大多為20 * 20, x + 10與y + 10是將判斷碰撞的點設在卡比中心
 			RightOrLeft = false;        //設定面向左邊
+<<<<<<< HEAD
 			if(m->isEmpty(x + 320 + 10 - STEP_SIZE, y + 240 + 10) && !isMovingDown && ((isMovingUp&&flyDelay<1) || !isMovingUp))  //先判斷左邊是否可走且沒有按Down，狀態要是向左飛行中或正常向左走
 					x -= STEP_SIZE;
+=======
+			if((isMovingUp&&flyDelay<1) || !isMovingUp)  //向左飛行中或正常向左走
+				if(m->isEmpty(x + 10 - STEP_SIZE, y  + 10))  //判斷左邊是否可走
+				{
+					if (x <= 0)
+						x = 0;
+					else
+						x -= STEP_SIZE;
+				}
+>>>>>>> 94612b5000514bec4d4f6df3283e17d647551676
 		}
 		if (isMovingRight)
 		{
 			RightOrLeft = true;          //設定面向右邊
+<<<<<<< HEAD
 			if(m->isEmpty(x + 320 + 10 + STEP_SIZE, y + 240 + 10) && !isMovingDown && ((isMovingUp&&flyDelay<1) || !isMovingUp))   //先判斷右邊是否可走且沒有按Down，狀態要是向右飛行中或正常向右走
+=======
+			if((isMovingUp&&flyDelay<1) || !isMovingUp)   //向右飛行中或正常向右走
+			{
+				if (x >= m->GetWidth() - GoRight.Width())
+					x = m->GetWidth() - GoRight.Width();
+				else
+>>>>>>> 94612b5000514bec4d4f6df3283e17d647551676
 					x += STEP_SIZE;
+			}
 		}
 		if (isMovingUp)
 		{
 			if (flyDelay > 0)             //飛行前的倒數
 				flyDelay--;
-			else if (m->isEmpty(x + 320 + 10, y + 240 + 10 - STEP_SIZE))  //判斷上面是否可走
-				y -= STEP_SIZE;
+			else if (m->isEmpty(x  + 10, y  + 10 - STEP_SIZE))  //判斷上面是否可走
+			{
+				if (y <= 0)
+					y = 0;
+				else
+					y -= STEP_SIZE;
+			}
 		}
+<<<<<<< HEAD
+=======
+		if (isMovingDown)
+			if (m->isEmpty(x  + 10, y + 10 + STEP_SIZE))   //判斷左邊是否可走
+			{
+				if (y >= m->GetHeight() - originR.Height())
+					y = m->GetHeight() - originR.Height();
+				else
+					y += STEP_SIZE;
+			}
+>>>>>>> 94612b5000514bec4d4f6df3283e17d647551676
 		if (isSpace)
 		{
 			PrepareFlyRight.Reset();
@@ -144,6 +180,7 @@ namespace game_framework {
 			flyDelay = 46;
 			isFly = false;
 		}
+<<<<<<< HEAD
 		if (isJump)
 		{
 			JumpDelay--;
@@ -156,11 +193,15 @@ namespace game_framework {
 			}
 		}
 		if(!(isMovingUp || isJump) && m->isEmpty(x + 320 + 10, y + 240 + 10 + 1)) //地吸引力
+=======
+		if(!(isMovingDown || isMovingUp) && m->isEmpty(x + 10, y  + 10 + 1)) //地吸引力
+>>>>>>> 94612b5000514bec4d4f6df3283e17d647551676
 			y += 1;
 	}
 
 	void Kirby::OnShow(Map *m)
 	{
+<<<<<<< HEAD
 		if (is_alive) {    //全部動畫位子設定
 			originR.SetTopLeft(x, y);
 			originL.SetTopLeft(x, y);
@@ -176,6 +217,18 @@ namespace game_framework {
 			JumpLeft.SetTopLeft(x, y);
 			DownRight.SetTopLeft(x, y);
 			DownLeft.SetTopLeft(x, y);
+=======
+		if (is_alive) {    //全部動畫位子初始化
+			originR.SetTopLeft(m->ScreenX(x),m->ScreenY(y));
+			originL.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
+			GoLeft.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
+			GoRight.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
+			PrepareFlyRight.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
+			PrepareFlyLeft.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
+			FlyRight.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
+			FlyLeft.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
+			Exhale.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
+>>>>>>> 94612b5000514bec4d4f6df3283e17d647551676
 		}
 		if (isJump && RightOrLeft)
 			JumpRight.ShowBitmap();

@@ -15,6 +15,14 @@ namespace game_framework {
 		Initialize();
 	}
 
+	int Map::GetWidth(){
+		return background.Width();
+	}
+
+	int Map::GetHeight() {
+		return background.Height();
+	}
+
 	int  Map::ScreenX(int x)
 	{
 		return x-sx;
@@ -27,8 +35,8 @@ namespace game_framework {
 
 	void Map::Initialize()
 	{
-		const int X_POS = -320;
-		const int Y_POS = -240;
+		const int X_POS = 320;
+		const int Y_POS = 240;
 		sx = X_POS;
 		sy = Y_POS;
 		isMovingLeft = isMovingRight = isMovingUp = isMovingDown = false;
@@ -39,14 +47,36 @@ namespace game_framework {
 		background.LoadBitmap(IDB_MAP);
 	}
 
-	void Map::OnMove()
+	void Map::OnMove(int x, int y)
 	{
+
+		sx = x - SIZE_X / 2;
+		sy = y - SIZE_Y / 2;
+
+		if (x <= SIZE_X / 2) {
+			sx = 0;
+		}
+
+		if (x >= background.Width() - SIZE_X / 2) {
+			sx = background.Width() - SIZE_X;
+		}
+
+		if (y <= SIZE_Y / 2) {
+			sy = 0;
+		}
+
+		if (y >= background.Height() - SIZE_Y / 2) {
+			sy = background.Height() - SIZE_Y;
+		}
+
+
+
 
 	}
 
 	void Map::OnShow()
 	{
-		background.SetTopLeft(sx, sy); // 指定第(i, j)這一格的座標
+		background.SetTopLeft(-sx, -sy); // 指定第(i, j)這一格的座標
 		background.ShowBitmap();
 	}
 
