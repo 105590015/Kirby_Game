@@ -152,13 +152,6 @@ namespace game_framework {
 					y -= STEP_SIZE;
 			}
 		}
-		if (isSpace)
-		{
-			PrepareFlyRight.Reset();
-			PrepareFlyLeft.Reset();
-			flyDelay = 46;
-			isFly = false;
-		}
 		if (isJump)
 		{
 			JumpDelay--;
@@ -170,8 +163,14 @@ namespace game_framework {
 				isJump = false;
 			}
 		}
-		if(!(isMovingUp || isJump) && m->isEmpty(x + 10, y + 20 + 1)) //地吸引力
-			y += 1;
+		if (!(isMovingUp || isJump) && m->isEmpty(x + 10, y + 20 + 1)) //地吸引力
+		{
+			if (isFly)
+				y += 1;
+			else
+				y += STEP_SIZE;
+		}
+			
 	}
 
 	void Kirby::OnShow(Map *m)
@@ -192,13 +191,41 @@ namespace game_framework {
 			DownRight.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
 			DownLeft.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
 		}
-		if (isJump && RightOrLeft)
+		if (isJump && RightOrLeft)         //面向右跳
 			JumpRight.ShowBitmap();
-		else if (isJump && !RightOrLeft)
+		else if (isJump && !RightOrLeft)   //面向左跳
 			JumpLeft.ShowBitmap();
+		else if (isSpace && RightOrLeft && isFly)   //向右吐氣
+		{
+			ExhaleDelay--;
+			ExhaleRight.ShowBitmap();
+			if (ExhaleDelay == 0)
+			{
+				flyDelay = 46;
+				ExhaleDelay = 10;
+				PrepareFlyRight.Reset();
+				PrepareFlyLeft.Reset();
+				isFly = false;
+				isSpace = false;
+			}
+		}
+		else if (isSpace && !RightOrLeft && isFly)  //向左吐氣
+		{
+			ExhaleDelay--;
+			ExhaleLeft.ShowBitmap();
+			if (ExhaleDelay == 0)
+			{
+				flyDelay = 46;
+				ExhaleDelay = 10;
+				PrepareFlyRight.Reset();
+				PrepareFlyLeft.Reset();
+				isFly = false;
+				isSpace = false;
+			}
+		}
 		else if (isMovingUp && RightOrLeft)      //面相右按上
 		{
-			if (flyDelay > 0)             //飛行前的倒數
+			if (flyDelay > 0)              //飛行前的倒數
 			{
 				PrepareFlyRight.OnShow();
 				PrepareFlyRight.OnMove();
@@ -224,26 +251,6 @@ namespace game_framework {
 				isFly = true;
 				FlyLeft.OnShow();
 				FlyLeft.OnMove();
-			}
-		}
-		else if (isSpace && RightOrLeft)   //向右吐氣
-		{
-			ExhaleDelay--;
-			ExhaleRight.ShowBitmap();
-			if (ExhaleDelay == 0)
-			{
-				ExhaleDelay = 10;
-				isSpace = false;
-			}
-		}
-		else if (isSpace && !RightOrLeft)  //向左吐氣
-		{
-			ExhaleDelay--;
-			ExhaleLeft.ShowBitmap();
-			if (ExhaleDelay == 0)
-			{
-				ExhaleDelay = 10;
-				isSpace = false;
 			}
 		}
 		else if (isFly && RightOrLeft)  //面相右飛行中地吸引力
@@ -274,10 +281,11 @@ namespace game_framework {
 			originR.ShowBitmap();
 		else if (!RightOrLeft)  //面相左
 			originL.ShowBitmap();
-		if (!isMovingUp)   //沒吸氣就要reset吸氣動畫
+		if (!isMovingUp && !isFly)   //沒吸氣也沒飛行就要reset吸氣動畫
 		{
 			PrepareFlyRight.Reset();
 			PrepareFlyLeft.Reset();
+			flyDelay = 46;
 		}
 	}
 
