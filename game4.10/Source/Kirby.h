@@ -26,7 +26,7 @@ namespace game_framework {
 		void SetXY(int nx, int ny);		// 設定左上角的座標
 	protected:	
 		CMovingBitmap originR, originL;		//卡比不動的圖
-		CAnimation GoLeft, GoRight, FlyRight, PrepareFlyRight, FlyLeft, PrepareFlyLeft;	// 卡比左.右走.飛行.預備飛行的動畫
+		CAnimation GoLeft, GoRight, FlyRight, PrepareFlyRight, FlyLeft, PrepareFlyLeft, Exhale;	// 卡比左.右走.飛行.預備飛行.吐氣的動畫
 		int x, y;					// 左上角座標
 		bool isMovingDown;			// 是否正在往下移動
 		bool isMovingLeft;			// 是否正在往左移動

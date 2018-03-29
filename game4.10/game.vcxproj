@@ -328,7 +328,13 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\bitmap3.bmp" />
+    <Image Include="res\bitmap5.bmp" />
     <Image Include="RES\foreground.bmp" />
+    <Image Include="RES\KB_Exhale_1.bmp" />
+    <Image Include="RES\KB_Exhale_2.bmp" />
+    <Image Include="RES\KB_Exhale_3.bmp" />
+    <Image Include="RES\KB_Exhale_4.bmp" />
+    <Image Include="RES\KB_Exhale_5.bmp" />
     <Image Include="RES\KB_L_0.bmp" />
     <Image Include="RES\KB_L_1.bmp" />
     <Image Include="RES\KB_L_10.bmp" />

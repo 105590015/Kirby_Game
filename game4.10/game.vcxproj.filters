@@ -336,5 +336,23 @@
     <Image Include="RES\map.bmp">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="res\bitmap5.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\KB_Exhale_1.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\KB_Exhale_2.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\KB_Exhale_3.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\KB_Exhale_4.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\KB_Exhale_5.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

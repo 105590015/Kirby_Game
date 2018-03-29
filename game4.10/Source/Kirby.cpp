@@ -5,7 +5,7 @@
 #include "audio.h"
 #include "gamelib.h"
 #include "Kirby.h"
-
+////////////////////////////////////////吐氣只做了向右動畫///////////////////////////////////////////////////
 namespace game_framework {
 	/////////////////////////////////////////////////////////////////////////////
 	// CBall: Ball class
@@ -100,11 +100,15 @@ namespace game_framework {
 		FlyLeft.AddBitmap(IDB_KB_U_L_10, RGB(255, 255, 255));
 		FlyLeft.AddBitmap(IDB_KB_U_L_11, RGB(255, 255, 255));
 		FlyLeft.AddBitmap(IDB_KB_U_L_12, RGB(255, 255, 255));
+		Exhale.AddBitmap(IDB_KB_Exhale_R_1, RGB(255, 255, 255));
+		Exhale.AddBitmap(IDB_KB_Exhale_R_2, RGB(255, 255, 255));
+		Exhale.AddBitmap(IDB_KB_Exhale_R_3, RGB(255, 255, 255));
+		Exhale.AddBitmap(IDB_KB_Exhale_R_4, RGB(255, 255, 255));
+		Exhale.AddBitmap(IDB_KB_Exhale_R_5, RGB(255, 255, 255));
 	}
 
 	void Kirby::OnMove(Map *m)
 	{
-		
 		if (isMovingLeft)
 		{
 			//以下算式的x + 320與y + 240是補地圖移動的位子;卡比的圖大小大多為20 * 20, x + 10與y + 10是將判斷碰撞的點設在卡比中心
@@ -135,12 +139,16 @@ namespace game_framework {
 			PrepareFlyRight.Reset();
 			PrepareFlyLeft.Reset();
 			flyDelay = 46;
+			isFly = false;
 		}
+		if(!(isMovingDown || isMovingUp) && m->isEmpty(x + 320 + 10, y + 240 + 10 + 1)) //地吸引力
+			y += 1;
+
 	}
 
 	void Kirby::OnShow(Map *m)
 	{
-		if (is_alive) {
+		if (is_alive) {    //全部動畫位子初始化
 			originR.SetTopLeft(x, y);
 			originL.SetTopLeft(x, y);
 			GoLeft.SetTopLeft(x, y);
@@ -149,19 +157,9 @@ namespace game_framework {
 			PrepareFlyLeft.SetTopLeft(x, y);
 			FlyRight.SetTopLeft(x, y);
 			FlyLeft.SetTopLeft(x, y);
+			Exhale.SetTopLeft(x, y);
 		}
-
-		if (isMovingLeft && !isMovingUp)
-		{
-			GoLeft.OnShow();
-			GoLeft.OnMove();
-		}
-		if (isMovingRight && !isMovingUp && !isMovingLeft)
-		{
-			GoRight.OnShow();
-			GoRight.OnMove();
-		}
-		if (isMovingUp&&RightOrLeft)      //面相右按上
+		if (isMovingUp && RightOrLeft)      //面相右按上
 		{
 			if (flyDelay > 0)             //飛行前的倒數
 			{
@@ -171,11 +169,12 @@ namespace game_framework {
 			}
 			else
 			{
+				isFly = true;
 				FlyRight.OnShow();
 				FlyRight.OnMove();
 			}
 		}
-		if (isMovingUp && !RightOrLeft)       //面相左按上
+		else if (isMovingUp && !RightOrLeft)   //面相左按上
 		{
 			if (flyDelay > 0)               //飛行前倒數
 			{
@@ -185,14 +184,41 @@ namespace game_framework {
 			}
 			else
 			{
+				isFly = true;
 				FlyLeft.OnShow();
 				FlyLeft.OnMove();
 			}
 		}
-		if(!(isMovingDown|| isMovingLeft|| isMovingRight|| isMovingUp)&&RightOrLeft)         //面相右不動
+		else if (isFly && RightOrLeft)  //面相右飛行中地吸引力
+		{
+			FlyRight.OnShow();
+			FlyRight.OnMove();
+		}
+		else if (isFly && !RightOrLeft) //面向左飛行中地心引力
+		{
+			FlyLeft.OnShow();
+			FlyLeft.OnMove();
+		}
+		else if (isSpace)   //吐氣
+		{
+			Exhale.OnShow();
+			Exhale.OnMove();
+		}
+		else if (isMovingLeft && !isFly)  //一般向左走
+		{
+			GoLeft.OnShow();
+			GoLeft.OnMove();
+		}
+		else if (isMovingRight && !isFly)  //一般向右走
+		{
+			GoRight.OnShow();
+			GoRight.OnMove();
+		}
+		else if (!(isMovingDown || isMovingLeft || isMovingRight || isMovingUp) && RightOrLeft && !isFly)   //沒有按下移動,面相右,且不是飛行狀態
 			originR.ShowBitmap();
-		if (!(isMovingDown || isMovingLeft || isMovingRight || isMovingUp) && !RightOrLeft)  //面向左不動
+		else if (!(isMovingDown || isMovingLeft || isMovingRight || isMovingUp) && !RightOrLeft && !isFly)  //沒有按下移動,面相左,且不是飛行狀態
 			originL.ShowBitmap();
+
 	}
 
 	void Kirby::SetMovingDown(bool flag)

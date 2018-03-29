@@ -224,6 +224,16 @@ IDB_BACKGROUND          BITMAP                  "..\\RES\\ntutcsie.bmp"
 
 IDB_MAP                 BITMAP                  "..\\RES\\map.bmp"
 
+IDB_KB_Exhale_R_1       BITMAP                  "..\\RES\\KB_Exhale_R_1.bmp"
+
+IDB_KB_Exhale_R_2       BITMAP                  "..\\RES\\KB_Exhale_R_2.bmp"
+
+IDB_KB_Exhale_R_3       BITMAP                  "..\\RES\\KB_Exhale_R_3.bmp"
+
+IDB_KB_Exhale_R_4       BITMAP                  "..\\RES\\KB_Exhale_R_4.bmp"
+
+IDB_KB_Exhale_R_5       BITMAP                  "..\\RES\\KB_Exhale_R_5.bmp"
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
