@@ -5,7 +5,7 @@
 #include "audio.h"
 #include "gamelib.h"
 #include "Kirby.h"
-////////////////////////////////////////吐氣只做了向右動畫///////////////////////////////////////////////////
+
 namespace game_framework {
 	/////////////////////////////////////////////////////////////////////////////
 	// CBall: Ball class
@@ -43,7 +43,9 @@ namespace game_framework {
 		x = X_POS;
 		y = Y_POS;
 		flyDelay = 46;
-		isMovingLeft = isMovingRight = isMovingUp = isMovingDown = isSpace = isFly = false;
+		JumpDelay = 30;
+		ExhaleDelay = 10;
+		isMovingLeft = isMovingRight = isMovingUp = isMovingDown = isSpace = isJump = isFly = false;
 		is_alive = RightOrLeft = true;
 	}
 
@@ -52,10 +54,21 @@ namespace game_framework {
 		return is_alive;
 	}
 
+	bool Kirby::IsFly()
+	{
+		return isFly;
+	}
+
 	void Kirby::LoadBitmap()
 	{
 		originR.LoadBitmap(IDB_KB_R_0, RGB(255, 255, 255));
 		originL.LoadBitmap(IDB_KB_L_0, RGB(255, 255, 255));
+		ExhaleRight.LoadBitmap(IDB_KB_Exhale_R, RGB(255, 255, 255));
+		ExhaleLeft.LoadBitmap(IDB_KB_Exhale_L, RGB(255, 255, 255));
+		JumpRight.LoadBitmap(IDB_KB_Jump_R, RGB(255, 255, 255));
+		JumpLeft.LoadBitmap(IDB_KB_Jump_L, RGB(255, 255, 255));
+		DownRight.LoadBitmap(IDB_KB_Down_R, RGB(255, 255, 255));
+		DownLeft.LoadBitmap(IDB_KB_Down_L, RGB(255, 255, 255));
 		GoLeft.AddBitmap(IDB_KB_L_1, RGB(255, 255, 255));
 		GoLeft.AddBitmap(IDB_KB_L_2, RGB(255, 255, 255));
 		GoLeft.AddBitmap(IDB_KB_L_3, RGB(255, 255, 255));
@@ -100,11 +113,6 @@ namespace game_framework {
 		FlyLeft.AddBitmap(IDB_KB_U_L_10, RGB(255, 255, 255));
 		FlyLeft.AddBitmap(IDB_KB_U_L_11, RGB(255, 255, 255));
 		FlyLeft.AddBitmap(IDB_KB_U_L_12, RGB(255, 255, 255));
-		Exhale.AddBitmap(IDB_KB_Exhale_R_1, RGB(255, 255, 255));
-		Exhale.AddBitmap(IDB_KB_Exhale_R_2, RGB(255, 255, 255));
-		Exhale.AddBitmap(IDB_KB_Exhale_R_3, RGB(255, 255, 255));
-		Exhale.AddBitmap(IDB_KB_Exhale_R_4, RGB(255, 255, 255));
-		Exhale.AddBitmap(IDB_KB_Exhale_R_5, RGB(255, 255, 255));
 	}
 
 	void Kirby::OnMove(Map *m)
@@ -113,15 +121,13 @@ namespace game_framework {
 		{
 			//以下算式的x + 320與y + 240是補地圖移動的位子;卡比的圖大小大多為20 * 20, x + 10與y + 10是將判斷碰撞的點設在卡比中心
 			RightOrLeft = false;        //設定面向左邊
-			if((isMovingUp&&flyDelay<1) || !isMovingUp)  //向左飛行中或正常向左走
-				if(m->isEmpty(x + 320 + 10 - STEP_SIZE, y + 240 + 10))  //判斷左邊是否可走
+			if(m->isEmpty(x + 320 + 10 - STEP_SIZE, y + 240 + 10) && !isMovingDown && ((isMovingUp&&flyDelay<1) || !isMovingUp))  //先判斷左邊是否可走且沒有按Down，狀態要是向左飛行中或正常向左走
 					x -= STEP_SIZE;
 		}
 		if (isMovingRight)
 		{
 			RightOrLeft = true;          //設定面向右邊
-			if((isMovingUp&&flyDelay<1) || !isMovingUp)   //向右飛行中或正常向右走
-				if (m->isEmpty(x + 320 + 10 + STEP_SIZE, y + 240 + 10))   //判斷右邊是否可走
+			if(m->isEmpty(x + 320 + 10 + STEP_SIZE, y + 240 + 10) && !isMovingDown && ((isMovingUp&&flyDelay<1) || !isMovingUp))   //先判斷右邊是否可走且沒有按Down，狀態要是向右飛行中或正常向右走
 					x += STEP_SIZE;
 		}
 		if (isMovingUp)
@@ -131,9 +137,6 @@ namespace game_framework {
 			else if (m->isEmpty(x + 320 + 10, y + 240 + 10 - STEP_SIZE))  //判斷上面是否可走
 				y -= STEP_SIZE;
 		}
-		if (isMovingDown)
-			if (m->isEmpty(x + 320 + 10, y + 240 + 10 + STEP_SIZE))   //判斷左邊是否可走
-				y += STEP_SIZE;
 		if (isSpace)
 		{
 			PrepareFlyRight.Reset();
@@ -141,14 +144,24 @@ namespace game_framework {
 			flyDelay = 46;
 			isFly = false;
 		}
-		if(!(isMovingDown || isMovingUp) && m->isEmpty(x + 320 + 10, y + 240 + 10 + 1)) //地吸引力
+		if (isJump)
+		{
+			JumpDelay--;
+			if(m->isEmpty(x + 320 + 10, y + 240 + 10 - 4))  //會不會撞到頭
+				y -= 4;
+			if (JumpDelay == 0)
+			{
+				JumpDelay = 30;
+				isJump = false;
+			}
+		}
+		if(!(isMovingUp || isJump) && m->isEmpty(x + 320 + 10, y + 240 + 10 + 1)) //地吸引力
 			y += 1;
-
 	}
 
 	void Kirby::OnShow(Map *m)
 	{
-		if (is_alive) {    //全部動畫位子初始化
+		if (is_alive) {    //全部動畫位子設定
 			originR.SetTopLeft(x, y);
 			originL.SetTopLeft(x, y);
 			GoLeft.SetTopLeft(x, y);
@@ -157,9 +170,18 @@ namespace game_framework {
 			PrepareFlyLeft.SetTopLeft(x, y);
 			FlyRight.SetTopLeft(x, y);
 			FlyLeft.SetTopLeft(x, y);
-			Exhale.SetTopLeft(x, y);
+			ExhaleRight.SetTopLeft(x, y);
+			ExhaleLeft.SetTopLeft(x, y);
+			JumpRight.SetTopLeft(x, y);
+			JumpLeft.SetTopLeft(x, y);
+			DownRight.SetTopLeft(x, y);
+			DownLeft.SetTopLeft(x, y);
 		}
-		if (isMovingUp && RightOrLeft)      //面相右按上
+		if (isJump && RightOrLeft)
+			JumpRight.ShowBitmap();
+		else if (isJump && !RightOrLeft)
+			JumpLeft.ShowBitmap();
+		else if (isMovingUp && RightOrLeft)      //面相右按上
 		{
 			if (flyDelay > 0)             //飛行前的倒數
 			{
@@ -189,6 +211,26 @@ namespace game_framework {
 				FlyLeft.OnMove();
 			}
 		}
+		else if (isSpace && RightOrLeft)   //向右吐氣
+		{
+			ExhaleDelay--;
+			ExhaleRight.ShowBitmap();
+			if (ExhaleDelay == 0)
+			{
+				ExhaleDelay = 10;
+				isSpace = false;
+			}
+		}
+		else if (isSpace && !RightOrLeft)  //向左吐氣
+		{
+			ExhaleDelay--;
+			ExhaleLeft.ShowBitmap();
+			if (ExhaleDelay == 0)
+			{
+				ExhaleDelay = 10;
+				isSpace = false;
+			}
+		}
 		else if (isFly && RightOrLeft)  //面相右飛行中地吸引力
 		{
 			FlyRight.OnShow();
@@ -199,11 +241,10 @@ namespace game_framework {
 			FlyLeft.OnShow();
 			FlyLeft.OnMove();
 		}
-		else if (isSpace)   //吐氣
-		{
-			Exhale.OnShow();
-			Exhale.OnMove();
-		}
+		else if (isMovingDown && RightOrLeft && !m->isEmpty(x + 320 + 10, y + 240 + 10 + 1))
+			DownRight.ShowBitmap();
+		else if (isMovingDown && !RightOrLeft && !m->isEmpty(x + 320 + 10, y + 240 + 10 + 1))
+			DownLeft.ShowBitmap();
 		else if (isMovingLeft && !isFly)  //一般向左走
 		{
 			GoLeft.OnShow();
@@ -214,11 +255,10 @@ namespace game_framework {
 			GoRight.OnShow();
 			GoRight.OnMove();
 		}
-		else if (!(isMovingDown || isMovingLeft || isMovingRight || isMovingUp) && RightOrLeft && !isFly)   //沒有按下移動,面相右,且不是飛行狀態
+		else if (RightOrLeft)   //面相右
 			originR.ShowBitmap();
-		else if (!(isMovingDown || isMovingLeft || isMovingRight || isMovingUp) && !RightOrLeft && !isFly)  //沒有按下移動,面相左,且不是飛行狀態
+		else if (!RightOrLeft)  //面相左
 			originL.ShowBitmap();
-
 	}
 
 	void Kirby::SetMovingDown(bool flag)
@@ -244,6 +284,11 @@ namespace game_framework {
 	void Kirby::SetSpace(bool flag)
 	{
 		isSpace = flag;
+	}
+
+	void Kirby::SetJump(bool flag)
+	{
+		isJump = flag;
 	}
 
 	void Kirby::SetXY(int nx, int ny)

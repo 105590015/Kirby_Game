@@ -354,5 +354,29 @@
     <Image Include="RES\KB_Exhale_5.bmp">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="RES\KB_Exhale_L.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\KB_Exhale_R_3.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\KB_Jump.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\KB_Jump_L.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\KB_Down_L.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\KB_Down_R.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\KB_Exhale_R.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\KB_Jump_R.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

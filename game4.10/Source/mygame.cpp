@@ -319,6 +319,7 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 	const char KEY_RIGHT = 0x27; // keyboard右箭頭
 	const char KEY_DOWN  = 0x28; // keyboard下箭頭
 	const char KEY_SPACE = ' ';  // keyboard空白鍵
+	const char KEY_Jump = 0x58;  // keyboard X鍵
 	if (nChar == KEY_LEFT)
 	{
 		kirby.SetMovingLeft(true);
@@ -341,6 +342,8 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 	}
 	if (nChar == KEY_SPACE)
 		kirby.SetSpace(true);
+	if (nChar == KEY_Jump && !kirby.IsFly() && !map.isEmpty(kirby.GetX1()+320,kirby.GetY1()+240+20+1)) //按下X,卡比不是在飛行且落地才可跳躍(320.240是地圖補償20是卡比的身高)
+		kirby.SetJump(true);
 }
 
 void CGameStateRun::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
@@ -370,8 +373,6 @@ void CGameStateRun::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 		kirby.SetMovingDown(false);
 		map.SetMovingDown(false);
 	}
-	if (nChar == KEY_SPACE)
-		kirby.SetSpace(false);
 }
 
 void CGameStateRun::OnShow()
