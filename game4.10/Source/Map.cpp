@@ -41,9 +41,9 @@ namespace game_framework {
 		sy = Y_POS;
 	}
 
-	void Map::LoadBitmap()
+	void Map::LoadBitmap(int pic)
 	{
-		background.LoadBitmap(IDB_MAP);
+		background.LoadBitmap(pic);
 	}
 
 	void Map::OnMove(int x, int y)

@@ -179,7 +179,7 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 {
 	// 載入資料
-	map.LoadBitmap();
+	map.LoadBitmap(IDB_MAP);
 	kirby.LoadBitmap();						
 	CAudio::Instance()->Load(AUDIO_BACKGROUND, "sounds\\Kirby_background.mp3");  //背景音樂
 }
