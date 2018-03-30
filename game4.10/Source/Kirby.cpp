@@ -7,8 +7,11 @@
 #include "Kirby.h"
 
 namespace game_framework {
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> ffd4900f73ffa97f555b6104e187b8b68d0a1199
 	Kirby::Kirby()
 	{
 	}
@@ -327,9 +330,7 @@ namespace game_framework {
 		int y1 = y;				// 卡比左上角y座標
 		int x2 = x1 + originR.Width();	// 卡比右下角x座標
 		int y2 = y1 + originR.Height();	// 卡比右下角y座標
-									//
-									// 檢測卡比的矩形與參數矩形是否有交集
-									//
+		// 檢測卡比的矩形與參數矩形是否有交集
 		return (tx2 >= x1 && tx1 <= x2 && ty2 >= y1 && ty1 <= y2);
 	}
 }
