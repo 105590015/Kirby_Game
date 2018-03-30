@@ -7,11 +7,6 @@
 #include "Kirby.h"
 
 namespace game_framework {
-<<<<<<< HEAD
-
-
-=======
->>>>>>> ffd4900f73ffa97f555b6104e187b8b68d0a1199
 	Kirby::Kirby()
 	{
 	}
