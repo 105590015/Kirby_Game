@@ -13,7 +13,7 @@ namespace game_framework {
 		int  ScreenX(int x);				// 螢幕 x 座標
 		int  ScreenY(int y);				// 螢幕 y 座標
 		void Initialize();					// 設定為初始值
-		void LoadBitmap(int);					// 載入圖形
+		void LoadBitmap(int pic);			// 載入圖形
 		void OnMove(int,int);               // 地圖移動
 		void OnShow();						// 將圖形貼到畫面
 		void SetXY(int nx, int ny);	        // 設定螢幕畫面左上角的座標

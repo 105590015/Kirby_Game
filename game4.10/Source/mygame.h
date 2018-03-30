@@ -43,6 +43,7 @@
 #include "CBouncingBall.h"
 #include "Kirby.h"
 #include "Map.h"
+#include "Enemy.h"
 
 namespace game_framework {
 	/////////////////////////////////////////////////////////////////////////////
