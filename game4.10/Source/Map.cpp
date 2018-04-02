@@ -5,10 +5,24 @@
 #include "audio.h"
 #include "gamelib.h"
 #include "Map.h"
+#include <fstream> 
 
 namespace game_framework {
 	Map::Map()
 	{
+	}
+
+	void Map::SetMouse(int x, int y) {
+		mx = x;
+		my = y;
+	}
+
+	void Map::IsLclick(bool flag) {
+		Lclick= flag;
+	}
+
+	void Map::IsRclick(bool flag) {
+		Rclick= flag;
 	}
 
 	int Map::GetWidth() {
@@ -40,6 +54,7 @@ namespace game_framework {
 	void Map::LoadBitmap(int pic)
 	{
 		background.LoadBitmap(pic);
+		ball.LoadBitmap(IDB_BALL, RGB(0, 0, 0));
 	}
 
 	void Map::OnMove(int x, int y)
@@ -66,8 +81,54 @@ namespace game_framework {
 
 	void Map::OnShow()
 	{
+		
+
 		background.SetTopLeft(-sx, -sy); // 指定第(i, j)這一格的座標
 		background.ShowBitmap();
+
+		ifstream file("map.txt");
+
+		for (int i = 0; i<48; i++)
+		{
+			for (int j = 0; j < 64; j++) {
+				file >> map[i][j];
+			}			
+		}
+		file.close();
+
+		ofstream output("map.txt");
+		
+		for (int i = 0; i < 48; i++) {
+			for (int j = 0; j < 64; j++) {
+				int x = j * 20 - sx; // 算出第(i, j)這一格的 x 螢幕座標
+				int y = i * 20 - sy; // 算出第(i, j)這一格的 y 螢幕座標
+
+				if (mx >= x && mx <= x + 20 && my >= y && my <= y + 20) {
+					if (Lclick) {
+						map[i][j] = 1;
+					}
+
+					else if (Rclick) {
+						map[i][j] = 0;
+					}
+				}
+
+				output << map[i][j] << " ";
+
+
+				switch (map[i][j]) {
+				case 1:
+					ball.SetTopLeft(x, y); // 指定第(i, j)這一格的座標
+					ball.ShowBitmap();
+					break;
+
+				}
+
+
+			}
+			output << endl;
+			}
+		
 	}
 
 	void Map::SetXY(int nx, int ny)

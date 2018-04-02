@@ -18,9 +18,16 @@ namespace game_framework {
 		void OnShow();						// 將圖形貼到畫面
 		void SetXY(int nx, int ny);	        // 設定螢幕畫面左上角的座標
 		bool isEmpty(int x, int y);         // 判斷碰壁;
+		void SetMouse(int ,int);
+		void IsLclick(bool);
+		void IsRclick(bool);
 	protected:
 		CMovingBitmap background;			// 地圖
+		CMovingBitmap foreground;
+		CMovingBitmap ball;
 	private:
+		bool Lclick=false, Rclick=false;
+		int mx, my;
 		int sx, sy;							// 左上角座標
 		int map[48][64] = {
 			{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },

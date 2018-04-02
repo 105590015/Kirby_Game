@@ -384,5 +384,11 @@
     <Image Include="RES\KB_Jump_R.bmp">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="C:\Users\hanni\Desktop\素材\background.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\background.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

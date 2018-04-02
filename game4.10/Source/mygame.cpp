@@ -226,6 +226,33 @@ void CGameStateRun::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 		kirby.SetMovingDown(false);
 }
 
+void CGameStateRun::OnMouseMove(UINT nFlags, CPoint point)	// 處理滑鼠的動作
+{
+	// 沒事。如果需要處理滑鼠移動的話，寫code在這裡
+	map.SetMouse(point.x, point.y);
+
+}
+
+void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point)  // 處理滑鼠的動作
+{
+	map.IsLclick(true);
+}
+
+void CGameStateRun::OnLButtonUp(UINT nFlags, CPoint point)	// 處理滑鼠的動作
+{
+	map.IsLclick(false);
+}
+
+void CGameStateRun::OnRButtonDown(UINT nFlags, CPoint point)  // 處理滑鼠的動作
+{
+	map.IsRclick(true);
+}
+
+void CGameStateRun::OnRButtonUp(UINT nFlags, CPoint point)	// 處理滑鼠的動作
+{
+	map.IsRclick(false);
+}
+
 void CGameStateRun::OnShow()
 {
 	//  注意：Show裡面千萬不要移動任何物件的座標，移動座標的工作應由Move做才對，
