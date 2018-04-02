@@ -7,38 +7,39 @@
 #include "Map.h"
 #include <fstream> 
 
+
 namespace game_framework {
 	Map::Map()
 	{
 	}
 
-	void Map::SetMouse(int x, int y) {
+	void Map::SetMouse(int x, int y) {  //設定滑鼠座標
 		mx = x;
 		my = y;
 	}
 
-	void Map::IsLclick(bool flag) {
+	void Map::IsLclick(bool flag) {		//設定左鍵是否按下
 		Lclick= flag;
 	}
 
-	void Map::IsRclick(bool flag) {
+	void Map::IsRclick(bool flag) {		//設定右鍵是否按下
 		Rclick= flag;
 	}
 
-	int Map::GetWidth() {
+	int Map::GetWidth() {				//取得背景寬度
 		return background.Width();
 	}
 
-	int Map::GetHeight() {
+	int Map::GetHeight() {				//取得背景長度
 		return background.Height();
 	}
 
-	int  Map::ScreenX(int x)
+	int  Map::ScreenX(int x)			//回傳人物在螢幕上座標	
 	{
 		return x-sx;
 	}
 
-	int  Map::ScreenY(int y)
+	int  Map::ScreenY(int y)			//同上
 	{
 		return y-sy;
 	}
@@ -57,12 +58,12 @@ namespace game_framework {
 		ball.LoadBitmap(IDB_BALL, RGB(0, 0, 0));
 	}
 
-	void Map::OnMove(int x, int y)
+	void Map::OnMove(int x, int y)		//地圖隨人物移動
 	{
-		sx = x - SIZE_X / 2;
+		sx = x - SIZE_X / 2;			//讓人物保持在地圖中間
 		sy = y - SIZE_Y / 2;
 
-		if (x <= SIZE_X / 2) {
+		if (x <= SIZE_X / 2) {				//設定當人物接近邊界時地圖移動停止
 			sx = 0;
 		}
 
@@ -86,7 +87,7 @@ namespace game_framework {
 		background.SetTopLeft(-sx, -sy); // 指定第(i, j)這一格的座標
 		background.ShowBitmap();
 
-		ifstream file("map.txt");
+		ifstream file("map.txt");			//將資料存入陣列
 
 		for (int i = 0; i<48; i++)
 		{
@@ -103,17 +104,17 @@ namespace game_framework {
 				int x = j * 20 - sx; // 算出第(i, j)這一格的 x 螢幕座標
 				int y = i * 20 - sy; // 算出第(i, j)這一格的 y 螢幕座標
 
-				if (mx >= x && mx <= x + 20 && my >= y && my <= y + 20) {
-					if (Lclick) {
+				if (mx >= x && mx <= x + 20 && my >= y && my <= y + 20) { //判斷滑鼠位置
+					if (Lclick) {				//左鍵為設立障礙物
 						map[i][j] = 1;
 					}
 
-					else if (Rclick) {
+					else if (Rclick) {			//右鍵為取消障礙物
 						map[i][j] = 0;
 					}
 				}
 
-				output << map[i][j] << " ";
+				output << map[i][j] << " ";		//將改變輸出
 
 
 				switch (map[i][j]) {
