@@ -31,10 +31,10 @@ namespace game_framework {
 		return y + originR.Height();
 	}
 
-	void Kirby::Initialize()
+	void Kirby::Initialize(int px,int py)  //設定在腳色在螢幕的初始位置
 	{
-		const int X_POS = 640;
-		const int Y_POS = 480;
+		const int X_POS = px;
+		const int Y_POS = py;
 		x = X_POS;
 		y = Y_POS;
 		flyDelay = 46;
@@ -162,8 +162,13 @@ namespace game_framework {
 		{
 			if (isFly)
 				y += 1;
-			else
+			else {
+				if (y >= m->GetHeight() - GoRight.Height()) {
+					y = m->GetHeight() - GoRight.Height();
+				}
+
 				y += STEP_SIZE;
+			}
 		}
 			
 	}

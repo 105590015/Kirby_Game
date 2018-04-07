@@ -13,7 +13,7 @@ namespace game_framework {
 		int  GetY1();					// 左上角 y 座標
 		int  GetX2();					// 右下角 x 座標
 		int  GetY2();					// 右下角 y 座標
-		void Initialize();				// 設定為初始值
+		void Initialize(int ,int);				// 設定為初始值
 		bool IsAlive();					// 是否活著
 		bool IsFly();                   // 是否在飛
 		void LoadBitmap();				// 載入圖形

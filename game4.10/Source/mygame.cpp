@@ -166,7 +166,7 @@ CGameStateRun::~CGameStateRun()
 void CGameStateRun::OnBeginState()
 {
 	map.Initialize();
-	kirby.Initialize();
+	kirby.Initialize(0,120);
 	CAudio::Instance()->Play(AUDIO_BACKGROUND, true);
 }
 
@@ -258,7 +258,7 @@ void CGameStateRun::OnShow()
 	//  注意：Show裡面千萬不要移動任何物件的座標，移動座標的工作應由Move做才對，
 	//        否則當視窗重新繪圖時(OnDraw)，物件就會移動，看起來會很怪。換個術語
 	//        說，Move負責MVC中的Model，Show負責View，而View不應更動Model。
-	map.OnShow();
+	map.OnShow("map.txt");
 	kirby.OnShow(&map);
 }
 }

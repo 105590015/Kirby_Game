@@ -46,15 +46,17 @@ namespace game_framework {
 
 	void Map::Initialize()
 	{
-		const int X_POS = 320;
-		const int Y_POS = 240;
-		sx = X_POS;
-		sy = Y_POS;
+		//const int X_POS = 320;
+		//const int Y_POS = 240;
+		//sx = X_POS;
+		//sy = Y_POS;
 	}
 
 	void Map::LoadBitmap(int pic)
 	{
-		background.LoadBitmap(pic);
+		background.LoadBitmap(pic,RGB(255,255,255));
+		mapSize_X = (background.Width() * 10 + 5) / 200;
+		mapSize_Y = (background.Height() * 10 + 5) / 200;
 		ball.LoadBitmap(IDB_BALL, RGB(0, 0, 0));
 	}
 
@@ -80,27 +82,37 @@ namespace game_framework {
 		}
 	}
 
-	void Map::OnShow()
+	void Map::OnShow(string Mapfile)
 	{
 		
 
 		background.SetTopLeft(-sx, -sy); // 指定第(i, j)這一格的座標
 		background.ShowBitmap();
 
-		ifstream file("map.txt");			//將資料存入陣列
+		//ofstream set(Mapfile);			//第一次建立地圖設立初始值
 
-		for (int i = 0; i<48; i++)
+		//for (int i = 0; i < mapSize_Y; i++) {
+		//	for (int j = 0; j < mapSize_X; j++) {
+		//		set << 0 << " ";
+		//	}
+		//	set << endl;
+		//}
+		//set.close();
+
+		ifstream file(Mapfile);			//將資料存入陣列
+
+		for (int i = 0; i<mapSize_Y; i++)
 		{
-			for (int j = 0; j < 64; j++) {
+			for (int j = 0; j < mapSize_X; j++) {
 				file >> map[i][j];
 			}			
 		}
 		file.close();
 
-		ofstream output("map.txt");
+		ofstream output(Mapfile);
 		
-		for (int i = 0; i < 48; i++) {
-			for (int j = 0; j < 64; j++) {
+		for (int i = 0; i < mapSize_Y; i++) {
+			for (int j = 0; j < mapSize_X; j++) {
 				int x = j * 20 - sx; // 算出第(i, j)這一格的 x 螢幕座標
 				int y = i * 20 - sy; // 算出第(i, j)這一格的 y 螢幕座標
 
