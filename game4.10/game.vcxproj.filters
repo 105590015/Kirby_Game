@@ -399,5 +399,68 @@
     <Image Include="RES\map1.bmp">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="res\bitmap6.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\title_0.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\title_1.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\title_2.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\title_3.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\title_4.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\title_5.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\title_6.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\title_7.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\title_8.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\title_9.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\title_10.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\title_11.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\title_12.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\title_13.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\title_14.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\title_15.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\title_16.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\title_17.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\title_18.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\title_19.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>
