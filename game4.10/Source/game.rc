@@ -146,7 +146,7 @@ IDB_TITLE_18            BITMAP                  "..\\RES\\title_18.bmp"
 
 IDB_TITLE_19            BITMAP                  "..\\RES\\title_19.bmp"
 
-IDB_BACKGROUND          BITMAP                  "D:\\Kirby\\game4.10\\RES\\background.bmp"
+IDB_BACKGROUND          BITMAP                  "..\\RES\\background.bmp"
 
 
 /////////////////////////////////////////////////////////////////////////////

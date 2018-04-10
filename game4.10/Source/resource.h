@@ -124,15 +124,11 @@
 #define IDB_TITLE_17                    244
 #define IDB_TITLE_18                    245
 #define IDB_TITLE_19                    246
-<<<<<<< HEAD
 #define IDB_BITMAP6                     247
 #define IDB_die2                        248
 #define IDB_die3                        249
 #define IDB_die1                        250
-=======
-#define IDB_BITMAP6                     248
-#define IDB_BACKGROUND                  248
->>>>>>> 35d7ef2ba280f345d1fa07c4b40f3f555599e763
+#define IDB_BACKGROUND                  251
 #define IDC_README                      1001
 #define ID_FILE_PAUSE                   32771
 #define ID_TOGGLE_FULLSCREEN            32772
