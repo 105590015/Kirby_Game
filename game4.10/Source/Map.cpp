@@ -27,11 +27,11 @@ namespace game_framework {
 	}
 
 	int Map::GetWidth() {				//取得背景寬度
-		return background.Width();
+		return foreground.Width();
 	}
 
 	int Map::GetHeight() {				//取得背景長度
-		return background.Height();
+		return foreground.Height();
 	}
 
 	int  Map::ScreenX(int x)			//回傳人物在螢幕上座標	
@@ -54,9 +54,10 @@ namespace game_framework {
 
 	void Map::LoadBitmap(int pic)
 	{
-		background.LoadBitmap(pic,RGB(255,255,255));
-		mapSize_X = (background.Width() * 10 + 5) / 200;
-		mapSize_Y = (background.Height() * 10 + 5) / 200;
+		foreground.LoadBitmap(pic,RGB(255,255,255));
+		background.LoadBitmap(IDB_BACKGROUND);
+		mapSize_X = (foreground.Width() * 10 + 5) / 200;
+		mapSize_Y = (foreground.Height() * 10 + 5) / 200;
 		ball.LoadBitmap(IDB_BALL, RGB(0, 0, 0));
 	}
 
@@ -69,25 +70,26 @@ namespace game_framework {
 			sx = 0;
 		}
 
-		if (x >= background.Width() - SIZE_X / 2) {
-			sx = background.Width() - SIZE_X;
+		if (x >= foreground.Width() - SIZE_X / 2) {
+			sx = foreground.Width() - SIZE_X;
 		}
 
 		if (y <= SIZE_Y / 2) {
 			sy = 0;
 		}
 
-		if (y >= background.Height() - SIZE_Y / 2) {
-			sy = background.Height() - SIZE_Y;
+		if (y >= foreground.Height() - SIZE_Y / 2) {
+			sy = foreground.Height() - SIZE_Y;
 		}
 	}
 
 	void Map::OnShow(string Mapfile)
 	{
-		
-
-		background.SetTopLeft(-sx, -sy); // 指定第(i, j)這一格的座標
+		background.SetTopLeft(0, 0);
 		background.ShowBitmap();
+
+		foreground.SetTopLeft(-sx, -sy); // 指定第(i, j)這一格的座標
+		foreground.ShowBitmap();
 
 		//ofstream set(Mapfile);			//第一次建立地圖設立初始值
 

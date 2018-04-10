@@ -123,12 +123,16 @@
 #define IDB_TITLE_16                    243
 #define IDB_TITLE_17                    244
 #define IDB_TITLE_18                    245
-#define IDB_BITMAP26                    246
 #define IDB_TITLE_19                    246
+<<<<<<< HEAD
 #define IDB_BITMAP6                     247
 #define IDB_die2                        248
 #define IDB_die3                        249
 #define IDB_die1                        250
+=======
+#define IDB_BITMAP6                     248
+#define IDB_BACKGROUND                  248
+>>>>>>> 35d7ef2ba280f345d1fa07c4b40f3f555599e763
 #define IDC_README                      1001
 #define ID_FILE_PAUSE                   32771
 #define ID_TOGGLE_FULLSCREEN            32772
@@ -141,7 +145,11 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
+<<<<<<< HEAD
 #define _APS_NEXT_RESOURCE_VALUE        251
+=======
+#define _APS_NEXT_RESOURCE_VALUE        249
+>>>>>>> 35d7ef2ba280f345d1fa07c4b40f3f555599e763
 #define _APS_NEXT_COMMAND_VALUE         32776
 #define _APS_NEXT_CONTROL_VALUE         1003
 #define _APS_NEXT_SYMED_VALUE           101
