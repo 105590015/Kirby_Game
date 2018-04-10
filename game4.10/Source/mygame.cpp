@@ -195,6 +195,7 @@ void CGameStateRun::OnBeginState()
 {
 	map.Initialize();
 	kirby.Initialize(0,120);
+	monster1.Initialize(0, 120, 0, 20, true);
 	CAudio::Instance()->Play(AUDIO_BACKGROUND, true);
 }
 
@@ -202,25 +203,28 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 {
 	map.OnMove(kirby.GetX1(),kirby.GetY1());
 	kirby.OnMove(&map);
+	monster1.OnMove(&map, &kirby);
 }
 
 void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 {
 	// 載入資料
 	map.LoadBitmap(IDB_MAP);
-	kirby.LoadBitmap();						
+	kirby.LoadBitmap();		
+	monster1.LoadBitmap();
 	CAudio::Instance()->Load(AUDIO_BACKGROUND, "sounds\\Kirby_background.mp3");  //背景音樂
 }
 
 void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
-	const char KEY_ESC = 27;     // keyboard Esc
-	const char KEY_LEFT  = 0x25; // keyboard左箭頭
-	const char KEY_UP    = 0x26; // keyboard上箭頭
-	const char KEY_RIGHT = 0x27; // keyboard右箭頭
-	const char KEY_DOWN  = 0x28; // keyboard下箭頭
-	const char KEY_SPACE = ' ';  // keyboard空白鍵
-	const char KEY_Jump = 0x58;  // keyboard X鍵
+	const char KEY_ESC = 27;       // keyboard Esc
+	const char KEY_LEFT  = 0x25;   // keyboard左箭頭
+	const char KEY_UP    = 0x26;   // keyboard上箭頭
+	const char KEY_RIGHT = 0x27;   // keyboard右箭頭
+	const char KEY_DOWN  = 0x28;   // keyboard下箭頭
+	const char KEY_SPACE = ' ';    // keyboard空白鍵
+	const char KEY_Jump = 0x58;    // keyboard X鍵
+	const char KEY_Attack = 0x5A;  // keyboard Z鍵
 	if (nChar == KEY_LEFT)
 		kirby.SetMovingLeft(true);
 	if (nChar == KEY_RIGHT)
@@ -231,6 +235,8 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 		kirby.SetMovingDown(true);
 	if (nChar == KEY_SPACE)
 		kirby.SetSpace(true);
+	if (nChar == KEY_Attack)
+		kirby.SetAttack(true);
 	if (nChar == KEY_Jump && !kirby.IsFly() && !map.isEmpty(kirby.GetX1() + 10, kirby.GetY1() + 20 + 1)) //按下X,卡比不是在飛行且落地才可跳躍(320.240是地圖補償20是卡比的身高)
 		kirby.SetJump(true);
 	if (nChar == KEY_ESC)
@@ -239,11 +245,12 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 
 void CGameStateRun::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
-	const char KEY_LEFT  = 0x25; // keyboard左箭頭
-	const char KEY_UP    = 0x26; // keyboard上箭頭
-	const char KEY_RIGHT = 0x27; // keyboard右箭頭
-	const char KEY_DOWN  = 0x28; // keyboard下箭頭
-	const char KEY_SPACE = ' ';  // keyboard空白鍵
+	const char KEY_LEFT  = 0x25;   // keyboard左箭頭
+	const char KEY_UP    = 0x26;   // keyboard上箭頭
+	const char KEY_RIGHT = 0x27;   // keyboard右箭頭
+	const char KEY_DOWN  = 0x28;   // keyboard下箭頭
+	const char KEY_SPACE = ' ';    // keyboard空白鍵
+	const char KEY_Attack = 0x5A;  // keyboard Z鍵
 	if (nChar == KEY_LEFT)
 		kirby.SetMovingLeft(false);
 	if (nChar == KEY_RIGHT)
@@ -252,6 +259,8 @@ void CGameStateRun::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 		kirby.SetMovingUp(false);
 	if (nChar == KEY_DOWN)
 		kirby.SetMovingDown(false);
+	if (nChar == KEY_Attack)
+		kirby.SetAttack(false);
 }
 
 void CGameStateRun::OnMouseMove(UINT nFlags, CPoint point)	// 處理滑鼠的動作
@@ -288,5 +297,6 @@ void CGameStateRun::OnShow()
 	//        說，Move負責MVC中的Model，Show負責View，而View不應更動Model。
 	map.OnShow("map.txt");
 	kirby.OnShow(&map);
+	monster1.OnShow(&map, &kirby);
 }
 }

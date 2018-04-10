@@ -141,6 +141,9 @@
     <ClCompile Include="Source\Door.cpp">
       <Filter>MyGame</Filter>
     </ClCompile>
+    <ClCompile Include="Source\NormalMonster.cpp">
+      <Filter>MyGame</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\audio.h">
@@ -189,6 +192,9 @@
       <Filter>MyGame</Filter>
     </ClInclude>
     <ClInclude Include="Source\Door.h">
+      <Filter>MyGame</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\NormalMonster.h">
       <Filter>MyGame</Filter>
     </ClInclude>
   </ItemGroup>
@@ -460,6 +466,15 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="RES\title_19.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\die1.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\die2.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\die3.bmp">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

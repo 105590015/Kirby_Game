@@ -43,7 +43,7 @@
 #include "CBouncingBall.h"
 #include "Kirby.h"
 #include "Map.h"
-#include "Enemy.h"
+#include "NormalMonster.h"
 
 namespace game_framework {
 	/////////////////////////////////////////////////////////////////////////////
@@ -95,8 +95,9 @@ namespace game_framework {
 		void OnMove();									// 移動遊戲元素
 		void OnShow();									// 顯示這個狀態的遊戲畫面
 	private:
-		Kirby kirby;                // 卡比
-		Map map;                    // 地圖
+		Kirby kirby;                                    // 卡比
+		Map map;                                        // 地圖
+		NormalMonster monster1;                         // 怪物
 	};
 
 	/////////////////////////////////////////////////////////////////////////////

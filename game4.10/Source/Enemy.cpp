@@ -7,12 +7,28 @@
 #include "Enemy.h"
 
 namespace game_framework {
-	Enemy::Enemy(int ox, int oy)
+	Enemy::Enemy()
 	{
-		x = ox;
-		y = oy;
-		hp = 100;
-		is_alive = RightOrLeft = true;
+	}
+
+	int Enemy::GetX1()
+	{
+		return x;
+	}
+
+	int Enemy::GetY1()
+	{
+		return y;
+	}
+
+	int Enemy::GetX2()
+	{
+		return 0;
+	}
+
+	int Enemy::GetY2()
+	{
+		return 0;
 	}
 
 	bool Enemy::IsAlive()
@@ -20,33 +36,27 @@ namespace game_framework {
 		return is_alive;
 	}
 
-	void Enemy::SetXY(int nx, int ny)
+	bool Enemy::IsSucked()
 	{
-
+		return is_sucked;
 	}
 
-	bool Enemy::HitRectangle(int tx1, int ty1, int tx2, int ty2)
+	void Enemy::hurted(int demage)
 	{
-		return false;
+		hp -= demage;
+		if (hp <= 0)
+			is_alive = false;
 	}
 
-	void Enemy::OnShow(Map *m)
+	void Enemy::OnShow(Map *m, Kirby *kirby)
 	{
-
 	}
 
-	void Enemy::OnMove(Map *m)
+	void Enemy::OnMove(Map *m, Kirby* kirby)
 	{
-
 	}
 
 	void Enemy::Attack()
 	{
-
-	}
-
-	void Enemy::hurted()
-	{
-
 	}
 }

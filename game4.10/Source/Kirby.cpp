@@ -39,8 +39,9 @@ namespace game_framework {
 		y = Y_POS;
 		flyDelay = 46;
 		JumpDelay = 30;
+		KickDistance = 40;
 		ExhaleDelay = 10;
-		isMovingLeft = isMovingRight = isMovingUp = isMovingDown = isSpace = isJump = isFly = false;
+		isMovingLeft = isMovingRight = isMovingUp = isMovingDown = isSpace = isJump = isAttack = isKick = isFly = false;
 		is_alive = RightOrLeft = true;
 	}
 
@@ -64,6 +65,10 @@ namespace game_framework {
 		JumpLeft.LoadBitmap(IDB_KB_Jump_L, RGB(255, 255, 255));
 		DownRight.LoadBitmap(IDB_KB_Down_R, RGB(255, 255, 255));
 		DownLeft.LoadBitmap(IDB_KB_Down_L, RGB(255, 255, 255));
+		LandingLeft.LoadBitmap(".\\RES\\KB_Landing_L.bmp", RGB(255, 255, 255));
+		LandingRight.LoadBitmap(".\\RES\\KB_Landing_R.bmp", RGB(255, 255, 255));
+		downAttackL.LoadBitmap(".\\RES\\KB_DownAttack_L.bmp", RGB(255, 255, 255));
+		downAttackR.LoadBitmap(".\\RES\\KB_DownAttack_R.bmp", RGB(255, 255, 255));
 		GoLeft.AddBitmap(IDB_KB_L_1, RGB(255, 255, 255));
 		GoLeft.AddBitmap(IDB_KB_L_2, RGB(255, 255, 255));
 		GoLeft.AddBitmap(IDB_KB_L_3, RGB(255, 255, 255));
@@ -124,10 +129,10 @@ namespace game_framework {
 					x -= STEP_SIZE;
 			}
 		}
-		if (isMovingRight)
+		else if (isMovingRight)
 		{
 			RightOrLeft = true;          //設定面向右邊
-			if (m->isEmpty(GetX2() + STEP_SIZE, GetY1() + GoRight.Height() / 2) && !isMovingDown && ((isMovingUp&&flyDelay < 1) || !isMovingUp))   //先判斷右邊是否可走且沒有按Down，狀態要是向右飛行中或正常向右走
+			if (m->isEmpty(GetX2() + STEP_SIZE, GetY2() - GoRight.Height() / 2) && !isMovingDown && ((isMovingUp&&flyDelay < 1) || !isMovingUp))   //先判斷右邊是否可走且沒有按Down，狀態要是向右飛行中或正常向右走
 			{
 				if (x >= m->GetWidth() - GoRight.Width())  //邊界
 					x = m->GetWidth() - GoRight.Width();
@@ -158,7 +163,21 @@ namespace game_framework {
 				isJump = false;
 			}
 		}
-		if (!(isMovingUp || isJump) && m->isEmpty(GetX1() + originR.Width() / 2, GetY2() + 1)) //地吸引力
+		if (isMovingDown && (isAttack || isKick) && !m->isEmpty(GetX2() - originR.Width() / 2, GetY2() + 1)) //在地面上蹲下按攻擊
+		{
+			isKick = true;
+			KickDistance-=4;
+			if (RightOrLeft && m->isEmpty(GetX2() + 4, GetY2() - 2))        //右邊會不會踢牆(y-2是補償圖檔大小的差異)
+				x += 4;
+			else if (!RightOrLeft && m->isEmpty(GetX1() - 4, GetY2() - 2))  //左邊會不會踢牆(y-2是補償圖檔大小的差異)
+				x -= 4;
+			if (KickDistance == 0)
+			{
+				KickDistance = 40;
+				isKick = false;
+			}
+		}
+		if (!(isMovingUp || isJump) && m->isEmpty(GetX2() - originR.Width() / 2, GetY2() + 1)) //地吸引力
 		{
 			if (isFly)
 				y += 1;
@@ -190,6 +209,10 @@ namespace game_framework {
 			JumpLeft.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
 			DownRight.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
 			DownLeft.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
+			LandingLeft.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
+			LandingRight.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
+			downAttackL.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
+			downAttackR.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
 		}
 		if (isJump && RightOrLeft)         //面向右跳
 			JumpRight.ShowBitmap();
@@ -253,19 +276,33 @@ namespace game_framework {
 				FlyLeft.OnMove();
 			}
 		}
-		else if (isFly && RightOrLeft)  //面相右飛行中地吸引力
+		else if (isFly)  //飛行中地吸引力
 		{
-			FlyRight.OnShow();
-			FlyRight.OnMove();
+			if (RightOrLeft)
+			{
+				FlyRight.OnShow();
+				FlyRight.OnMove();
+			}
+			else
+			{
+				FlyLeft.OnShow();
+				FlyLeft.OnMove();
+			}
 		}
-		else if (isFly && !RightOrLeft) //面向左飛行中地心引力
+		else if (!isFly && m->isEmpty(GetX2() - originR.Width() / 2, GetY2() + 1))  //自由落體
 		{
-			FlyLeft.OnShow();
-			FlyLeft.OnMove();
+			if (RightOrLeft)
+				LandingRight.ShowBitmap();
+			else
+				LandingLeft.ShowBitmap();
 		}
-		else if (isMovingDown && RightOrLeft && !m->isEmpty(GetX1() + originR.Width() / 2, GetY2() + 1))  //面向右縮小
+		else if (isKick && RightOrLeft)    //向右踢擊
+			downAttackR.ShowBitmap();
+		else if (isKick && !RightOrLeft)   //向左踢擊
+			downAttackL.ShowBitmap();
+		else if (isMovingDown && RightOrLeft && !m->isEmpty(GetX2() - originR.Width() / 2, GetY2() + 1))  //面向右縮小
 			DownRight.ShowBitmap();
-		else if (isMovingDown && !RightOrLeft && !m->isEmpty(GetX1() + originR.Width() / 2, GetY2() + 1)) //面向左縮小
+		else if (isMovingDown && !RightOrLeft && !m->isEmpty(GetX2() - originR.Width() / 2, GetY2() + 1)) //面向左縮小
 			DownLeft.ShowBitmap();
 		else if (isMovingLeft && !isFly)  //一般向左走
 		{
@@ -317,6 +354,11 @@ namespace game_framework {
 	void Kirby::SetJump(bool flag)
 	{
 		isJump = flag;
+	}
+
+	void Kirby::SetAttack(bool flag)
+	{
+		isAttack = flag;
 	}
 
 	void Kirby::SetXY(int nx, int ny)
