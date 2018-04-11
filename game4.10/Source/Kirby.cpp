@@ -139,7 +139,7 @@ namespace game_framework {
 			//以下算式的x + 320與y + 240是補地圖移動的位子;卡比的圖大小大多為20 * 20, x + 10與y + 10是將判斷碰撞的點設在卡比中心
 			RightOrLeft = false;        //設定面向左邊
 
-			if (m->isEmpty(GetX1() - STEP_SIZE, GetY1() + GoLeft.Height() / 2) && !isMovingDown && ((isMovingUp&&flyDelay < 1) || !isMovingUp)&&isRunning)  //先判斷左邊是否可走且沒有按Down，狀態要是向左飛行中或正常向左走
+			if (m->isEmpty(GetX1() - STEP_SIZE, GetY1() + GoLeft.Height() / 2) && !isMovingDown && ((isMovingUp&&flyDelay < 1) || !isMovingUp)&&isRunning&&!isFly)  //先判斷左邊是否可走且沒有按Down，狀態要是向左飛行中或正常向左走
 			{
 				if (x <= 0) //邊界
 					x = 0;
@@ -159,7 +159,7 @@ namespace game_framework {
 		{
 			RightOrLeft = true;          //設定面向右邊
 
-			if (m->isEmpty(GetX2() + STEP_SIZE, GetY2() - GoRight.Height() / 2) && !isMovingDown && ((isMovingUp&&flyDelay < 1) || !isMovingUp)&&isRunning)   //先判斷右邊是否可走且沒有按Down，狀態要是向右飛行中或正常向右走
+			if (m->isEmpty(GetX2() + STEP_SIZE, GetY2() - GoRight.Height() / 2) && !isMovingDown && ((isMovingUp&&flyDelay < 1) || !isMovingUp)&&isRunning&&!isFly)   //先判斷右邊是否可走且沒有按Down，狀態要是向右飛行中或正常向右走
 			{
 				if (x >= m->GetWidth() - GoRight.Width())  //邊界
 					x = m->GetWidth() - GoRight.Width();
