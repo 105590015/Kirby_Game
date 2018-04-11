@@ -240,6 +240,7 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 	const char KEY_SPACE = ' ';    // keyboard空白鍵
 	const char KEY_Jump = 0x58;    // keyboard X鍵
 	const char KEY_Attack = 0x5A;  // keyboard Z鍵
+	const char KEY_Run = 0x43;
 	if (nChar == KEY_LEFT)
 		kirby.SetMovingLeft(true);
 	if (nChar == KEY_RIGHT)
@@ -256,6 +257,8 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 		kirby.SetJump(true);
 	if (nChar == KEY_ESC)
 		PostMessage(AfxGetMainWnd()->m_hWnd, WM_CLOSE, 0, 0);	// 關閉遊戲
+	if (nChar == KEY_Run)
+		kirby.SetRun(true);
 }
 
 void CGameStateRun::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
@@ -266,6 +269,7 @@ void CGameStateRun::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 	const char KEY_DOWN  = 0x28;   // keyboard下箭頭
 	const char KEY_SPACE = ' ';    // keyboard空白鍵
 	const char KEY_Attack = 0x5A;  // keyboard Z鍵
+	const char KEY_Run = 0x43;
 	if (nChar == KEY_LEFT)
 		kirby.SetMovingLeft(false);
 	if (nChar == KEY_RIGHT)
@@ -276,6 +280,10 @@ void CGameStateRun::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 		kirby.SetMovingDown(false);
 	if (nChar == KEY_Attack)
 		kirby.SetAttack(false);
+	if (nChar == KEY_Run)
+		kirby.SetRun(false);
+
+	
 }
 
 void CGameStateRun::OnMouseMove(UINT nFlags, CPoint point)	// 處理滑鼠的動作
