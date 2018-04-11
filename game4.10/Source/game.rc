@@ -64,10 +64,6 @@ END
 
 IDB_BALL                BITMAP                  "..\\res\\ball.bmp"
 
-IDB_ERASER1             BITMAP                  "..\\res\\eraser1.bmp"
-
-IDB_CORNER              BITMAP                  "..\\res\\corner.bmp"
-
 IDB_0                   BITMAP                  "..\\res\\bmp0.bmp"
 
 IDB_1                   BITMAP                  "..\\res\\bmp1.bmp"
@@ -90,63 +86,11 @@ IDB_9                   BITMAP                  "..\\res\\bmp9.bmp"
 
 IDB_MINUS               BITMAP                  "..\\res\\bmp10.bmp"
 
-IDB_CENTER              BITMAP                  "..\\res\\center.bmp"
-
-IDB_ERASER2             BITMAP                  "..\\res\\eraser2.bmp"
-
-IDB_ERASER3             BITMAP                  "..\\res\\eraser3.bmp"
-
 IDB_CONTINUE            BITMAP                  "..\\res\\continue.bmp"
 
 IDB_HELP                BITMAP                  "..\\res\\help.bmp"
 
 IDB_LOADING             BITMAP                  "..\\res\\loading.bmp"
-
-IDB_ForeGround          BITMAP                  "..\\RES\\foreground.bmp"
-
-IDB_MAP_1               BITMAP                  "..\\RES\\map1.bmp"
-
-IDB_TITLE_0             BITMAP                  "..\\RES\\title_0.bmp"
-
-IDB_TITLE_1             BITMAP                  "..\\RES\\title_1.bmp"
-
-IDB_TITLE_2             BITMAP                  "..\\RES\\title_2.bmp"
-
-IDB_TITLE_3             BITMAP                  "..\\RES\\title_3.bmp"
-
-IDB_TITLE_4             BITMAP                  "..\\RES\\title_4.bmp"
-
-IDB_TITLE_5             BITMAP                  "..\\RES\\title_5.bmp"
-
-IDB_TITLE_6             BITMAP                  "..\\RES\\title_6.bmp"
-
-IDB_TITLE_7             BITMAP                  "..\\RES\\title_7.bmp"
-
-IDB_TITLE_8             BITMAP                  "..\\RES\\title_8.bmp"
-
-IDB_TITLE_9             BITMAP                  "..\\RES\\title_9.bmp"
-
-IDB_TITLE_10            BITMAP                  "..\\RES\\title_10.bmp"
-
-IDB_TITLE_11            BITMAP                  "..\\RES\\title_11.bmp"
-
-IDB_TITLE_12            BITMAP                  "..\\RES\\title_12.bmp"
-
-IDB_TITLE_13            BITMAP                  "..\\RES\\title_13.bmp"
-
-IDB_TITLE_14            BITMAP                  "..\\RES\\title_14.bmp"
-
-IDB_TITLE_15            BITMAP                  "..\\RES\\title_15.bmp"
-
-IDB_TITLE_16            BITMAP                  "..\\RES\\title_16.bmp"
-
-IDB_TITLE_17            BITMAP                  "..\\RES\\title_17.bmp"
-
-IDB_TITLE_18            BITMAP                  "..\\RES\\title_18.bmp"
-
-IDB_TITLE_19            BITMAP                  "..\\RES\\title_19.bmp"
-
-IDB_BACKGROUND          BITMAP                  "..\\RES\\background.bmp"
 
 
 /////////////////////////////////////////////////////////////////////////////
@@ -174,117 +118,7 @@ LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
 
 IDR_MAINFRAME           BITMAP                  "..\\res\\Toolbar.bmp"
 
-IDB_KB_L_1              BITMAP                  "..\\RES\\KB_L_1.bmp"
-
-IDB_KB_L_2              BITMAP                  "..\\RES\\KB_L_2.bmp"
-
-IDB_KB_L_3              BITMAP                  "..\\RES\\KB_L_3.bmp"
-
-IDB_KB_L_4              BITMAP                  "..\\RES\\KB_L_4.bmp"
-
-IDB_KB_L_5              BITMAP                  "..\\RES\\KB_L_5.bmp"
-
-IDB_KB_L_6              BITMAP                  "..\\RES\\KB_L_6.bmp"
-
-IDB_KB_L_7              BITMAP                  "..\\RES\\KB_L_7.bmp"
-
-IDB_KB_L_8              BITMAP                  "..\\RES\\KB_L_8.bmp"
-
-IDB_KB_L_9              BITMAP                  "..\\RES\\KB_L_9.bmp"
-
-IDB_KB_L_10             BITMAP                  "..\\RES\\KB_L_10.bmp"
-
-IDB_KB_R_1              BITMAP                  "..\\RES\\KB_R_1.bmp"
-
-IDB_KB_R_2              BITMAP                  "..\\RES\\KB_R_2.bmp"
-
-IDB_KB_R_3              BITMAP                  "..\\RES\\KB_R_3.bmp"
-
-IDB_KB_R_4              BITMAP                  "..\\RES\\KB_R_4.bmp"
-
-IDB_KB_R_5              BITMAP                  "..\\RES\\KB_R_5.bmp"
-
-IDB_KB_R_6              BITMAP                  "..\\RES\\KB_R_6.bmp"
-
-IDB_KB_R_7              BITMAP                  "..\\RES\\KB_R_7.bmp"
-
-IDB_KB_R_8              BITMAP                  "..\\RES\\KB_R_8.bmp"
-
-IDB_KB_R_9              BITMAP                  "..\\RES\\KB_R_9.bmp"
-
-IDB_KB_R_10             BITMAP                  "..\\RES\\KB_R_10.bmp"
-
-IDB_KB_U_1              BITMAP                  "..\\RES\\KB_U_1.bmp"
-
-IDB_KB_U_2              BITMAP                  "..\\RES\\KB_U_2.bmp"
-
-IDB_KB_U_3              BITMAP                  "..\\RES\\KB_U_3.bmp"
-
-IDB_KB_U_4              BITMAP                  "..\\RES\\KB_U_4.bmp"
-
-IDB_KB_U_5              BITMAP                  "..\\RES\\KB_U_5.bmp"
-
-IDB_KB_U_6              BITMAP                  "..\\RES\\KB_U_6.bmp"
-
-IDB_KB_U_7              BITMAP                  "..\\RES\\KB_U_7.bmp"
-
-IDB_KB_U_8              BITMAP                  "..\\RES\\KB_U_8.bmp"
-
-IDB_KB_U_9              BITMAP                  "..\\RES\\KB_U_9.bmp"
-
-IDB_KB_U_10             BITMAP                  "..\\RES\\KB_U_10.bmp"
-
-IDB_KB_U_11             BITMAP                  "..\\RES\\KB_U_11.bmp"
-
-IDB_KB_U_12             BITMAP                  "..\\RES\\KB_U_12.bmp"
-
-IDB_KB_L_0              BITMAP                  "..\\RES\\KB_L_0.bmp"
-
-IDB_KB_R_0              BITMAP                  "..\\RES\\KB_R_0.bmp"
-
-IDB_KB_U_L_1            BITMAP                  "..\\RES\\KB_U_L_1.bmp"
-
-IDB_KB_U_L_2            BITMAP                  "..\\RES\\KB_U_L_2.bmp"
-
-IDB_KB_U_L_3            BITMAP                  "..\\RES\\KB_U_L_3.bmp"
-
-IDB_KB_U_L_4            BITMAP                  "..\\RES\\KB_U_L_4.bmp"
-
-IDB_KB_U_L_5            BITMAP                  "..\\RES\\KB_U_L_5.bmp"
-
-IDB_KB_U_L_6            BITMAP                  "..\\RES\\KB_U_L_6.bmp"
-
-IDB_KB_U_L_7            BITMAP                  "..\\RES\\KB_U_L_7.bmp"
-
-IDB_KB_U_L_8            BITMAP                  "..\\RES\\KB_U_L_8.bmp"
-
-IDB_KB_U_L_9            BITMAP                  "..\\RES\\KB_U_L_9.bmp"
-
-IDB_KB_U_L_10           BITMAP                  "..\\RES\\KB_U_L_10.bmp"
-
-IDB_KB_U_L_11           BITMAP                  "..\\RES\\KB_U_L_11.bmp"
-
-IDB_KB_U_L_12           BITMAP                  "..\\RES\\KB_U_L_12.bmp"
-
-IDB_MAP                 BITMAP                  "..\\RES\\map.bmp"
-
-IDB_KB_Exhale_R         BITMAP                  "..\\RES\\KB_Exhale_R.bmp"
-
-IDB_KB_Exhale_L         BITMAP                  "..\\RES\\KB_Exhale_L.bmp"
-
-IDB_KB_Jump_R           BITMAP                  "..\\RES\\KB_Jump_R.bmp"
-
-IDB_KB_Jump_L           BITMAP                  "..\\RES\\KB_Jump_L.bmp"
-
-IDB_KB_Down_L           BITMAP                  "..\\RES\\KB_Down_L.bmp"
-
-IDB_KB_Down_R           BITMAP                  "..\\RES\\KB_Down_R.bmp"
-
-IDB_die1                BITMAP                  "..\\RES\\die1.bmp"
-
-IDB_die2                BITMAP                  "..\\RES\\die2.bmp"
-
-IDB_die3                BITMAP                  "..\\RES\\die3.bmp"
+IDB_foreground          BITMAP                  "..\\RES\\foreground.bmp"
 
 
 /////////////////////////////////////////////////////////////////////////////

@@ -16,9 +16,11 @@ namespace game_framework {
 		void Initialize(int ,int);		// 設定為初始值
 		bool IsAlive();					// 是否活著
 		bool IsFly();                   // 是否在飛
+		bool IsKick();                  // 是否踢擊
 		void LoadBitmap();				// 載入圖形
 		void OnMove(Map *m);		    // 移動
 		void OnShow(Map *m);			// 將圖形貼到畫面
+		void Hurted();                  // 受傷
 		void SetMovingDown(bool flag);	// 設定是否正在往下移動
 		void SetMovingLeft(bool flag);	// 設定是否正在往左移動
 		void SetMovingRight(bool flag); // 設定是否正在往右移動
@@ -29,7 +31,7 @@ namespace game_framework {
 		void SetXY(int nx, int ny);		// 設定左上角的座標
 	protected:	
 		CMovingBitmap originR, originL, ExhaleRight, ExhaleLeft, JumpRight, JumpLeft, DownRight, DownLeft, LandingRight, LandingLeft, downAttackR, downAttackL;
-		CAnimation GoLeft, GoRight, FlyRight, PrepareFlyRight, FlyLeft, PrepareFlyLeft;
+		CAnimation GoLeft, GoRight, FlyRight, PrepareFlyRight, FlyLeft, PrepareFlyLeft, hurtedL, hurtedR;
 		int x, y;					// 左上角座標
 		bool isMovingDown;			// 是否正在往下移動
 		bool isMovingLeft;			// 是否正在往左移動
@@ -38,15 +40,15 @@ namespace game_framework {
 		bool isSpace;			    // 是否按下空白鍵
 		bool isJump;			    // 是否按下X鍵
 		bool isAttack;              // 是否按下Z鍵
-		bool isKick;                 // 是否使用踢擊
+		bool isKick;                // 是否使用踢擊
+		bool isHurted;              // 是否被攻擊
 		bool is_alive;				// 是否活著
 		bool isFly;                 // 是否在飛
 		bool RightOrLeft;           // 判斷左右
 	private:
-		int flyDelay;               // 飛行前的吸氣時間
-		int JumpDelay;              // 跳躍的時間
 		int ExhaleDelay;            // 吐氣的時間
+		int JumpDistance;           // 跳躍的距離
 		int KickDistance;           // 踢擊的距離
-		bool HitRectangle(int tx1, int ty1, int tx2, int ty2);	// 是否碰到參數範圍的矩形
+		int hp;
 	};
 }

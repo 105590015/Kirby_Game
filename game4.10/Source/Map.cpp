@@ -55,7 +55,7 @@ namespace game_framework {
 	void Map::LoadBitmap(int pic)
 	{
 		foreground.LoadBitmap(pic,RGB(255,255,255));
-		background.LoadBitmap(IDB_BACKGROUND);
+		background.LoadBitmap(".\\RES\\background.bmp");
 		mapSize_X = (foreground.Width() * 10 + 5) / 200;
 		mapSize_Y = (foreground.Height() * 10 + 5) / 200;
 		ball.LoadBitmap(IDB_BALL, RGB(0, 0, 0));
@@ -91,16 +91,16 @@ namespace game_framework {
 		foreground.SetTopLeft(-sx, -sy); // 指定第(i, j)這一格的座標
 		foreground.ShowBitmap();
 
-		//ofstream set(Mapfile);			//第一次建立地圖設立初始值
+		/*ofstream set(Mapfile);			//第一次建立地圖設立初始值
 
-		//for (int i = 0; i < mapSize_Y; i++) {
-		//	for (int j = 0; j < mapSize_X; j++) {
-		//		set << 0 << " ";
-		//	}
-		//	set << endl;
-		//}
-		//set.close();
-
+		for (int i = 0; i < mapSize_Y; i++) {
+			for (int j = 0; j < mapSize_X; j++) {
+				set << 0 << " ";
+			}
+			set << endl;
+		}
+		set.close();*/
+		
 		ifstream file(Mapfile);			//將資料存入陣列
 
 		for (int i = 0; i<mapSize_Y; i++)
@@ -118,18 +118,18 @@ namespace game_framework {
 				int x = j * 20 - sx; // 算出第(i, j)這一格的 x 螢幕座標
 				int y = i * 20 - sy; // 算出第(i, j)這一格的 y 螢幕座標
 
-				//if (mx >= x && mx <= x + 20 && my >= y && my <= y + 20) { //判斷滑鼠位置
-				//	if (Lclick) {				//左鍵為設立障礙物
-				//		map[i][j] = 1;
-				//	}
+				/*if (mx >= x && mx <= x + 20 && my >= y && my <= y + 20) { //判斷滑鼠位置
+					if (Lclick) {				//左鍵為設立障礙物
+						map[i][j] = 1;
+					}
 
-				//	else if (Rclick) {			//右鍵為取消障礙物
-				//		map[i][j] = 0;
-				//	}
-				//}
+					else if (Rclick) {			//右鍵為取消障礙物
+						map[i][j] = 0;
+					}
+				}*/
 
 				output << map[i][j] << " ";		//將改變輸出
-
+				
 
 				switch (map[i][j]) {
 				case 1:

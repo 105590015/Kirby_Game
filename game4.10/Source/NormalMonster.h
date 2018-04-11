@@ -14,6 +14,7 @@ namespace game_framework {
 		void LoadBitmap();
 		void OnShow(Map *m, Kirby *kirby);      // Εγ₯ά
 		void OnMove(Map *m, Kirby *kirby);      // ²Ύ°Κ
+		void Attack(Kirby* kirby);              // §πΐ»
 	protected:
 		CMovingBitmap isSuckedR, isSuckedL;
 		CAnimation goLeft, goRight, die;

@@ -97,7 +97,7 @@ namespace game_framework {
 	private:
 		Kirby kirby;                                    // 卡比
 		Map map;                                        // 地圖
-		NormalMonster monster1;                         // 怪物
+		NormalMonster normalMonster[6];                 // 怪物
 	};
 
 	/////////////////////////////////////////////////////////////////////////////

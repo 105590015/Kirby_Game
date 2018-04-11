@@ -71,26 +71,26 @@ CGameStateInit::CGameStateInit(CGame *g)
 
 void CGameStateInit::OnInit()
 {
-	StartAnimation.AddBitmap(IDB_TITLE_0);
-	StartAnimation.AddBitmap(IDB_TITLE_1);
-	StartAnimation.AddBitmap(IDB_TITLE_2);
-	StartAnimation.AddBitmap(IDB_TITLE_3);
-	StartAnimation.AddBitmap(IDB_TITLE_4);
-	StartAnimation.AddBitmap(IDB_TITLE_5);
-	StartAnimation.AddBitmap(IDB_TITLE_6);
-	StartAnimation.AddBitmap(IDB_TITLE_7);
-	StartAnimation.AddBitmap(IDB_TITLE_8);
-	StartAnimation.AddBitmap(IDB_TITLE_9);
-	StartAnimation.AddBitmap(IDB_TITLE_10);
-	StartAnimation.AddBitmap(IDB_TITLE_11);
-	StartAnimation.AddBitmap(IDB_TITLE_12);
-	StartAnimation.AddBitmap(IDB_TITLE_13);
-	StartAnimation.AddBitmap(IDB_TITLE_14);
-	StartAnimation.AddBitmap(IDB_TITLE_15);
-	StartAnimation.AddBitmap(IDB_TITLE_16);
-	StartAnimation.AddBitmap(IDB_TITLE_17);
-	StartAnimation.AddBitmap(IDB_TITLE_18);
-	StartAnimation.AddBitmap(IDB_TITLE_19);
+	StartAnimation.AddBitmap(".\\RES\\Start\\title_0.bmp");
+	StartAnimation.AddBitmap(".\\RES\\Start\\title_1.bmp");
+	StartAnimation.AddBitmap(".\\RES\\Start\\title_2.bmp");
+	StartAnimation.AddBitmap(".\\RES\\Start\\title_3.bmp");
+	StartAnimation.AddBitmap(".\\RES\\Start\\title_4.bmp");
+	StartAnimation.AddBitmap(".\\RES\\Start\\title_5.bmp");
+	StartAnimation.AddBitmap(".\\RES\\Start\\title_6.bmp");
+	StartAnimation.AddBitmap(".\\RES\\Start\\title_7.bmp");
+	StartAnimation.AddBitmap(".\\RES\\Start\\title_8.bmp");
+	StartAnimation.AddBitmap(".\\RES\\Start\\title_9.bmp");
+	StartAnimation.AddBitmap(".\\RES\\Start\\title_10.bmp");
+	StartAnimation.AddBitmap(".\\RES\\Start\\title_11.bmp");
+	StartAnimation.AddBitmap(".\\RES\\Start\\title_12.bmp");
+	StartAnimation.AddBitmap(".\\RES\\Start\\title_13.bmp");
+	StartAnimation.AddBitmap(".\\RES\\Start\\title_14.bmp");
+	StartAnimation.AddBitmap(".\\RES\\Start\\title_15.bmp");
+	StartAnimation.AddBitmap(".\\RES\\Start\\title_16.bmp");
+	StartAnimation.AddBitmap(".\\RES\\Start\\title_17.bmp");
+	StartAnimation.AddBitmap(".\\RES\\Start\\title_18.bmp");
+	StartAnimation.AddBitmap(".\\RES\\Start\\title_19.bmp");
 	
 }
 
@@ -195,7 +195,12 @@ void CGameStateRun::OnBeginState()
 {
 	map.Initialize();
 	kirby.Initialize(0,120);
-	monster1.Initialize(320, 240, 320, 400, true);
+	normalMonster[0].Initialize(50, 100, 50, 220, false);
+	normalMonster[1].Initialize(550, 100, 550, 690, false);
+	normalMonster[2].Initialize(1010, 100, 1010, 1208, false);
+	normalMonster[3].Initialize(40, 680, 0, 90, false);
+	normalMonster[4].Initialize(614, 680, 370, 888, false);
+	normalMonster[5].Initialize(1190, 680, 1170, 1250, false);
 	CAudio::Instance()->Play(AUDIO_BACKGROUND, true);
 }
 
@@ -203,15 +208,25 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 {
 	map.OnMove(kirby.GetX1(),kirby.GetY1());
 	kirby.OnMove(&map);
-	monster1.OnMove(&map, &kirby);
+	normalMonster[0].OnMove(&map, &kirby);
+	normalMonster[1].OnMove(&map, &kirby);
+	normalMonster[2].OnMove(&map, &kirby);
+	normalMonster[3].OnMove(&map, &kirby);
+	normalMonster[4].OnMove(&map, &kirby);
+	normalMonster[5].OnMove(&map, &kirby);
 }
 
 void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 {
 	// 載入資料
-	map.LoadBitmap(IDB_ForeGround);
+	map.LoadBitmap(IDB_foreground);
 	kirby.LoadBitmap();		
-	monster1.LoadBitmap();
+	normalMonster[0].LoadBitmap();
+	normalMonster[1].LoadBitmap();
+	normalMonster[2].LoadBitmap();
+	normalMonster[3].LoadBitmap();
+	normalMonster[4].LoadBitmap();
+	normalMonster[5].LoadBitmap();
 	CAudio::Instance()->Load(AUDIO_BACKGROUND, "sounds\\Kirby_background.mp3");  //背景音樂
 }
 
@@ -297,6 +312,11 @@ void CGameStateRun::OnShow()
 	//        說，Move負責MVC中的Model，Show負責View，而View不應更動Model。
 	map.OnShow("map.txt");
 	kirby.OnShow(&map);
-	monster1.OnShow(&map, &kirby);
+	normalMonster[0].OnShow(&map, &kirby);
+	normalMonster[1].OnShow(&map, &kirby);
+	normalMonster[2].OnShow(&map, &kirby);
+	normalMonster[3].OnShow(&map, &kirby);
+	normalMonster[4].OnShow(&map, &kirby);
+	normalMonster[5].OnShow(&map, &kirby);
 }
 }

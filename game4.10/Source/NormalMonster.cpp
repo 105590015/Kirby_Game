@@ -18,7 +18,7 @@ namespace game_framework {
 		startX = sx;
 		endX = ex;
 		RightOrLeft = direction;
-		hp = 100;
+		hp = 10;
 		is_alive = true;
 		is_sucked = false;
 	}
@@ -53,9 +53,9 @@ namespace game_framework {
 		goRight.AddBitmap(".\\RES\\NormalMonster\\NormalMonster_R_8.bmp", RGB(0, 219, 255));
 		isSuckedL.LoadBitmap(".\\RES\\NormalMonster\\NormalMonster_Sucked_L.bmp", RGB(0, 219, 255));
 		isSuckedR.LoadBitmap(".\\RES\\NormalMonster\\NormalMonster_Sucked_R.bmp", RGB(0, 219, 255));
-		die.AddBitmap(IDB_die1, RGB(255, 255, 255));
-		die.AddBitmap(IDB_die2, RGB(255, 255, 255));
-		die.AddBitmap(IDB_die3, RGB(255, 255, 255));
+		die.AddBitmap(".\\RES\\die1.bmp", RGB(255, 255, 255));
+		die.AddBitmap(".\\RES\\die2.bmp", RGB(255, 255, 255));
+		die.AddBitmap(".\\RES\\die3.bmp", RGB(255, 255, 255));
 	}
 
 	void NormalMonster::OnShow(Map *m, Kirby *kirby)
@@ -66,6 +66,7 @@ namespace game_framework {
 			goRight.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
 			isSuckedL.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
 			isSuckedR.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
+			die.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
 			if (!IsSucked() && !RightOrLeft)
 			{
 				goLeft.OnShow();
@@ -80,6 +81,7 @@ namespace game_framework {
 				isSuckedL.ShowBitmap();
 			else if (IsSucked() && RightOrLeft && x != kirby->GetX1() && y != kirby->GetY1())
 				isSuckedR.ShowBitmap();
+			hurted(kirby);
 		}
 		else
 		{
@@ -94,19 +96,21 @@ namespace game_framework {
 
 	void NormalMonster::OnMove(Map *m, Kirby *kirby)
 	{
-		if (IsAlive() && !IsSucked() && !RightOrLeft && m->isEmpty(GetX1() - STEP_SIZE, GetY1() + goLeft.Height() / 2))
+		if(IsAlive())
+			Attack(kirby);
+		if (IsAlive() && !IsSucked() && !RightOrLeft && m->isEmpty(GetX1() - 1, GetY1() + goLeft.Height() / 2))
 		{
-			if (x == startX) //ǐ跋办程オ璶奔繷
+			if (x <= startX) //ǐ跋办程オ璶奔繷
 				RightOrLeft = true;
 			else
-				x -= STEP_SIZE;
+				x -= 1;
 		}
-		else if(IsAlive() && !IsSucked() && RightOrLeft && m->isEmpty(GetX2() + STEP_SIZE, GetY2() - goLeft.Height() / 2))
+		else if(IsAlive() && !IsSucked() && RightOrLeft && m->isEmpty(GetX2() + 1, GetY2() - goLeft.Height() / 2))
 		{
-			if (x == endX)  //ǐ跋办程璶奔繷
+			if (x >= endX)  //ǐ跋办程璶奔繷
 				RightOrLeft = false;
 			else
-				x += STEP_SIZE;
+				x += 1;
 		}
 		else if (IsSucked())
 		{
@@ -119,5 +123,13 @@ namespace game_framework {
 			else if (y < kirby->GetY1())
 				y += 1;
 		}
+		if (IsAlive() && !IsSucked() && m->isEmpty(GetX2() - goLeft.Width() / 2, GetY2() + 1)) //ま
+				y += 1;
+	}
+
+	void NormalMonster::Attack(Kirby* kirby)
+	{
+		if (HitRectangle(kirby->GetX1(), kirby->GetY1(), kirby->GetX2(), kirby->GetY2()) && !kirby->IsKick())
+			kirby->Hurted();
 	}
 }
