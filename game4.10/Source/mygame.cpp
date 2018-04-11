@@ -195,7 +195,7 @@ void CGameStateRun::OnBeginState()
 {
 	map.Initialize();
 	kirby.Initialize(0,120);
-	monster1.Initialize(320, 240, 0, 20, true);
+	monster1.Initialize(320, 240, 320, 400, true);
 	CAudio::Instance()->Play(AUDIO_BACKGROUND, true);
 }
 
