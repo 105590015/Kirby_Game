@@ -128,7 +128,7 @@ namespace game_framework {
 					}
 				}
 
-				output << map[i][j] << " ";		//將改變輸出
+			//	output << map[i][j] << " ";		//將改變輸出
 
 
 				switch (map[i][j]) {
@@ -141,7 +141,7 @@ namespace game_framework {
 
 
 			}
-			output << endl;
+		//	output << endl;
 			}
 		
 	}

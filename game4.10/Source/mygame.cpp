@@ -195,7 +195,7 @@ void CGameStateRun::OnBeginState()
 {
 	map.Initialize();
 	kirby.Initialize(0,120);
-	monster1.Initialize(0, 120, 0, 20, true);
+	monster1.Initialize(320, 240, 0, 20, true);
 	CAudio::Instance()->Play(AUDIO_BACKGROUND, true);
 }
 
@@ -209,7 +209,7 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 {
 	// 載入資料
-	map.LoadBitmap(IDB_MAP);
+	map.LoadBitmap(IDB_ForeGround);
 	kirby.LoadBitmap();		
 	monster1.LoadBitmap();
 	CAudio::Instance()->Load(AUDIO_BACKGROUND, "sounds\\Kirby_background.mp3");  //背景音樂
