@@ -43,6 +43,7 @@ namespace game_framework {
 		ExhaleDelay = 10;
 		isMovingLeft = isMovingRight = isMovingUp = isMovingDown = isSpace = isJump = isAttack = isKick = isFly = false;
 		is_alive = RightOrLeft = true;
+		isRunning = false;
 	}
 
 	bool Kirby::IsAlive()
@@ -113,6 +114,22 @@ namespace game_framework {
 		FlyLeft.AddBitmap(IDB_KB_U_L_10, RGB(255, 255, 255));
 		FlyLeft.AddBitmap(IDB_KB_U_L_11, RGB(255, 255, 255));
 		FlyLeft.AddBitmap(IDB_KB_U_L_12, RGB(255, 255, 255));
+		RunLeft.AddBitmap(".\\RES\\RUN_L_0.bmp", RGB(207,176,255));
+		RunLeft.AddBitmap(".\\RES\\RUN_L_1.bmp", RGB(207, 176, 255));
+		RunLeft.AddBitmap(".\\RES\\RUN_L_2.bmp", RGB(207, 176, 255));
+		RunLeft.AddBitmap(".\\RES\\RUN_L_3.bmp", RGB(207, 176, 255));
+		RunLeft.AddBitmap(".\\RES\\RUN_L_4.bmp", RGB(207, 176, 255));
+		RunLeft.AddBitmap(".\\RES\\RUN_L_5.bmp", RGB(207, 176, 255));
+		RunLeft.AddBitmap(".\\RES\\RUN_L_6.bmp", RGB(207, 176, 255));
+		RunLeft.AddBitmap(".\\RES\\RUN_L_7.bmp", RGB(207, 176, 255));	
+		RunRight.AddBitmap(".\\RES\\RUN_R_0.bmp", RGB(207, 176, 255));
+		RunRight.AddBitmap(".\\RES\\RUN_R_1.bmp", RGB(207, 176, 255));
+		RunRight.AddBitmap(".\\RES\\RUN_R_2.bmp", RGB(207, 176, 255));
+		RunRight.AddBitmap(".\\RES\\RUN_R_3.bmp", RGB(207, 176, 255));
+		RunRight.AddBitmap(".\\RES\\RUN_R_4.bmp", RGB(207, 176, 255));
+		RunRight.AddBitmap(".\\RES\\RUN_R_5.bmp", RGB(207, 176, 255));
+		RunRight.AddBitmap(".\\RES\\RUN_R_6.bmp", RGB(207, 176, 255));
+		RunRight.AddBitmap(".\\RES\\RUN_R_7.bmp", RGB(207, 176, 255));
 	}
 
 	void Kirby::OnMove(Map *m)
@@ -121,7 +138,16 @@ namespace game_framework {
 		{
 			//以下算式的x + 320與y + 240是補地圖移動的位子;卡比的圖大小大多為20 * 20, x + 10與y + 10是將判斷碰撞的點設在卡比中心
 			RightOrLeft = false;        //設定面向左邊
-			if (m->isEmpty(GetX1() - STEP_SIZE, GetY1() + GoLeft.Height() / 2) && !isMovingDown && ((isMovingUp&&flyDelay < 1) || !isMovingUp))  //先判斷左邊是否可走且沒有按Down，狀態要是向左飛行中或正常向左走
+
+			if (m->isEmpty(GetX1() - STEP_SIZE, GetY1() + GoLeft.Height() / 2) && !isMovingDown && ((isMovingUp&&flyDelay < 1) || !isMovingUp)&&isRunning)  //先判斷左邊是否可走且沒有按Down，狀態要是向左飛行中或正常向左走
+			{
+				if (x <= 0) //邊界
+					x = 0;
+				else
+					x -= STEP_SIZE*2;
+			}
+
+			else if (m->isEmpty(GetX1() - STEP_SIZE, GetY1() + GoLeft.Height() / 2) && !isMovingDown && ((isMovingUp&&flyDelay < 1) || !isMovingUp))  //先判斷左邊是否可走且沒有按Down，狀態要是向左飛行中或正常向左走
 			{
 				if (x <= 0) //邊界
 					x = 0;
@@ -132,7 +158,16 @@ namespace game_framework {
 		else if (isMovingRight)
 		{
 			RightOrLeft = true;          //設定面向右邊
-			if (m->isEmpty(GetX2() + STEP_SIZE, GetY2() - GoRight.Height() / 2) && !isMovingDown && ((isMovingUp&&flyDelay < 1) || !isMovingUp))   //先判斷右邊是否可走且沒有按Down，狀態要是向右飛行中或正常向右走
+
+			if (m->isEmpty(GetX2() + STEP_SIZE, GetY2() - GoRight.Height() / 2) && !isMovingDown && ((isMovingUp&&flyDelay < 1) || !isMovingUp)&&isRunning)   //先判斷右邊是否可走且沒有按Down，狀態要是向右飛行中或正常向右走
+			{
+				if (x >= m->GetWidth() - GoRight.Width())  //邊界
+					x = m->GetWidth() - GoRight.Width();
+				else
+					x += STEP_SIZE*2;
+			}
+
+			else if (m->isEmpty(GetX2() + STEP_SIZE, GetY2() - GoRight.Height() / 2) && !isMovingDown && ((isMovingUp&&flyDelay < 1) || !isMovingUp))   //先判斷右邊是否可走且沒有按Down，狀態要是向右飛行中或正常向右走
 			{
 				if (x >= m->GetWidth() - GoRight.Width())  //邊界
 					x = m->GetWidth() - GoRight.Width();
@@ -213,6 +248,8 @@ namespace game_framework {
 			LandingRight.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
 			downAttackL.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
 			downAttackR.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
+			RunRight.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
+			RunLeft.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
 		}
 		if (isJump && RightOrLeft)         //面向右跳
 			JumpRight.ShowBitmap();
@@ -304,6 +341,16 @@ namespace game_framework {
 			DownRight.ShowBitmap();
 		else if (isMovingDown && !RightOrLeft && !m->isEmpty(GetX2() - originR.Width() / 2, GetY2() + 1)) //面向左縮小
 			DownLeft.ShowBitmap();
+		else if (isMovingLeft && !isFly&&isRunning)  //向左跑
+		{
+			RunLeft.OnShow();
+			RunLeft.OnMove();
+		}
+		else if (isMovingRight && !isFly&&isRunning)  //向右跑
+		{
+			RunRight.OnShow();
+			RunRight.OnMove();
+		}
 		else if (isMovingLeft && !isFly)  //一般向左走
 		{
 			GoLeft.OnShow();
@@ -359,6 +406,10 @@ namespace game_framework {
 	void Kirby::SetAttack(bool flag)
 	{
 		isAttack = flag;
+	}
+
+	void Kirby::SetRun(bool flag) {
+		isRunning = flag;
 	}
 
 	void Kirby::SetXY(int nx, int ny)

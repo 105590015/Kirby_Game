@@ -26,10 +26,11 @@ namespace game_framework {
 		void SetSpace(bool flag);	    // 設定是否按下空白鍵
 		void SetJump(bool flag);	    // 設定是否按下X鍵
 		void SetAttack(bool flag);	    // 設定是否按下Z鍵
+		void SetRun(bool);				//設定是否按下C
 		void SetXY(int nx, int ny);		// 設定左上角的座標
 	protected:	
 		CMovingBitmap originR, originL, ExhaleRight, ExhaleLeft, JumpRight, JumpLeft, DownRight, DownLeft, LandingRight, LandingLeft, downAttackR, downAttackL;
-		CAnimation GoLeft, GoRight, FlyRight, PrepareFlyRight, FlyLeft, PrepareFlyLeft;
+		CAnimation GoLeft, GoRight, FlyRight, PrepareFlyRight, FlyLeft, PrepareFlyLeft,RunLeft,RunRight;
 		int x, y;					// 左上角座標
 		bool isMovingDown;			// 是否正在往下移動
 		bool isMovingLeft;			// 是否正在往左移動
@@ -41,6 +42,7 @@ namespace game_framework {
 		bool isKick;                 // 是否使用踢擊
 		bool is_alive;				// 是否活著
 		bool isFly;                 // 是否在飛
+		bool isRunning;				// 是否在跑
 		bool RightOrLeft;           // 判斷左右
 	private:
 		int flyDelay;               // 飛行前的吸氣時間
