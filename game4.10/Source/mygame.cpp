@@ -91,7 +91,6 @@ void CGameStateInit::OnInit()
 	StartAnimation.AddBitmap(".\\RES\\Start\\title_17.bmp");
 	StartAnimation.AddBitmap(".\\RES\\Start\\title_18.bmp");
 	StartAnimation.AddBitmap(".\\RES\\Start\\title_19.bmp");
-	
 }
 
 void CGameStateInit::OnBeginState()
@@ -240,7 +239,7 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 	const char KEY_SPACE = ' ';    // keyboard空白鍵
 	const char KEY_Jump = 0x58;    // keyboard X鍵
 	const char KEY_Attack = 0x5A;  // keyboard Z鍵
-	const char KEY_Run = 0x43;
+	const char KEY_Run = 0x43;     // keyboard C鍵
 	if (nChar == KEY_LEFT)
 		kirby.SetMovingLeft(true);
 	if (nChar == KEY_RIGHT)
@@ -253,12 +252,12 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 		kirby.SetSpace(true);
 	if (nChar == KEY_Attack)
 		kirby.SetAttack(true);
-	if (nChar == KEY_Jump && !kirby.IsFly() && !map.isEmpty(kirby.GetX1() + 10, kirby.GetY1() + 20 + 1)) //按下X,卡比不是在飛行且落地才可跳躍(320.240是地圖補償20是卡比的身高)
+	if (nChar == KEY_Run)
+		kirby.SetRun(true);
+	if (nChar == KEY_Jump && !kirby.IsFly() && !map.isEmpty(kirby.GetX1() + 10, kirby.GetY1() + 20 + 1)) //按下X,卡比不是在飛行且落地才可跳躍(20是卡比的身高)
 		kirby.SetJump(true);
 	if (nChar == KEY_ESC)
 		PostMessage(AfxGetMainWnd()->m_hWnd, WM_CLOSE, 0, 0);	// 關閉遊戲
-	if (nChar == KEY_Run)
-		kirby.SetRun(true);
 }
 
 void CGameStateRun::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
@@ -269,7 +268,7 @@ void CGameStateRun::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 	const char KEY_DOWN  = 0x28;   // keyboard下箭頭
 	const char KEY_SPACE = ' ';    // keyboard空白鍵
 	const char KEY_Attack = 0x5A;  // keyboard Z鍵
-	const char KEY_Run = 0x43;
+	const char KEY_Run = 0x43;     // keyboard C鍵
 	if (nChar == KEY_LEFT)
 		kirby.SetMovingLeft(false);
 	if (nChar == KEY_RIGHT)
@@ -282,15 +281,12 @@ void CGameStateRun::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 		kirby.SetAttack(false);
 	if (nChar == KEY_Run)
 		kirby.SetRun(false);
-
-	
 }
 
 void CGameStateRun::OnMouseMove(UINT nFlags, CPoint point)	// 處理滑鼠的動作
 {
 	// 沒事。如果需要處理滑鼠移動的話，寫code在這裡
 	map.SetMouse(point.x, point.y);
-
 }
 
 void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point)  // 處理滑鼠的動作

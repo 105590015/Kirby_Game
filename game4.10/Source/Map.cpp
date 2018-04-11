@@ -87,12 +87,9 @@ namespace game_framework {
 	{
 		background.SetTopLeft(0, 0);
 		background.ShowBitmap();
-
 		foreground.SetTopLeft(-sx, -sy); // 指定第(i, j)這一格的座標
 		foreground.ShowBitmap();
-
 		/*ofstream set(Mapfile);			//第一次建立地圖設立初始值
-
 		for (int i = 0; i < mapSize_Y; i++) {
 			for (int j = 0; j < mapSize_X; j++) {
 				set << 0 << " ";
@@ -100,9 +97,7 @@ namespace game_framework {
 			set << endl;
 		}
 		set.close();*/
-		
 		ifstream file(Mapfile);			//將資料存入陣列
-
 		for (int i = 0; i<mapSize_Y; i++)
 		{
 			for (int j = 0; j < mapSize_X; j++) {
@@ -110,14 +105,11 @@ namespace game_framework {
 			}			
 		}
 		file.close();
-
 		ofstream output(Mapfile);
-		
 		for (int i = 0; i < mapSize_Y; i++) {
 			for (int j = 0; j < mapSize_X; j++) {
 				int x = j * 20 - sx; // 算出第(i, j)這一格的 x 螢幕座標
 				int y = i * 20 - sy; // 算出第(i, j)這一格的 y 螢幕座標
-
 				/*if (mx >= x && mx <= x + 20 && my >= y && my <= y + 20) { //判斷滑鼠位置
 					if (Lclick) {				//左鍵為設立障礙物
 						map[i][j] = 1;
@@ -127,23 +119,17 @@ namespace game_framework {
 						map[i][j] = 0;
 					}
 				}*/
-
 				output << map[i][j] << " ";		//將改變輸出
-				
-
-				switch (map[i][j]) {
+				/*switch (map[i][j]) {
 				case 1:
 					ball.SetTopLeft(x, y); // 指定第(i, j)這一格的座標
 					ball.ShowBitmap();
 					break;
 
-				}
-
-
+				}*/
 			}
 			output << endl;
 			}
-		
 	}
 
 	void Map::SetXY(int nx, int ny)

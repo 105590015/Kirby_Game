@@ -32,11 +32,7 @@ namespace game_framework {
 		void SetXY(int nx, int ny);		// 設定左上角的座標
 	protected:	
 		CMovingBitmap originR, originL, ExhaleRight, ExhaleLeft, JumpRight, JumpLeft, DownRight, DownLeft, LandingRight, LandingLeft, downAttackR, downAttackL;
-<<<<<<< HEAD
-		CAnimation GoLeft, GoRight, FlyRight, PrepareFlyRight, FlyLeft, PrepareFlyLeft, hurtedL, hurtedR;
-=======
-		CAnimation GoLeft, GoRight, FlyRight, PrepareFlyRight, FlyLeft, PrepareFlyLeft,RunLeft,RunRight;
->>>>>>> 0192380022e61e8144655f8943a1f1f93256db0a
+		CAnimation GoLeft, GoRight, FlyRight, PrepareFlyRight, FlyLeft, PrepareFlyLeft, hurtedL, hurtedR, RunLeft,RunRight;
 		int x, y;					// 左上角座標
 		bool isMovingDown;			// 是否正在往下移動
 		bool isMovingLeft;			// 是否正在往左移動
