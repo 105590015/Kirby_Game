@@ -110,23 +110,23 @@ namespace game_framework {
 			for (int j = 0; j < mapSize_X; j++) {
 				int x = j * 20 - sx; // 算出第(i, j)這一格的 x 螢幕座標
 				int y = i * 20 - sy; // 算出第(i, j)這一格的 y 螢幕座標
-				/*if (mx >= x && mx <= x + 20 && my >= y && my <= y + 20) { //判斷滑鼠位置
-					if (Lclick) {				//左鍵為設立障礙物
-						map[i][j] = 1;
-					}
+				//if (mx >= x && mx <= x + 20 && my >= y && my <= y + 20) { //判斷滑鼠位置
+				//	if (Lclick) {				//左鍵為設立障礙物
+				//		map[i][j] = 1;
+				//	}
 
-					else if (Rclick) {			//右鍵為取消障礙物
-						map[i][j] = 0;
-					}
-				}*/
+				//	else if (Rclick) {			//右鍵為取消障礙物
+				//		map[i][j] = 0;
+				//	}
+				//}
 				output << map[i][j] << " ";		//將改變輸出
-				/*switch (map[i][j]) {
-				case 1:
-					ball.SetTopLeft(x, y); // 指定第(i, j)這一格的座標
-					ball.ShowBitmap();
-					break;
+				//switch (map[i][j]) {
+				//case 1:
+				//	ball.SetTopLeft(x, y); // 指定第(i, j)這一格的座標
+				//	ball.ShowBitmap();
+				//	break;
 
-				}*/
+				//}
 			}
 			output << endl;
 			}
