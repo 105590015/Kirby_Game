@@ -208,12 +208,12 @@ namespace game_framework {
 			{
 				isKick = true;
 				KickDistance -= 3;
-				if (RightOrLeft && m->isEmpty(GetX2() + 3, GetY2() - 2))        //右邊會不會踢牆(y-2是補償圖檔大小的差異)
+				if (RightOrLeft && m->isEmpty(GetX2() + 3, GetY2() - 2) && x + 3 <= m->GetWidth() - downAttackR.Width())        //右邊會不會踢牆(y-2是補償圖檔大小的差異)
 					x += 3;
-				else if (!RightOrLeft && m->isEmpty(GetX1() - 3, GetY2() - 2))  //左邊會不會踢牆(y-2是補償圖檔大小的差異)
+				else if (!RightOrLeft && m->isEmpty(GetX1() - 3, GetY2() - 2) && x - 3 >= 0)  //左邊會不會踢牆(y-2是補償圖檔大小的差異)
 					x -= 3;
 				//踢完.踢到邊界.腳沒踏到地都不能使用踢擊
-				if (KickDistance == 0 || x <= downAttackL.Width() || x >= m->GetWidth() - downAttackL.Width() || m->isEmpty(GetX2() - originR.Width() / 2, GetY2() + 1))
+				if (KickDistance == 0 || x <= 0 || x >= m->GetWidth() || m->isEmpty(GetX2() - originR.Width() / 2, GetY2() + 1))
 				{
 					KickDistance = 42;
 					isKick = false;
