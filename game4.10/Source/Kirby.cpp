@@ -146,8 +146,11 @@ namespace game_framework {
 	void Kirby::OnMove(Map *m)
 	{
 		//被攻擊且不是在空中也沒超出邊界時
-		if (isHurted && !m->isEmpty(GetX2() - originR.Width() / 2, GetY2() + 1))
+		if (isHurted)
 		{
+			isFly = false;
+			if (m->isEmpty(GetX2() - originR.Width() / 2, GetY2() + 1))
+				y++;
 			if (RightOrLeft && m->isEmpty(GetX1() - STEP_SIZE, GetY1() + hurtedR.Height() / 2) && x - STEP_SIZE >= 0)
 				x -= STEP_SIZE;
 			else if(!RightOrLeft && m->isEmpty(GetX2() + STEP_SIZE, GetY2() - hurtedL.Height() / 2) && x + STEP_SIZE <= m->GetWidth() - GoRight.Width())
@@ -163,7 +166,7 @@ namespace game_framework {
 				{
 					if (x <= 0) //邊界
 						x = 0;
-					else if (isRunning && !m->isEmpty(GetX2() - originR.Width() / 2, GetY2() + 1))
+					else if (isRunning && !isFly && !m->isEmpty(GetX2() - originR.Width() / 2, GetY2() + 1))
 						x -= STEP_SIZE * 2;
 					else
 						x -= STEP_SIZE;
@@ -177,7 +180,7 @@ namespace game_framework {
 				{
 					if (x >= m->GetWidth() - GoRight.Width())  //邊界
 						x = m->GetWidth() - GoRight.Width();
-					else if (isRunning && !m->isEmpty(GetX2() - originR.Width() / 2, GetY2() + 1))
+					else if (isRunning && !isFly && !m->isEmpty(GetX2() - originR.Width() / 2, GetY2() + 1))
 						x += STEP_SIZE * 2;
 					else
 						x += STEP_SIZE;
@@ -204,11 +207,11 @@ namespace game_framework {
 					isJump = false;
 				}
 			}
-			if ((isMovingDown || isKick) && (isAttack || isKick) && !m->isEmpty(GetX2() - originR.Width() / 2, GetY2() + 1)) //在地面上蹲下按攻擊
+			if (!isFly && (isMovingDown || isKick) && (isAttack || isKick) && !m->isEmpty(GetX2() - originR.Width() / 2, GetY2() + 1)) //在地面上蹲下按攻擊
 			{
 				isKick = true;
 				KickDistance -= 3;
-				if (RightOrLeft && m->isEmpty(GetX2() + 3, GetY2() - 2) && x + 3 <= m->GetWidth() - downAttackR.Width())        //右邊會不會踢牆(y-2是補償圖檔大小的差異)
+				if (RightOrLeft && m->isEmpty(GetX2() + 3, GetY2() - 2) && x + 3 <= m->GetWidth() - downAttackR.Width())  //右邊會不會踢牆(y-2是補償圖檔大小的差異)
 					x += 3;
 				else if (!RightOrLeft && m->isEmpty(GetX1() - 3, GetY2() - 2) && x - 3 >= 0)  //左邊會不會踢牆(y-2是補償圖檔大小的差異)
 					x -= 3;
@@ -272,7 +275,7 @@ namespace game_framework {
 				hurtedL.OnMove();
 				hurtedL.OnShow();
 			}
-			if (hurtedL.IsFinalBitmap() || hurtedR.IsFinalBitmap() || m->isEmpty(GetX2() - originR.Width() / 2, GetY2() + 1))
+			if (hurtedL.IsFinalBitmap() || hurtedR.IsFinalBitmap())
 			{
 				isHurted = false;
 				hurtedL.Reset();
@@ -352,7 +355,7 @@ namespace game_framework {
 			else
 				LandingLeft.ShowBitmap();
 		}
-		else if (isKick)   //踢擊
+		else if (isKick && !isFly)   //踢擊
 		{
 			if(RightOrLeft)
 				downAttackR.ShowBitmap();
@@ -366,7 +369,7 @@ namespace game_framework {
 			else
 				DownLeft.ShowBitmap();
 		}
-		else if (!isFly && isRunning)  //跑
+		else if (!isFly && isRunning && (isMovingLeft || isMovingRight))  //跑
 		{
 			if (!RightOrLeft)
 			{
