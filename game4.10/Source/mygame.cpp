@@ -193,7 +193,7 @@ CGameStateRun::~CGameStateRun()
 void CGameStateRun::OnBeginState()
 {
 	map.Initialize();
-	kirby.Initialize(0,120);
+	kirby.Initialize(640,400);
 	normalMonster[0].Initialize(50, 100, 50, 220, false);
 	normalMonster[1].Initialize(550, 100, 550, 690, false);
 	normalMonster[2].Initialize(1010, 100, 1010, 1208, false);
