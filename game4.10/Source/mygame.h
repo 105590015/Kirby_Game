@@ -44,6 +44,7 @@
 #include "Kirby.h"
 #include "Map.h"
 #include "NormalMonster.h"
+#include"Door.h"
 
 namespace game_framework {
 	/////////////////////////////////////////////////////////////////////////////
@@ -97,7 +98,11 @@ namespace game_framework {
 	private:
 		Kirby kirby;                                    // 卡比
 		Map map;                                        // 地圖
+		Map map1;
+		Map *index;
 		NormalMonster normalMonster[6];                 // 怪物
+		Door door;
+		int mapNum;							//設定現在為第幾號地圖
 	};
 
 	/////////////////////////////////////////////////////////////////////////////

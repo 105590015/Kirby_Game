@@ -193,7 +193,9 @@ CGameStateRun::~CGameStateRun()
 void CGameStateRun::OnBeginState()
 {
 	map.Initialize();
+	map1.Initialize();
 	kirby.Initialize(640,400);
+	door.Initialize(993,367, 1);
 	normalMonster[0].Initialize(50, 100, 50, 220, false);
 	normalMonster[1].Initialize(550, 100, 550, 690, false);
 	normalMonster[2].Initialize(1010, 100, 1010, 1208, false);
@@ -201,31 +203,45 @@ void CGameStateRun::OnBeginState()
 	normalMonster[4].Initialize(614, 680, 370, 888, false);
 	normalMonster[5].Initialize(1190, 680, 1170, 1250, false);
 	CAudio::Instance()->Play(AUDIO_BACKGROUND, true);
+
 }
 
 void CGameStateRun::OnMove()							// 移動遊戲元素
 {
-	map.OnMove(kirby.GetX1(),kirby.GetY1());
-	kirby.OnMove(&map);
-	normalMonster[0].OnMove(&map, &kirby);
-	normalMonster[1].OnMove(&map, &kirby);
-	normalMonster[2].OnMove(&map, &kirby);
-	normalMonster[3].OnMove(&map, &kirby);
-	normalMonster[4].OnMove(&map, &kirby);
-	normalMonster[5].OnMove(&map, &kirby);
+
+	door.OnMove();
+	index->OnMove(kirby.GetX1(),kirby.GetY1());
+	kirby.OnMove(index);
+	normalMonster[0].OnMove(index, &kirby);
+	normalMonster[1].OnMove(index, &kirby);
+	normalMonster[2].OnMove(index, &kirby);
+	normalMonster[3].OnMove(index, &kirby);
+	normalMonster[4].OnMove(index, &kirby);
+	normalMonster[5].OnMove(index, &kirby);
+	if (door.IsEnter(&kirby)) {
+		index = &map1;
+		kirby.SetXY(10, 10);
+		mapNum = door.GetMapNum();
+	}
 }
 
 void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 {
 	// 載入資料
-	map.LoadBitmap(IDB_foreground);
-	kirby.LoadBitmap();		
-	normalMonster[0].LoadBitmap();
-	normalMonster[1].LoadBitmap();
-	normalMonster[2].LoadBitmap();
-	normalMonster[3].LoadBitmap();
-	normalMonster[4].LoadBitmap();
-	normalMonster[5].LoadBitmap();
+		map.LoadBitmap(IDB_foreground, RGB(255, 255, 255), ".//RES//background.bmp", ".//Map//map.txt");
+		map1.LoadBitmap(IDB_foreground_1, RGB(255, 255, 255), ".//RES//background_1.bmp", ".//Map//map1.txt");
+		kirby.LoadBitmap();
+		normalMonster[0].LoadBitmap();
+		normalMonster[1].LoadBitmap();
+		normalMonster[2].LoadBitmap();
+		normalMonster[3].LoadBitmap();
+		normalMonster[4].LoadBitmap();
+		normalMonster[5].LoadBitmap();
+		door.LoadBitmap();
+		index = &map;
+		mapNum = 0;
+
+
 	CAudio::Instance()->Load(AUDIO_BACKGROUND, "sounds\\Kirby_background.mp3");  //背景音樂
 }
 
@@ -244,8 +260,10 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 		kirby.SetMovingLeft(true);
 	if (nChar == KEY_RIGHT)
 		kirby.SetMovingRight(true);
-	if (nChar == KEY_UP)
+	if (nChar == KEY_UP) {
 		kirby.SetMovingUp(true);
+		door.SetEnter(true);
+	}
 	if (nChar == KEY_DOWN)
 		kirby.SetMovingDown(true);
 	if (nChar == KEY_SPACE)
@@ -273,8 +291,10 @@ void CGameStateRun::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 		kirby.SetMovingLeft(false);
 	if (nChar == KEY_RIGHT)
 		kirby.SetMovingRight(false);
-	if (nChar == KEY_UP)
+	if (nChar == KEY_UP) {
 		kirby.SetMovingUp(false);
+		door.SetEnter(false);
+	}
 	if (nChar == KEY_DOWN)
 		kirby.SetMovingDown(false);
 	if (nChar == KEY_Attack)
@@ -286,27 +306,29 @@ void CGameStateRun::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 void CGameStateRun::OnMouseMove(UINT nFlags, CPoint point)	// 處理滑鼠的動作
 {
 	// 沒事。如果需要處理滑鼠移動的話，寫code在這裡
-	map.SetMouse(point.x, point.y);
+	index->SetMouse(point.x, point.y);
 }
 
 void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point)  // 處理滑鼠的動作
 {
-	map.IsLclick(true);
+	index->IsLclick(true);
+
+
 }
 
 void CGameStateRun::OnLButtonUp(UINT nFlags, CPoint point)	// 處理滑鼠的動作
 {
-	map.IsLclick(false);
+	index->IsLclick(false);
 }
 
 void CGameStateRun::OnRButtonDown(UINT nFlags, CPoint point)  // 處理滑鼠的動作
 {
-	map.IsRclick(true);
+	index->IsRclick(true);
 }
 
 void CGameStateRun::OnRButtonUp(UINT nFlags, CPoint point)	// 處理滑鼠的動作
 {
-	map.IsRclick(false);
+	index->IsRclick(false);
 }
 
 void CGameStateRun::OnShow()
@@ -314,13 +336,20 @@ void CGameStateRun::OnShow()
 	//  注意：Show裡面千萬不要移動任何物件的座標，移動座標的工作應由Move做才對，
 	//        否則當視窗重新繪圖時(OnDraw)，物件就會移動，看起來會很怪。換個術語
 	//        說，Move負責MVC中的Model，Show負責View，而View不應更動Model。
-	map.OnShow(".//Map//map.txt");
-	kirby.OnShow(&map);
-	normalMonster[0].OnShow(&map, &kirby);
-	normalMonster[1].OnShow(&map, &kirby);
-	normalMonster[2].OnShow(&map, &kirby);
-	normalMonster[3].OnShow(&map, &kirby);
-	normalMonster[4].OnShow(&map, &kirby);
-	normalMonster[5].OnShow(&map, &kirby);
+
+
+	//map.OnShow();
+	index->OnShow();
+	if (mapNum == 0) {
+		door.OnShow(index);
+		normalMonster[0].OnShow(index, &kirby);
+		normalMonster[1].OnShow(index, &kirby);
+		normalMonster[2].OnShow(index, &kirby);
+		normalMonster[3].OnShow(index, &kirby);
+		normalMonster[4].OnShow(index, &kirby);
+		normalMonster[5].OnShow(index, &kirby);
+	}
+	
+	kirby.OnShow(index);
 }
 }

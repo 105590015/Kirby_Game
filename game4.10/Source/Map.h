@@ -13,9 +13,9 @@ namespace game_framework {
 		int  ScreenX(int x);				// 螢幕 x 座標
 		int  ScreenY(int y);				// 螢幕 y 座標
 		void Initialize();					// 設定為初始值
-		void LoadBitmap(int pic);		// 載入圖形
+		void LoadBitmap(int,COLORREF,char*,string);		// 載入圖形
 		void OnMove(int,int);               // 地圖移動
-		void OnShow(string);						// 將圖形貼到畫面
+		void OnShow();						// 將圖形貼到畫面
 		void SetXY(int nx, int ny);	        // 設定螢幕畫面左上角的座標
 		bool isEmpty(int x, int y);         // 判斷碰壁;
 		void SetMouse(int ,int);			//設定滑鼠座標
@@ -25,12 +25,14 @@ namespace game_framework {
 		CMovingBitmap background;			// 地圖
 		CMovingBitmap foreground;
 		CMovingBitmap ball;					//顯示地形圖
+
 	private:
 		bool Lclick=false, Rclick=false;    //滑鼠左鍵與右鍵是否按下 預設為否
 		int mx, my;							//滑鼠座標
 		int sx, sy;							// 左上角座標
 		int mapSize_X, mapSize_Y;			//地圖所切的格數
 		int map[100][200];
+		string Mapfile;
 		/*int map[48][64] = {
 			{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
 		{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },

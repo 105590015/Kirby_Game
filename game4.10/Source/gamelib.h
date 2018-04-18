@@ -231,6 +231,7 @@ public:
 	void  OnMove();					// 依頻率更換bitmap
 	void  OnMove(bool);             // 新增判斷左右移動
 	void  OnShow();					// 將動畫貼到螢幕
+	void  OnShow(double);					// 將動畫貼到螢幕
 	void  Reset();					// 重設播放順序回到第一張圖形
 	void  SetDelayCount(int);		// 設定動畫播放速度的常數(越大越慢)
 	void  SetTopLeft(int,int);		// 將動畫的左上角座標移至 (x,y)

@@ -52,15 +52,18 @@ namespace game_framework {
 		//sy = Y_POS;
 	}
 
-	void Map::LoadBitmap(int pic)
+	void Map::LoadBitmap(int fore,COLORREF color,char* back,string file)
 	{
-		foreground.LoadBitmap(pic,RGB(255,255,255));
-		background.LoadBitmap(".\\RES\\background.bmp");
+		
+		foreground.LoadBitmap(fore,color);
+		background.LoadBitmap(back);
+		Mapfile = file;
 		mapSize_X = (foreground.Width() * 10 + 5) / 200;
 		mapSize_Y = (foreground.Height() * 10 + 5) / 200;
 		ball.LoadBitmap(IDB_BALL, RGB(0, 0, 0));
+		
 	}
-
+	
 	void Map::OnMove(int x, int y)		//地圖隨人物移動
 	{
 		sx = x - SIZE_X / 2;			//讓人物保持在地圖中間
@@ -83,7 +86,7 @@ namespace game_framework {
 		}
 	}
 
-	void Map::OnShow(string Mapfile)
+	void Map::OnShow()
 	{
 		background.SetTopLeft(0, 0);
 		background.ShowBitmap();
@@ -105,31 +108,31 @@ namespace game_framework {
 			}			
 		}
 		file.close();
-		ofstream output(Mapfile);
-		for (int i = 0; i < mapSize_Y; i++) {
-			for (int j = 0; j < mapSize_X; j++) {
-				int x = j * 20 - sx; // 算出第(i, j)這一格的 x 螢幕座標
-				int y = i * 20 - sy; // 算出第(i, j)這一格的 y 螢幕座標
-				//if (mx >= x && mx <= x + 20 && my >= y && my <= y + 20) { //判斷滑鼠位置
-				//	if (Lclick) {				//左鍵為設立障礙物
-				//		map[i][j] = 1;
-				//	}
+		//ofstream output(Mapfile);
+		//for (int i = 0; i < mapSize_Y; i++) {
+		//	for (int j = 0; j < mapSize_X; j++) {
+		//		int x = j * 20 - sx; // 算出第(i, j)這一格的 x 螢幕座標
+		//		int y = i * 20 - sy; // 算出第(i, j)這一格的 y 螢幕座標
+		//		//if (mx >= x && mx <= x + 20 && my >= y && my <= y + 20) { //判斷滑鼠位置
+		//		//	if (Lclick) {				//左鍵為設立障礙物
+		//		//		map[i][j] = 1;
+		//		//	}
 
-				//	else if (Rclick) {			//右鍵為取消障礙物
-				//		map[i][j] = 0;
-				//	}
-				//}
-				output << map[i][j] << " ";		//將改變輸出
-				//switch (map[i][j]) {
-				//case 1:
-				//	ball.SetTopLeft(x, y); // 指定第(i, j)這一格的座標
-				//	ball.ShowBitmap();
-				//	break;
+		//		//	else if (Rclick) {			//右鍵為取消障礙物
+		//		//		map[i][j] = 0;
+		//		//	}
+		//		//}
+		//		output << map[i][j] << " ";		//將改變輸出
+		//		//switch (map[i][j]) {
+		//		//case 1:
+		//		//	ball.SetTopLeft(x, y); // 指定第(i, j)這一格的座標
+		//		//	ball.ShowBitmap();
+		//		//	break;
 
-				//}
-			}
-			output << endl;
-			}
+		//		//}
+		//	}
+		//	output << endl;
+		//	}
 	}
 
 	void Map::SetXY(int nx, int ny)
