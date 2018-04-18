@@ -31,22 +31,22 @@ namespace game_framework {
 		return 0;
 	}
 
-	bool Enemy::IsAlive()
-	{
-		return is_alive;
-	}
-
-	bool Enemy::IsSucked()
-	{
-		return is_sucked;
-	}
-
-	void Enemy::hurted(Kirby* kirby)
+	void Enemy::Hurted(Kirby* kirby)
 	{
 		if (HitRectangle(kirby->GetX1(), kirby->GetY1(), kirby->GetX2(), kirby->GetY2()) && kirby->IsKick())
 			hp -= 10;
-		if (hp <= 0)
+		if ((kirby->IsKick() && hp <= 0) || (kirby->IsSuck() && x - kirby->GetX1() <= 1 && x - kirby->GetX1() >= -1 && y - kirby->GetY1() <= 1 && y - kirby->GetY1() >= -1))
 			is_alive = false;
+	}
+
+	void Enemy::Sucked(Kirby* kirby)
+	{
+		if (ComputeDistance(kirby->GetX1(), kirby->GetY1()) < 50.0 && kirby->IsSuck())
+		{
+			hp -= 10;
+			if (hp <= 0)
+				is_sucked = true;
+		}
 	}
 
 	void Enemy::OnShow(Map *m, Kirby *kirby)
@@ -69,5 +69,11 @@ namespace game_framework {
 		int y2 = GetY2();	// 右下角y座標
 		// 檢測矩形與參數矩形是否有交集
 		return (tx2 >= x1 && tx1 <= x2 && ty2 >= y1 && ty1 <= y2);
+	}
+
+	double Enemy::ComputeDistance(int tx1, int ty1)
+	{
+		int temp = (x - tx1)*(x - tx1) + (y - ty1)*(y - ty1);
+		return sqrt(temp);
 	}
 }

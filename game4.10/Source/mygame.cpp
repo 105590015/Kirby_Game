@@ -298,7 +298,10 @@ void CGameStateRun::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 	if (nChar == KEY_DOWN)
 		kirby.SetMovingDown(false);
 	if (nChar == KEY_Attack)
+	{
 		kirby.SetAttack(false);
+		kirby.SetSuck(false);
+	}
 	if (nChar == KEY_Run)
 		kirby.SetRun(false);
 }

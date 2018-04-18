@@ -41,7 +41,7 @@ namespace game_framework {
 		JumpDistance = 60;
 		KickDistance = 42;
 		ExhaleDelay = 10;
-		isMovingLeft = isMovingRight = isMovingUp = isMovingDown = isSpace = isJump = isAttack = isKick = isFly = isHurted = false;
+		isMovingLeft = isMovingRight = isMovingUp = isMovingDown = isSpace = isJump = isAttack = isKick = isFly = isHurted = isSuck = false;
 		is_alive = RightOrLeft = true;
 		isRunning = false;
 	}
@@ -59,6 +59,11 @@ namespace game_framework {
 	bool Kirby::IsKick()
 	{
 		return isKick;
+	}
+
+	bool Kirby::IsSuck()
+	{
+		return isSuck;
 	}
 
 	void Kirby::LoadBitmap()
@@ -141,6 +146,14 @@ namespace game_framework {
 		RunRight.AddBitmap(".\\RES\\Kirby\\RUN_R_5.bmp", RGB(207, 176, 255));
 		RunRight.AddBitmap(".\\RES\\Kirby\\RUN_R_6.bmp", RGB(207, 176, 255));
 		RunRight.AddBitmap(".\\RES\\Kirby\\RUN_R_7.bmp", RGB(207, 176, 255));
+		suckLeft.AddBitmap(".\\RES\\Kirby\\KB_Suck_L_1.bmp", RGB(255, 255, 255));
+		suckLeft.AddBitmap(".\\RES\\Kirby\\KB_Suck_L_2.bmp", RGB(255, 255, 255));
+		suckLeft.AddBitmap(".\\RES\\Kirby\\KB_Suck_L_3.bmp", RGB(255, 255, 255));
+		suckLeft.AddBitmap(".\\RES\\Kirby\\KB_Suck_L_4.bmp", RGB(255, 255, 255));
+		suckRight.AddBitmap(".\\RES\\Kirby\\KB_Suck_R_1.bmp", RGB(255, 255, 255));
+		suckRight.AddBitmap(".\\RES\\Kirby\\KB_Suck_R_2.bmp", RGB(255, 255, 255));
+		suckRight.AddBitmap(".\\RES\\Kirby\\KB_Suck_R_3.bmp", RGB(255, 255, 255));
+		suckRight.AddBitmap(".\\RES\\Kirby\\KB_Suck_R_4.bmp", RGB(255, 255, 255));
 	}
 
 	void Kirby::OnMove(Map *m)
@@ -158,7 +171,7 @@ namespace game_framework {
 		}
 		else
 		{
-			if (isMovingLeft)
+			if (isMovingLeft && !isSuck)
 			{
 				RightOrLeft = false;        //設定面向左邊
 				//先判斷左邊是否可走且沒有按Down，狀態要是向左飛行中或正常向左走
@@ -172,7 +185,7 @@ namespace game_framework {
 						x -= STEP_SIZE;
 				}
 			}
-			else if (isMovingRight)
+			else if (isMovingRight && !isSuck)
 			{
 				RightOrLeft = true;          //設定面向右邊
 				//先判斷右邊是否可走且沒有按Down，狀態要是向右飛行中或正常向右走
@@ -262,6 +275,8 @@ namespace game_framework {
 			hurtedR.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
 			RunRight.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
 			RunLeft.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
+			suckLeft.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
+			suckRight.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
 		}
 		if (isHurted)   // 被攻擊
 		{
@@ -362,6 +377,20 @@ namespace game_framework {
 			else
 				downAttackL.ShowBitmap();
 		}
+		else if (isAttack)  //吸怪
+		{
+			isSuck = true;
+			if (RightOrLeft)
+			{
+				suckRight.OnMove();
+				suckRight.OnShow();
+			}
+			else
+			{
+				suckLeft.OnMove();
+				suckLeft.OnShow();
+			}
+		}
 		else if (isMovingDown && !m->isEmpty(GetX2() - originR.Width() / 2, GetY2() + 1))   //縮小
 		{
 			if(RightOrLeft)
@@ -443,6 +472,11 @@ namespace game_framework {
 	void Kirby::SetAttack(bool flag)
 	{
 		isAttack = flag;
+	}
+
+	void Kirby::SetSuck(bool flag)
+	{
+		isSuck = flag;
 	}
 
 	void Kirby::SetRun(bool flag) {

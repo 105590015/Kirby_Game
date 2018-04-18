@@ -59,34 +59,33 @@ namespace game_framework {
 	}
 
 	void NormalMonster::OnShow(Map *m, Kirby *kirby)
-	{
-		if (IsAlive())
+	{			
+		goLeft.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
+		goRight.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
+		isSuckedL.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
+		isSuckedR.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
+		die.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
+		if (is_alive)
 		{
-			goLeft.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
-			goRight.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
-			isSuckedL.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
-			isSuckedR.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
-			die.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
-			if (!IsSucked() && !RightOrLeft)
+			if (!is_sucked && !RightOrLeft)
 			{
 				goLeft.OnShow();
 				goLeft.OnMove();
 			}
-			else if (!IsSucked() && RightOrLeft)
+			else if (!is_sucked && RightOrLeft)
 			{
 				goRight.OnShow();
 				goRight.OnMove();
 			}
-			else if (IsSucked() && !RightOrLeft && x!=kirby->GetX1() && y!=kirby->GetY1())
+			else if (is_sucked && !RightOrLeft && (x!=kirby->GetX1() || y!=kirby->GetY1()))
 				isSuckedL.ShowBitmap();
-			else if (IsSucked() && RightOrLeft && x != kirby->GetX1() && y != kirby->GetY1())
+			else if (is_sucked && RightOrLeft && (x != kirby->GetX1() || y != kirby->GetY1()))
 				isSuckedR.ShowBitmap();
-			hurted(kirby);
 		}
 		else
 		{
 			die.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
-			if (!die.IsFinalBitmap())
+			if (!die.IsFinalBitmap() && !is_sucked)
 			{
 				die.OnShow();
 				die.OnMove();
@@ -96,35 +95,40 @@ namespace game_framework {
 
 	void NormalMonster::OnMove(Map *m, Kirby *kirby)
 	{
-		if(IsAlive())
-			Attack(kirby);
-		if (IsAlive() && !IsSucked() && !RightOrLeft && m->isEmpty(GetX1() - 1, GetY1() + goLeft.Height() / 2))
+		if (is_alive)
 		{
-			if (x <= startX) //ǐ跋办程オ璶奔繷
-				RightOrLeft = true;
-			else
-				x -= 1;
-		}
-		else if(IsAlive() && !IsSucked() && RightOrLeft && m->isEmpty(GetX2() + 1, GetY2() - goLeft.Height() / 2))
-		{
-			if (x >= endX)  //ǐ跋办程璶奔繷
-				RightOrLeft = false;
-			else
-				x += 1;
-		}
-		else if (IsSucked())
-		{
-			if (x > kirby->GetX1())
-				x -= 1;
-			else if (x < kirby->GetX1())
-				x += 1;
-			if (y > kirby->GetY1())
-				y -= 1;
-			else if (y < kirby->GetY1())
+			Hurted(kirby);
+			Sucked(kirby);
+			if(!is_sucked)
+				Attack(kirby);
+			if (is_alive && !is_sucked && !RightOrLeft && m->isEmpty(GetX1() - 1, GetY1() + goLeft.Height() / 2))
+			{
+				if (x <= startX) //ǐ跋办程オ璶奔繷
+					RightOrLeft = true;
+				else
+					x -= 1;
+			}
+			else if (is_alive && !is_sucked && RightOrLeft && m->isEmpty(GetX2() + 1, GetY2() - goLeft.Height() / 2))
+			{
+				if (x >= endX)  //ǐ跋办程璶奔繷
+					RightOrLeft = false;
+				else
+					x += 1;
+			}
+			else if (is_sucked)
+			{
+				if (x > kirby->GetX1())
+					x -= STEP_SIZE;
+				else if (x < kirby->GetX1())
+					x += STEP_SIZE;
+				if (y > kirby->GetY1())
+					y -= STEP_SIZE;
+				else if (y < kirby->GetY1())
+					y += STEP_SIZE;
+			}
+			if (is_alive && is_sucked && m->isEmpty(GetX2() - goLeft.Width() / 2, GetY2() + 1)) //ま
 				y += 1;
 		}
-		if (IsAlive() && !IsSucked() && m->isEmpty(GetX2() - goLeft.Width() / 2, GetY2() + 1)) //ま
-				y += 1;
 	}
 
 	void NormalMonster::Attack(Kirby* kirby)

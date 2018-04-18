@@ -9,9 +9,8 @@ namespace game_framework {
 		Enemy();
 		int GetX1();                                  // 左上角 x 座標
 		int GetY1();                                  // 左上角 y 座標
-		bool IsAlive();
-		bool IsSucked();
-		void hurted(Kirby* kirby);                    // 被攻擊
+		void Hurted(Kirby* kirby);                    // 被攻擊
+		void Sucked(Kirby* kirby);                    // 被吸
 		virtual int GetX2();                          // 右下角 x 座標
 		virtual int GetY2();                          // 右下角 y 座標
 		virtual void OnShow(Map *m, Kirby *kirby);    // 顯示
@@ -22,6 +21,7 @@ namespace game_framework {
 		bool is_alive;				// 是否活著
 		bool is_sucked;             // 是否被吸
 		bool RightOrLeft;           // 判斷左右
-		bool HitRectangle(int tx1, int ty1, int tx2, int ty2);	// 是否碰到參數範圍的矩形
+		bool HitRectangle(int tx1, int ty1, int tx2, int ty2);   // 是否碰到參數範圍的矩形
+		double ComputeDistance(int tx1, int ty1);                   // 計算距離
 	};
 }
