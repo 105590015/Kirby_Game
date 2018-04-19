@@ -44,7 +44,9 @@
 #include "Kirby.h"
 #include "Map.h"
 #include "NormalMonster.h"
-#include"Door.h"
+#include "Door.h"
+#include "Gas.h"
+#include "Start.h"
 
 namespace game_framework {
 	/////////////////////////////////////////////////////////////////////////////
