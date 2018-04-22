@@ -18,6 +18,7 @@ namespace game_framework {
 		void OnMove();               // 地圖移動
 		void OnShow(Map *);						// 將圖形貼到畫面
 		void SetEnter(bool flag);	// 設定是否正進入傳送門
+		void SetTopLeft(int, int);
 		bool IsEnter(Kirby*);
 
 	protected:

@@ -195,7 +195,8 @@ void CGameStateRun::OnBeginState()
 	map.Initialize();
 	map1.Initialize();
 	kirby.Initialize(640,400);
-	door.Initialize(993,367, 1);
+	gate_0.Initialize(993,367, 1);
+	gate_1.Initialize(30, 260, 0);
 	normalMonster[0].Initialize(50, 100, 50, 220, false);
 	normalMonster[1].Initialize(550, 100, 550, 690, false);
 	normalMonster[2].Initialize(1010, 100, 1010, 1208, false);
@@ -209,19 +210,26 @@ void CGameStateRun::OnBeginState()
 void CGameStateRun::OnMove()							// 移動遊戲元素
 {
 
-	door.OnMove();
+	
 	index->OnMove(kirby.GetX1(),kirby.GetY1());
 	kirby.OnMove(index);
-	normalMonster[0].OnMove(index, &kirby);
-	normalMonster[1].OnMove(index, &kirby);
-	normalMonster[2].OnMove(index, &kirby);
-	normalMonster[3].OnMove(index, &kirby);
-	normalMonster[4].OnMove(index, &kirby);
-	normalMonster[5].OnMove(index, &kirby);
-	if (door.IsEnter(&kirby)) {
+	if (mapNum == 0) {
+		gate_0.OnMove();
+		normalMonster[0].OnMove(index, &kirby);
+		normalMonster[1].OnMove(index, &kirby);
+		normalMonster[2].OnMove(index, &kirby);
+		normalMonster[3].OnMove(index, &kirby);
+		normalMonster[4].OnMove(index, &kirby);
+		normalMonster[5].OnMove(index, &kirby);
+	}
+
+	else if (mapNum == 1) {
+		gate_1.OnMove();
+	}
+	if (gate_0.IsEnter(&kirby)) {
 		index = &map1;
 		kirby.SetXY(10, 10);
-		mapNum = door.GetMapNum();
+		mapNum = gate_0.GetMapNum();
 	}
 }
 
@@ -237,7 +245,8 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 		normalMonster[3].LoadBitmap();
 		normalMonster[4].LoadBitmap();
 		normalMonster[5].LoadBitmap();
-		door.LoadBitmap();
+		gate_0.LoadBitmap();
+		gate_1.LoadBitmap();
 		index = &map;
 		mapNum = 0;
 
@@ -262,7 +271,7 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 		kirby.SetMovingRight(true);
 	if (nChar == KEY_UP) {
 		kirby.SetMovingUp(true);
-		door.SetEnter(true);
+		gate_0.SetEnter(true);
 	}
 	if (nChar == KEY_DOWN)
 		kirby.SetMovingDown(true);
@@ -293,7 +302,7 @@ void CGameStateRun::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 		kirby.SetMovingRight(false);
 	if (nChar == KEY_UP) {
 		kirby.SetMovingUp(false);
-		door.SetEnter(false);
+		gate_0.SetEnter(false);
 	}
 	if (nChar == KEY_DOWN)
 		kirby.SetMovingDown(false);
@@ -344,13 +353,18 @@ void CGameStateRun::OnShow()
 	//map.OnShow();
 	index->OnShow();
 	if (mapNum == 0) {
-		door.OnShow(index);
+		gate_0.OnShow(index);
 		normalMonster[0].OnShow(index, &kirby);
 		normalMonster[1].OnShow(index, &kirby);
 		normalMonster[2].OnShow(index, &kirby);
 		normalMonster[3].OnShow(index, &kirby);
 		normalMonster[4].OnShow(index, &kirby);
 		normalMonster[5].OnShow(index, &kirby);
+	}
+
+	else if (mapNum==1)
+	{
+		gate_1.OnShow(index);
 	}
 	
 	kirby.OnShow(index);
