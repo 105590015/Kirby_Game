@@ -77,10 +77,13 @@ namespace game_framework {
 				goRight.OnShow();
 				goRight.OnMove();
 			}
-			else if (is_sucked && !RightOrLeft && (x!=kirby->GetX1() || y!=kirby->GetY1()))
-				isSuckedL.ShowBitmap();
-			else if (is_sucked && RightOrLeft && (x != kirby->GetX1() || y != kirby->GetY1()))
-				isSuckedR.ShowBitmap();
+			else if (is_sucked && !((x - kirby->GetX1() >= -1) && (x - kirby->GetX1() <= 1)) || !((y - kirby->GetY1() >= -1) && (y - kirby->GetY1() <= 1)))
+			{
+				if(!RightOrLeft)
+					isSuckedL.ShowBitmap();
+				else
+					isSuckedR.ShowBitmap();
+			}				
 		}
 		else
 		{
@@ -125,6 +128,8 @@ namespace game_framework {
 					y -= STEP_SIZE;
 				else if (y < kirby->GetY1())
 					y += STEP_SIZE;
+				if ((x - kirby->GetX1() >= -1) && (x - kirby->GetX1() <= 1) && (y - kirby->GetY1() >= -1) && (y - kirby->GetY1() <= 1))
+					is_alive = false;
 			}
 			if (is_alive && is_sucked && m->isEmpty(GetX2() - goLeft.Width() / 2, GetY2() + 1)) //¦a§l¤Þ¤O
 				y += 1;
