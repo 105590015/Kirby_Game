@@ -211,7 +211,7 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 
 	door.OnMove();
 	index->OnMove(kirby.GetX1(),kirby.GetY1());
-	kirby.OnMove(index);
+	if(kirby.IsAlive())  kirby.OnMove(index);
 	if (mapNum == 0)
 	{
 		normalMonster[0].OnMove(index, &kirby);
@@ -243,10 +243,6 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 		door.LoadBitmap();
 		index = &map;
 		mapNum = 0;
-
-
-		Blood.LoadBitmap(".//RES//Blood_6.bmp",RGB(255,255,255));
-
 
 	CAudio::Instance()->Load(AUDIO_BACKGROUND, "sounds\\Kirby_background.mp3");  //背景音樂
 }
@@ -359,11 +355,6 @@ void CGameStateRun::OnShow()
 		normalMonster[5].OnShow(index, &kirby);
 	}
 	
-	kirby.OnShow(index);
-
-	Blood.SetTopLeft(200, 200);
-	Blood.ShowBitmap();
-
-
+	if(kirby.IsAlive()) kirby.OnShow(index);
 }
 }

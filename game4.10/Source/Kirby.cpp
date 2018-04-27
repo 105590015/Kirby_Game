@@ -37,15 +37,23 @@ namespace game_framework {
 		const int Y_POS = py;
 		x = X_POS;
 		y = Y_POS;
-		hp = 5;
+		hp = 6;
 		jumpDistance = 60;
 		kickDistance = 48;
 		exhaleDelay = 10;
 		gasDistance = startDistance = 0;
-		isMovingLeft = isMovingRight = isMovingUp = isMovingDown = isSpace = isJump = isAttack = isKick = isFly = isHurted = isSuck = isBig = isSwallow = isRunning = false;
+		InvincibleTime = 0;
+		isMovingLeft = isMovingRight = isMovingUp = isMovingDown = isSpace = isJump = isAttack = isKick = isFly = isHurted = isSuck = isBig = isSwallow = isRunning = isInvincible = false;
 		isAlive = rightOrLeft = true;
 		gas.LoadBitmap();
 		start.LoadBitmap();
+		blood0.SetTopLeft(SIZE_X / 2 - blood0.Width() / 2, SIZE_Y - blood0.Height());
+		blood1.SetTopLeft(SIZE_X / 2 - blood1.Width() / 2, SIZE_Y - blood1.Height());
+		blood2.SetTopLeft(SIZE_X / 2 - blood2.Width() / 2, SIZE_Y - blood2.Height());
+		blood3.SetTopLeft(SIZE_X / 2 - blood3.Width() / 2, SIZE_Y - blood3.Height());
+		blood4.SetTopLeft(SIZE_X / 2 - blood4.Width() / 2, SIZE_Y - blood4.Height());
+		blood5.SetTopLeft(SIZE_X / 2 - blood5.Width() / 2, SIZE_Y - blood5.Height());
+		blood6.SetTopLeft(SIZE_X / 2 - blood6.Width() / 2, SIZE_Y - blood6.Height());
 	}
 
 	bool Kirby::IsAlive()
@@ -205,6 +213,14 @@ namespace game_framework {
 		swallowL.AddBitmap(".\\RES\\Kirby\\BKB_Swallow_L_3.bmp", RGB(255, 255, 255));
 		swallowL.AddBitmap(".\\RES\\Kirby\\BKB_Swallow_L_4.bmp", RGB(255, 255, 255));
 		swallowL.AddBitmap(".\\RES\\Kirby\\BKB_Swallow_L_5.bmp", RGB(255, 255, 255));
+
+		blood0.LoadBitmap(".\\RES\\Blood_0.bmp", RGB(255, 255, 255));
+		blood1.LoadBitmap(".\\RES\\Blood_1.bmp", RGB(255, 255, 255));
+		blood2.LoadBitmap(".\\RES\\Blood_2.bmp", RGB(255, 255, 255));
+		blood3.LoadBitmap(".\\RES\\Blood_3.bmp", RGB(255, 255, 255));
+		blood4.LoadBitmap(".\\RES\\Blood_4.bmp", RGB(255, 255, 255));
+		blood5.LoadBitmap(".\\RES\\Blood_5.bmp", RGB(255, 255, 255));
+		blood6.LoadBitmap(".\\RES\\Blood_6.bmp", RGB(255, 255, 255));
 	}
 
 	void Kirby::OnMove(Map *m)
@@ -288,45 +304,54 @@ namespace game_framework {
 
 	void Kirby::OnShow(Map *m)
 	{
-		if (isAlive) {    //全部動畫位子設定
-			originR.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
-			originL.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
-			goL.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
-			goR.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
-			prepareFlyR.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
-			prepareFlyL.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
-			flyR.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
-			flyL.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
-			exhaleR.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
-			exhaleL.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
-			jumpR.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
-			jumpL.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
-			downR.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
-			downL.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
-			landingL.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
-			landingR.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
-			downAttackL.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
-			downAttackR.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
-			hurtedL.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
-			hurtedR.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
-			runR.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
-			runL.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
-			suckL.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
-			suckR.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
-			bigOriginR.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
-			bigOriginL.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
-			bigJumpR.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
-			bigJumpL.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
-			bigLandingR.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
-			bigLandingL.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
-			threwR.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
-			threwL.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
-			bigGoL.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
-			bigGoR.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
-			swallowR.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
-			swallowL.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
-			Attack(m);
-		}
+		originR.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
+		originL.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
+		goL.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
+		goR.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
+		prepareFlyR.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
+		prepareFlyL.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
+		flyR.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
+		flyL.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
+		exhaleR.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
+		exhaleL.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
+		jumpR.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
+		jumpL.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
+		downR.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
+		downL.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
+		landingL.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
+		landingR.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
+		downAttackL.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
+		downAttackR.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
+		hurtedL.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
+		hurtedR.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
+		runR.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
+		runL.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
+		suckL.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
+		suckR.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
+		bigOriginR.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
+		bigOriginL.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
+		bigJumpR.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
+		bigJumpL.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
+		bigLandingR.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
+		bigLandingL.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
+		threwR.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
+		threwL.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
+		bigGoL.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
+		bigGoR.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
+		swallowR.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
+		swallowL.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
+		Attack(m);
+
+		if (hp == 6) blood6.ShowBitmap();
+		else if (hp == 5) blood5.ShowBitmap();
+		else if (hp == 4) blood4.ShowBitmap();
+		else if (hp == 3) blood3.ShowBitmap();
+		else if (hp == 2) blood2.ShowBitmap();
+		else if (hp == 1) blood1.ShowBitmap();
+		else blood0.ShowBitmap();
+
+		if (InvincibleTime != 0) InvincibleTime--;
+		else isInvincible = false;
 
 		if (!isMovingUp && !isFly)   //沒吸氣也沒飛行就要reset吸氣動畫
 		{
@@ -558,8 +583,17 @@ namespace game_framework {
 
 	void Kirby::Hurted()
 	{
-		hp--;
-		isHurted = true;
+		if (!isInvincible)
+		{
+			hp--;
+			isInvincible = true;
+			InvincibleTime = 45;
+		}
+
+		if (hp > 0)
+			isHurted = true;
+		else
+			isAlive = false;
 	}
 
 	void Kirby::SetMovingDown(bool flag)
