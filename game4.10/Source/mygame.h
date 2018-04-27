@@ -105,7 +105,6 @@ namespace game_framework {
 		NormalMonster normalMonster[6];                 // 怪物
 		Door door;
 		int mapNum;							//設定現在為第幾號地圖
-		CMovingBitmap Blood;
 	};
 
 	/////////////////////////////////////////////////////////////////////////////

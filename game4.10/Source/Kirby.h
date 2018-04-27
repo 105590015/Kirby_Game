@@ -42,6 +42,7 @@ namespace game_framework {
 		// 含東西卡比
 		CMovingBitmap bigOriginR, bigOriginL, bigJumpR, bigJumpL, bigLandingR, bigLandingL, threwR, threwL;
 		CAnimation bigGoL, bigGoR, swallowR, swallowL;
+		CMovingBitmap blood6, blood5, blood4, blood3, blood2, blood1, blood0;
 		Gas gas;
 		Start start;
 		int x, y;					// 左上角座標
@@ -68,6 +69,8 @@ namespace game_framework {
 		int gasDistance;            // 氣體飛行距離
 		int startDistance;          // 星星飛行距離
 		bool bulletDirection;       // 吐出物體方向
+		bool isInvincible;          // 是否無敵
+		int InvincibleTime;         // 無敵時間
 		virtual void Attack(Map *m);// 攻擊
 		int hp;
 	};
