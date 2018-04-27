@@ -129,7 +129,10 @@ namespace game_framework {
 				else if (y < kirby->GetY1())
 					y += STEP_SIZE;
 				if ((x - kirby->GetX1() >= -1) && (x - kirby->GetX1() <= 1) && (y - kirby->GetY1() >= -1) && (y - kirby->GetY1() <= 1))
+				{
+					kirby->SetBig(true);
 					is_alive = false;
+				}
 			}
 			if (is_alive && is_sucked && m->isEmpty(GetX2() - goLeft.Width() / 2, GetY2() + 1)) //¦a§l¤Þ¤O
 				y += 1;

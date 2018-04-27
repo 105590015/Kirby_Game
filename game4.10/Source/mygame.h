@@ -103,9 +103,9 @@ namespace game_framework {
 		Map map1;
 		Map *index;
 		NormalMonster normalMonster[6];                 // 怪物
-		Door gate_0;
-		Door gate_1;
+		Door door;
 		int mapNum;							//設定現在為第幾號地圖
+		CMovingBitmap Blood;
 	};
 
 	/////////////////////////////////////////////////////////////////////////////

@@ -252,7 +252,7 @@ namespace game_framework {
 			}
 			if (isMovingUp && !isBig)
 			{
-				if (isFly && m->isEmpty(GetX1() + flyR.Width() / 2, GetY1() - STEP_SIZE))  //判斷飛行中上面是否可走
+				if (isFly && m->isEmpty_2(GetX1() + flyR.Width() / 2, GetY1() - STEP_SIZE))  //判斷飛行中上面是否可走
 				{
 					if (y <= 0)  //邊界
 						y = 0;
@@ -260,10 +260,10 @@ namespace game_framework {
 						y -= STEP_SIZE;
 				}
 			}
-			if (isJump)
+			if (isJump && !isSuck)
 			{
 				jumpDistance-=3;
-				if (m->isEmpty(GetX1() + jumpR.Width() / 2, GetY1() - 3))  //會不會撞到頭
+				if (m->isEmpty_2(GetX1() + jumpR.Width() / 2, GetY1() - 3))  //會不會撞到頭
 					y -= 3;
 				if (jumpDistance == 0)
 				{
@@ -425,7 +425,21 @@ namespace game_framework {
 		}
 		else
 		{
-			if (isJump)   //跳躍
+			if (isAttack && !isFly && !isMovingDown)  //吸怪
+			{
+				isSuck = true;
+				if (rightOrLeft)
+				{
+					suckR.OnMove();
+					suckR.OnShow();
+				}
+				else
+				{
+					suckL.OnMove();
+					suckL.OnShow();
+				}
+			}
+			else if (isJump)   //跳躍
 			{
 				if(rightOrLeft)
 					jumpR.ShowBitmap();
@@ -504,20 +518,6 @@ namespace game_framework {
 					downAttackR.ShowBitmap();
 				else
 					downAttackL.ShowBitmap();
-			}
-			else if (isAttack)  //吸怪
-			{
-				isSuck = true;
-				if (rightOrLeft)
-				{
-					suckR.OnMove();
-					suckR.OnShow();
-				}
-				else
-				{
-					suckL.OnMove();
-					suckL.OnShow();
-				}
 			}
 			else if (isMovingDown && !m->isEmpty(GetX2() - originR.Width() / 2, GetY2() + 1))   //縮小
 			{

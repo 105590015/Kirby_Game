@@ -50,6 +50,24 @@ namespace game_framework {
 		//const int Y_POS = 240;
 		//sx = X_POS;
 		//sy = Y_POS;
+
+		//ofstream set(Mapfile);			//第一次建立地圖設立初始值
+		//for (int i = 0; i < mapSize_Y; i++) {
+		//	for (int j = 0; j < mapSize_X; j++) {
+		//		set << 0 << " ";
+		//	}
+		//	set << endl;
+		//}
+		//set.close();
+
+		ifstream file(Mapfile);			//將資料存入陣列
+		for (int i = 0; i<mapSize_Y; i++)
+		{
+			for (int j = 0; j < mapSize_X; j++) {
+				file >> map[i][j];
+			}
+		}
+		file.close();
 	}
 
 	void Map::LoadBitmap(int fore,COLORREF color,char* back,string file)
@@ -58,9 +76,10 @@ namespace game_framework {
 		foreground.LoadBitmap(fore,color);
 		background.LoadBitmap(back);
 		Mapfile = file;
-		mapSize_X = (foreground.Width() * 10 + 9) / 200;
-		mapSize_Y = (foreground.Height() * 10 + 9) / 200;
-		ball.LoadBitmap(IDB_BALL, RGB(0, 0, 0));
+		mapSize_X = (foreground.Width() * 10 + 5) / 100;
+		mapSize_Y = (foreground.Height() * 10 + 5) / 100;
+		ball.LoadBitmap(".//RES//ball.bmp", RGB(0, 0, 0));
+		ball_1.LoadBitmap(".//RES//ball_1.bmp", RGB(0, 0, 0));
 		
 	}
 	
@@ -92,31 +111,22 @@ namespace game_framework {
 		background.ShowBitmap();
 		foreground.SetTopLeft(-sx, -sy); // 指定第(i, j)這一格的座標
 		foreground.ShowBitmap();
-		/*ofstream set(Mapfile);			//第一次建立地圖設立初始值
-		for (int i = 0; i < mapSize_Y; i++) {
-			for (int j = 0; j < mapSize_X; j++) {
-				set << 0 << " ";
-			}
-			set << endl;
-		}
-		set.close();*/
-		ifstream file(Mapfile);			//將資料存入陣列
-		for (int i = 0; i<mapSize_Y; i++)
-		{
-			for (int j = 0; j < mapSize_X; j++) {
-				file >> map[i][j];
-			}			
-		}
-		file.close();
+
+		
+		
 		ofstream output(Mapfile);
 		for (int i = 0; i < mapSize_Y; i++) {
 			for (int j = 0; j < mapSize_X; j++) {
-				int x = j * 20 - sx; // 算出第(i, j)這一格的 x 螢幕座標
-				int y = i * 20 - sy; // 算出第(i, j)這一格的 y 螢幕座標
+				int x = j * 10 - sx; // 算出第(i, j)這一格的 x 螢幕座標
+				int y = i * 10 - sy; // 算出第(i, j)這一格的 y 螢幕座標
 				if (mx >= x && mx <= x + 20 && my >= y && my <= y + 20) { //判斷滑鼠位置
 					if (Lclick) {				//左鍵為設立障礙物
 						map[i][j] = 1;
 					}
+
+					//if (Lclick) {				//左鍵為設立障礙物
+					//	map[i][j] = 2;
+					//}
 
 					else if (Rclick) {			//右鍵為取消障礙物
 						map[i][j] = 0;
@@ -124,10 +134,16 @@ namespace game_framework {
 				}
 				output << map[i][j] << " ";		//將改變輸出
 				switch (map[i][j]) {
-				case 1:
-					ball.SetTopLeft(x, y); // 指定第(i, j)這一格的座標
-					ball.ShowBitmap();
-					break;
+					case 1:
+						ball.SetTopLeft(x, y); // 指定第(i, j)這一格的座標
+						ball.ShowBitmap();
+						break;
+
+					case 2:
+						ball_1.SetTopLeft(x, y);
+						ball_1.ShowBitmap();
+						break;
+						
 
 				}
 			}
@@ -143,9 +159,17 @@ namespace game_framework {
 
 	bool Map::isEmpty(int x, int y) // (x, y) 為地圖的點座標
 	{
-		int gx = x / 20; // 轉換為X軸格座標(整數除法)
-		int gy = y / 20; // 轉換為Y軸格座標(整數除法)
+		int gx = x / 10; // 轉換為X軸格座標(整數除法)
+		int gy = y / 10; // 轉換為Y軸格座標(整數除法)
 		//map[x][y]中的y表示X軸的格數，x表示Y軸
 		return map[gy][gx] == 0; // 假設 0 代表空的
+	}
+
+	bool Map::isEmpty_2(int x, int y) // (x, y) 為地圖的點座標
+	{
+		int gx = x / 10; // 轉換為X軸格座標(整數除法)
+		int gy = y / 10; // 轉換為Y軸格座標(整數除法)
+		//map[x][y]中的y表示X軸的格數，x表示Y軸
+		return map[gy][gx] == 0 || map[gy][gx]==2; // 假設 0 代表空的
 	}
 }

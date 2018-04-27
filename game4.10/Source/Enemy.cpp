@@ -36,11 +36,7 @@ namespace game_framework {
 		if (HitRectangle(kirby->GetX1(), kirby->GetY1(), kirby->GetX2(), kirby->GetY2()) && kirby->IsKick())
 			hp -= 10;
 		if ((kirby->IsKick() && hp <= 0) || (kirby->IsSuck() && x - kirby->GetX1() <= 1 && x - kirby->GetX1() >= -1 && y - kirby->GetY1() <= 1 && y - kirby->GetY1() >= -1))
-		{
 			is_alive = false;
-			if (kirby->IsSuck() && x - kirby->GetX1() <= 1 && x - kirby->GetX1() >= -1 && y - kirby->GetY1() <= 1 && y - kirby->GetY1() >= -1)
-				kirby->SetBig(true);
-		}
 	}
 
 	void Enemy::Sucked(Kirby* kirby)

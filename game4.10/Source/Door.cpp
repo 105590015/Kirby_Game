@@ -51,11 +51,6 @@ namespace game_framework {
 	void Door::SetEnter(bool flag) {
 		Enter = flag;
 	}
-
-	void Door::SetTopLeft(int px, int py) {
-		x = px;
-		y = py;
-	}
 	
 	bool Door::IsEnter(Kirby *k) {
 
