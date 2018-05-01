@@ -288,6 +288,7 @@
     </ClCompile>
     <ClCompile Include="Source\Map.cpp" />
     <ClCompile Include="Source\NormalMonster.cpp" />
+    <ClCompile Include="Source\Spark.cpp" />
     <ClCompile Include="Source\Start.cpp" />
     <ClCompile Include="Source\StdAfx.cpp">
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -327,6 +328,7 @@
     <ClInclude Include="Source\Map.h" />
     <ClInclude Include="Source\NormalMonster.h" />
     <ClInclude Include="Source\Resource.h" />
+    <ClInclude Include="Source\Spark.h" />
     <ClInclude Include="Source\Start.h" />
     <ClInclude Include="Source\StdAfx.h" />
     <ClInclude Include="Source\gamelib.h" />

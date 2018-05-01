@@ -20,10 +20,29 @@ namespace game_framework {
 
 	void Map::IsLclick(bool flag) {		//設定左鍵是否按下
 		Lclick= flag;
+
+		ofstream output(Mapfile);
+
+		for (int i = 0; i < mapSize_Y; i++) {
+			for (int j = 0; j < mapSize_X; j++) {
+				output << map[i][j] << " ";
+			}
+			output << endl;
+		}
+
 	}
 
 	void Map::IsRclick(bool flag) {		//設定右鍵是否按下
 		Rclick= flag;
+
+		ofstream output(Mapfile);
+
+		for (int i = 0; i < mapSize_Y; i++) {
+			for (int j = 0; j < mapSize_X; j++) {
+				output << map[i][j] << " ";
+			}
+			output << endl;
+		}
 	}
 
 	int Map::GetWidth() {				//取得背景寬度
@@ -70,7 +89,7 @@ namespace game_framework {
 		file.close();
 	}
 
-	void Map::LoadBitmap(int fore,COLORREF color,char* back,string file)
+	void Map::LoadBitmap(char* fore,COLORREF color,char* back,string file)
 	{
 		
 		foreground.LoadBitmap(fore,color);
@@ -114,7 +133,7 @@ namespace game_framework {
 
 		
 		
-		//ofstream output(Mapfile);
+
 		//for (int i = 0; i < mapSize_Y; i++) {
 		//	for (int j = 0; j < mapSize_X; j++) {
 		//		int x = j * 10 - sx; // 算出第(i, j)這一格的 x 螢幕座標
@@ -132,23 +151,18 @@ namespace game_framework {
 		//				map[i][j] = 0;
 		//			}
 		//		}
-		//		output << map[i][j] << " ";		//將改變輸出
 		//		switch (map[i][j]) {
 		//			case 1:
 		//				ball.SetTopLeft(x, y); // 指定第(i, j)這一格的座標
 		//				ball.ShowBitmap();
 		//				break;
-
 		//			case 2:
 		//				ball_1.SetTopLeft(x, y);
 		//				ball_1.ShowBitmap();
 		//				break;
-		//				
-
 		//		}
 		//	}
-		//	output << endl;
-		//	}
+		//}
 	}
 
 	void Map::SetXY(int nx, int ny)

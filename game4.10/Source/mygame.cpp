@@ -231,8 +231,8 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 {
 	// 載入資料
-		map.LoadBitmap(IDB_foreground, RGB(255, 255, 255), ".//RES//background.bmp", ".//Map//map.txt");
-		map1.LoadBitmap(IDB_foreground_1, RGB(255, 255, 255), ".//RES//background_1.bmp", ".//Map//map1.txt");
+		map.LoadBitmap(".//Map//foreground.bmp", RGB(255, 255, 255), ".//Map//background.bmp", ".//Map//map.txt");
+		map1.LoadBitmap(".//Map//map1.bmp", RGB(255, 255, 255), ".//Map//background_1.bmp", ".//Map//map1.txt");
 		kirby.LoadBitmap();
 		normalMonster[0].LoadBitmap();
 		normalMonster[1].LoadBitmap();
