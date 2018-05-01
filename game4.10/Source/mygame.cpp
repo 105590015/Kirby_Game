@@ -194,6 +194,7 @@ void CGameStateRun::OnBeginState()
 {
 	map.Initialize();
 	map1.Initialize();
+	spark.Initialize(614, 680);
 	kirby.Initialize(640,400);
 	door.Initialize(993,367, 1);
 	normalMonster[0].Initialize(50, 100, 50, 220, false);
@@ -209,11 +210,13 @@ void CGameStateRun::OnBeginState()
 void CGameStateRun::OnMove()							// 移動遊戲元素
 {
 
-	door.OnMove();
+	
 	index->OnMove(kirby.GetX1(),kirby.GetY1());
 	if(kirby.IsAlive())  kirby.OnMove(index);
 	if (mapNum == 0)
 	{
+		door.OnMove();
+		spark.OnMove(index,&kirby);
 		normalMonster[0].OnMove(index, &kirby);
 		normalMonster[1].OnMove(index, &kirby);
 		normalMonster[2].OnMove(index, &kirby);
@@ -241,6 +244,7 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 		normalMonster[4].LoadBitmap();
 		normalMonster[5].LoadBitmap();
 		door.LoadBitmap();
+		spark.LoadBitmap();
 		index = &map;
 		mapNum = 0;
 
@@ -347,6 +351,7 @@ void CGameStateRun::OnShow()
 	index->OnShow();
 	if (mapNum == 0) {
 		door.OnShow(index);
+		spark.OnShow(index);
 		normalMonster[0].OnShow(index, &kirby);
 		normalMonster[1].OnShow(index, &kirby);
 		normalMonster[2].OnShow(index, &kirby);

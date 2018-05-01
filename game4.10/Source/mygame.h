@@ -47,6 +47,7 @@
 #include "Door.h"
 #include "Gas.h"
 #include "Start.h"
+#include "Spark.h"
 
 namespace game_framework {
 	/////////////////////////////////////////////////////////////////////////////
@@ -104,6 +105,7 @@ namespace game_framework {
 		Map *index;
 		NormalMonster normalMonster[6];                 // 怪物
 		Door door;
+		Spark spark;
 		int mapNum;							//設定現在為第幾號地圖
 	};
 
