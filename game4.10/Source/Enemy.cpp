@@ -41,7 +41,7 @@ namespace game_framework {
 
 	void Enemy::Sucked(Kirby* kirby)
 	{
-		if (ComputeDistance(kirby->GetX1(), kirby->GetY1()) < 50.0 && kirby->IsSuck())
+		if (ComputeDistance(kirby->GetX1(), kirby->GetY1()) < 100.0 && kirby->IsSuck())
 		{
 			hp -= 10;
 			if (hp <= 0)

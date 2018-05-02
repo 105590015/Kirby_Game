@@ -194,7 +194,7 @@ void CGameStateRun::OnBeginState()
 {
 	map.Initialize();
 	map1.Initialize();
-	spark.Initialize(614, 680);
+	spark.Initialize(614, 420);
 	kirby.Initialize(640,400);
 	door.Initialize(993,367, 1);
 	normalMonster[0].Initialize(50, 100, 50, 220, false);

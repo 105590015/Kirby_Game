@@ -12,16 +12,22 @@ namespace game_framework {
 		void OnShow(Map*);
 		void OnMove(Map*,Kirby*);
 		void Initialize(int ,int);
+		void Attack(Kirby*);
 		int GetX2();
 		int GetY2();
 
 	private:
 		bool IsRising;
+		bool IsAttacking;
 		int velocity;
 		int init_velocity;
-		int floor;
+		int counter;
+		int StepSize;
+		int tempX, tempY;
+		int midX, midY;
+		void Jump(Kirby*);
 		CAnimation *index;
-		CAnimation Jump_L, Jump_R, Sucked_L, Sucked_R,Attack,Stand_L,Stand_R;
+		CAnimation Jump_L, Jump_R, Sucked_L, Sucked_R,ATK,AttackRange,Stand_L,Stand_R;
 
 	};
 
