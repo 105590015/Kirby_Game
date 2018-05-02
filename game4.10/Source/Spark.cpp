@@ -178,7 +178,7 @@ namespace game_framework {
 					else {
 						velocity = init_velocity; // 重設上升初始速度
 
-						if (abs(x-k->GetX1()) < 30) {
+						if (abs(x-k->GetX1()) < 80) {
 							if (!IsAttacking) {
 								tempX = x;
 								tempY = y;
@@ -186,7 +186,13 @@ namespace game_framework {
 								midY = (y + GetY2()) / 2;
 								index = &AttackRange;
 								IsAttacking = true;
-								ATK.OnMove();
+								ATK.SetDelayCount(1);
+								
+							}
+
+							if (ATK.IsFinalBitmap()) {
+								x = tempX;
+								y = tempY;
 							}
 
 						}
@@ -195,15 +201,16 @@ namespace game_framework {
 
 				
 
-				if (counter > 150) {
+				if (counter > 200) {
 					counter = 0;
 					IsAttacking = false;
 					IsRising = true;
 				}
 			}
 
-
+			ATK.OnMove();
 			index->OnMove();
+			
 		}
 
 		
@@ -216,7 +223,7 @@ namespace game_framework {
 			index->OnShow();
 
 			if (IsAttacking) {
-				ATK.SetTopLeft(x,y);
+				ATK.SetTopLeft(m->ScreenX(midX-ATK.Width()/2),m->ScreenY(midY-ATK.Height()/2));
 				ATK.OnShow();
 			}
 		}
