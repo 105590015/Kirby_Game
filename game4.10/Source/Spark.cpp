@@ -102,7 +102,8 @@ namespace game_framework {
 
 	void Spark::OnMove(Map* m,Kirby* k) {
 		if (is_alive) {
-			counter++;
+			if(!IsAttacking)
+				counter++;
 			Sucked(k);
 			Attack(k);
 			Hurted(k);
@@ -142,7 +143,17 @@ namespace game_framework {
 			}
 
 			else {
-				if (IsRising && counter >= 50  && counter < 100) {
+				if (counter==100) {
+					velocity = 10;
+					IsRising = true;
+				}
+
+				if (counter == 150) {
+					velocity = 8;
+					IsRising = true;
+				}
+
+				if (IsRising) {
 					index->SetDelayCount(80);
 
 					if (RightOrLeft)
@@ -153,7 +164,7 @@ namespace game_framework {
 					if (velocity > 0) {
 						y -= velocity;	// 當速度 > 0時，y軸上升(移動velocity個點，velocity的單位為 點/次)
 						velocity--;		// 受重力影響，下次的上升速度降低
-						if (x != k->GetX1())
+						if (x != k->GetX1() && abs(x-k->GetX1())<SIZE_X/2 )
 							x += StepSize;
 					}
 					else {
@@ -179,6 +190,7 @@ namespace game_framework {
 						velocity = init_velocity; // 重設上升初始速度
 
 						if (abs(x-k->GetX1()) < 80) {
+							
 							if (!IsAttacking) {
 								tempX = x;
 								tempY = y;
@@ -188,13 +200,14 @@ namespace game_framework {
 								IsAttacking = true;
 								ATK.SetDelayCount(1);
 								
-							}
+							}						
+						}
 
-							if (ATK.IsFinalBitmap()) {
-								x = tempX;
-								y = tempY;
-							}
-
+						if (ATK.IsFinalBitmap() && IsAttacking) {
+							ATK.Reset();
+							IsAttacking = false;
+							x = tempX;
+							y = tempY;
 						}
 					}
 				}
