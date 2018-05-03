@@ -139,6 +139,8 @@ namespace game_framework {
 					y += 3;
 				if (x >= k->GetX1() && x<=k->GetX2() && y >= k->GetY1() && y <= k->GetY2()) {
 					is_alive = false;
+					k->SetBig(true);
+					k->SetEat(1);
 				}
 			}
 

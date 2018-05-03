@@ -131,6 +131,7 @@ namespace game_framework {
 				if ((x - kirby->GetX1() >= -1) && (x - kirby->GetX1() <= 1) && (y - kirby->GetY1() >= -1) && (y - kirby->GetY1() <= 1))
 				{
 					kirby->SetBig(true);
+					kirby->SetEat(0);
 					is_alive = false;
 				}
 			}
