@@ -49,7 +49,7 @@ namespace game_framework {
 		exhaleDelay = 10;
 		gasDistance = startDistance = 0;
 		InvincibleTime = 0;
-		type = 1;
+		type = 0;
 		eat = -1;
 		isMovingLeft = isMovingRight = isMovingUp = isMovingDown = isSpace = isJump = isAttack = isKick = isFly = isHurted = isSuck = isBig = isSwallow = isRunning = isInvincible = false;
 		isAlive = rightOrLeft = true;
@@ -702,6 +702,8 @@ namespace game_framework {
 					isSwallow = false;
 					isBig = false;
 					Transform();
+					swallowR.Reset();
+					swallowL.Reset();
 				}
 			}
 			else if (m->isEmpty(GetX2() - bigOriginR.Width() / 2, GetY2() + 1))  //¶€•—∏®≈È
