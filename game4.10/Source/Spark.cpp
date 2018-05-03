@@ -104,9 +104,9 @@ namespace game_framework {
 		if (is_alive) {
 			if(!IsAttacking)
 				counter++;
-			Sucked(k);
-			Attack(k);
+			
 			Hurted(k);
+			Sucked(k);
 
 			if (x - k->GetX1() > 0) {
 				RightOrLeft = false;
@@ -143,6 +143,8 @@ namespace game_framework {
 			}
 
 			else {
+				Attack(k);
+				
 				if (counter==100) {
 					velocity = 10;
 					IsRising = true;
