@@ -38,8 +38,8 @@ namespace game_framework {
 		x = X_POS;
 		y = Y_POS;
 		hp = 6;
-		jumpDistance = 60;
-		kickDistance = 48;
+		jumpDistance = 120;
+		kickDistance = 100;
 		exhaleDelay = 10;
 		gasDistance = startDistance = 0;
 		InvincibleTime = 0;
@@ -90,6 +90,7 @@ namespace game_framework {
 		landingR.LoadBitmap(".\\RES\\Kirby\\KB_Landing_R.bmp", RGB(255, 255, 255));
 		downAttackL.LoadBitmap(".\\RES\\Kirby\\KB_DownAttack_L.bmp", RGB(255, 255, 255));
 		downAttackR.LoadBitmap(".\\RES\\Kirby\\KB_DownAttack_R.bmp", RGB(255, 255, 255));
+		GG.LoadBitmap(".\\RES\\Kirby\\Die.bmp", RGB(255, 255, 255));
 		goL.AddBitmap(".\\RES\\Kirby\\KB_L_1.bmp", RGB(255, 255, 255));
 		goL.AddBitmap(".\\RES\\Kirby\\KB_L_2.bmp", RGB(255, 255, 255));
 		goL.AddBitmap(".\\RES\\Kirby\\KB_L_3.bmp", RGB(255, 255, 255));
@@ -213,6 +214,129 @@ namespace game_framework {
 		swallowL.AddBitmap(".\\RES\\Kirby\\BKB_Swallow_L_3.bmp", RGB(255, 255, 255));
 		swallowL.AddBitmap(".\\RES\\Kirby\\BKB_Swallow_L_4.bmp", RGB(255, 255, 255));
 		swallowL.AddBitmap(".\\RES\\Kirby\\BKB_Swallow_L_5.bmp", RGB(255, 255, 255));
+		// 雷電卡比
+		Spark_exhaleR.LoadBitmap(".\\RES\\SparkKirby\\Spark_FlyPrepare_R_4.bmp", RGB(255, 255, 255));
+		Spark_exhaleL.LoadBitmap(".\\RES\\SparkKirby\\Spark_FlyPrepare_L_4.bmp", RGB(255, 255, 255));
+		Spark_downR.LoadBitmap(".\\RES\\SparkKirby\\Spark_Down_R.bmp", RGB(255, 255, 255));
+		Spark_downL.LoadBitmap(".\\RES\\SparkKirby\\Spark_Down_L.bmp", RGB(255, 255, 255));
+		Spark_landingR.LoadBitmap(".\\RES\\SparkKirby\\Spark_Landing_R.bmp", RGB(255, 255, 255));
+		Spark_landingL.LoadBitmap(".\\RES\\SparkKirby\\Spark_Landing_L.bmp", RGB(255, 255, 255));
+		Spark_originR.AddBitmap(".\\RES\\SparkKirby\\Spark_stand_R_0.bmp", RGB(255, 255, 255));
+		Spark_originR.AddBitmap(".\\RES\\SparkKirby\\Spark_stand_R_1.bmp", RGB(255, 255, 255));
+		Spark_originR.AddBitmap(".\\RES\\SparkKirby\\Spark_stand_R_2.bmp", RGB(255, 255, 255));
+		Spark_originR.AddBitmap(".\\RES\\SparkKirby\\Spark_stand_R_3.bmp", RGB(255, 255, 255));
+		Spark_originL.AddBitmap(".\\RES\\SparkKirby\\Spark_stand_L_0.bmp", RGB(255, 255, 255));
+		Spark_originL.AddBitmap(".\\RES\\SparkKirby\\Spark_stand_L_1.bmp", RGB(255, 255, 255));
+		Spark_originL.AddBitmap(".\\RES\\SparkKirby\\Spark_stand_L_2.bmp", RGB(255, 255, 255));
+		Spark_originL.AddBitmap(".\\RES\\SparkKirby\\Spark_stand_L_3.bmp", RGB(255, 255, 255));
+		Spark_goR.AddBitmap(".\\RES\\SparkKirby\\Spark_walk_R_00.bmp", RGB(255, 255, 255));
+		Spark_goR.AddBitmap(".\\RES\\SparkKirby\\Spark_walk_R_01.bmp", RGB(255, 255, 255));
+		Spark_goR.AddBitmap(".\\RES\\SparkKirby\\Spark_walk_R_02.bmp", RGB(255, 255, 255));
+		Spark_goR.AddBitmap(".\\RES\\SparkKirby\\Spark_walk_R_03.bmp", RGB(255, 255, 255));
+		Spark_goR.AddBitmap(".\\RES\\SparkKirby\\Spark_walk_R_04.bmp", RGB(255, 255, 255));
+		Spark_goR.AddBitmap(".\\RES\\SparkKirby\\Spark_walk_R_05.bmp", RGB(255, 255, 255));
+		Spark_goR.AddBitmap(".\\RES\\SparkKirby\\Spark_walk_R_06.bmp", RGB(255, 255, 255));
+		Spark_goR.AddBitmap(".\\RES\\SparkKirby\\Spark_walk_R_07.bmp", RGB(255, 255, 255));
+		Spark_goR.AddBitmap(".\\RES\\SparkKirby\\Spark_walk_R_08.bmp", RGB(255, 255, 255));
+		Spark_goR.AddBitmap(".\\RES\\SparkKirby\\Spark_walk_R_09.bmp", RGB(255, 255, 255));
+		Spark_goR.AddBitmap(".\\RES\\SparkKirby\\Spark_walk_R_10.bmp", RGB(255, 255, 255));
+		Spark_goR.AddBitmap(".\\RES\\SparkKirby\\Spark_walk_R_11.bmp", RGB(255, 255, 255));
+		Spark_goR.AddBitmap(".\\RES\\SparkKirby\\Spark_walk_R_12.bmp", RGB(255, 255, 255));
+		Spark_goR.AddBitmap(".\\RES\\SparkKirby\\Spark_walk_R_13.bmp", RGB(255, 255, 255));
+		Spark_goR.AddBitmap(".\\RES\\SparkKirby\\Spark_walk_R_14.bmp", RGB(255, 255, 255));
+		Spark_goR.AddBitmap(".\\RES\\SparkKirby\\Spark_walk_R_15.bmp", RGB(255, 255, 255));
+		Spark_goR.AddBitmap(".\\RES\\SparkKirby\\Spark_walk_R_16.bmp", RGB(255, 255, 255));
+		Spark_goR.AddBitmap(".\\RES\\SparkKirby\\Spark_walk_R_17.bmp", RGB(255, 255, 255));
+		Spark_goR.AddBitmap(".\\RES\\SparkKirby\\Spark_walk_R_18.bmp", RGB(255, 255, 255));
+		Spark_goR.AddBitmap(".\\RES\\SparkKirby\\Spark_walk_R_19.bmp", RGB(255, 255, 255));
+		Spark_goL.AddBitmap(".\\RES\\SparkKirby\\Spark_walk_L_00.bmp", RGB(255, 255, 255));
+		Spark_goL.AddBitmap(".\\RES\\SparkKirby\\Spark_walk_L_01.bmp", RGB(255, 255, 255));
+		Spark_goL.AddBitmap(".\\RES\\SparkKirby\\Spark_walk_L_02.bmp", RGB(255, 255, 255));
+		Spark_goL.AddBitmap(".\\RES\\SparkKirby\\Spark_walk_L_03.bmp", RGB(255, 255, 255));
+		Spark_goL.AddBitmap(".\\RES\\SparkKirby\\Spark_walk_L_04.bmp", RGB(255, 255, 255));
+		Spark_goL.AddBitmap(".\\RES\\SparkKirby\\Spark_walk_L_05.bmp", RGB(255, 255, 255));
+		Spark_goL.AddBitmap(".\\RES\\SparkKirby\\Spark_walk_L_06.bmp", RGB(255, 255, 255));
+		Spark_goL.AddBitmap(".\\RES\\SparkKirby\\Spark_walk_L_07.bmp", RGB(255, 255, 255));
+		Spark_goL.AddBitmap(".\\RES\\SparkKirby\\Spark_walk_L_08.bmp", RGB(255, 255, 255));
+		Spark_goL.AddBitmap(".\\RES\\SparkKirby\\Spark_walk_L_09.bmp", RGB(255, 255, 255));
+		Spark_goL.AddBitmap(".\\RES\\SparkKirby\\Spark_walk_L_10.bmp", RGB(255, 255, 255));
+		Spark_goL.AddBitmap(".\\RES\\SparkKirby\\Spark_walk_L_11.bmp", RGB(255, 255, 255));
+		Spark_goL.AddBitmap(".\\RES\\SparkKirby\\Spark_walk_L_12.bmp", RGB(255, 255, 255));
+		Spark_goL.AddBitmap(".\\RES\\SparkKirby\\Spark_walk_L_13.bmp", RGB(255, 255, 255));
+		Spark_goL.AddBitmap(".\\RES\\SparkKirby\\Spark_walk_L_14.bmp", RGB(255, 255, 255));
+		Spark_goL.AddBitmap(".\\RES\\SparkKirby\\Spark_walk_L_15.bmp", RGB(255, 255, 255));
+		Spark_goL.AddBitmap(".\\RES\\SparkKirby\\Spark_walk_L_16.bmp", RGB(255, 255, 255));
+		Spark_goL.AddBitmap(".\\RES\\SparkKirby\\Spark_walk_L_17.bmp", RGB(255, 255, 255));
+		Spark_goL.AddBitmap(".\\RES\\SparkKirby\\Spark_walk_L_18.bmp", RGB(255, 255, 255));
+		Spark_goL.AddBitmap(".\\RES\\SparkKirby\\Spark_walk_L_19.bmp", RGB(255, 255, 255));
+		Spark_jumpR.AddBitmap(".\\RES\\SparkKirby\\Spark_Jump_R_0.bmp", RGB(255, 255, 255));
+		Spark_jumpR.AddBitmap(".\\RES\\SparkKirby\\Spark_Jump_R_1.bmp", RGB(255, 255, 255));
+		Spark_jumpL.AddBitmap(".\\RES\\SparkKirby\\Spark_Jump_L_0.bmp", RGB(255, 255, 255));
+		Spark_jumpL.AddBitmap(".\\RES\\SparkKirby\\Spark_Jump_L_1.bmp", RGB(255, 255, 255));
+		Spark_downAttackR.AddBitmap(".\\RES\\SparkKirby\\Spark_Kick_R_0.bmp", RGB(255, 255, 255));
+		Spark_downAttackR.AddBitmap(".\\RES\\SparkKirby\\Spark_Kick_R_1.bmp", RGB(255, 255, 255));
+		Spark_downAttackR.AddBitmap(".\\RES\\SparkKirby\\Spark_Kick_R_2.bmp", RGB(255, 255, 255));
+		Spark_downAttackR.AddBitmap(".\\RES\\SparkKirby\\Spark_Kick_R_3.bmp", RGB(255, 255, 255));
+		Spark_downAttackL.AddBitmap(".\\RES\\SparkKirby\\Spark_Kick_L_0.bmp", RGB(255, 255, 255));
+		Spark_downAttackL.AddBitmap(".\\RES\\SparkKirby\\Spark_Kick_L_1.bmp", RGB(255, 255, 255));
+		Spark_downAttackL.AddBitmap(".\\RES\\SparkKirby\\Spark_Kick_L_2.bmp", RGB(255, 255, 255));
+		Spark_downAttackL.AddBitmap(".\\RES\\SparkKirby\\Spark_Kick_L_3.bmp", RGB(255, 255, 255));
+		Spark_flyR.AddBitmap(".\\RES\\SparkKirby\\Spark_Fly_R_00.bmp", RGB(255, 255, 255));
+		Spark_flyR.AddBitmap(".\\RES\\SparkKirby\\Spark_Fly_R_01.bmp", RGB(255, 255, 255));
+		Spark_flyR.AddBitmap(".\\RES\\SparkKirby\\Spark_Fly_R_02.bmp", RGB(255, 255, 255));
+		Spark_flyR.AddBitmap(".\\RES\\SparkKirby\\Spark_Fly_R_03.bmp", RGB(255, 255, 255));
+		Spark_flyR.AddBitmap(".\\RES\\SparkKirby\\Spark_Fly_R_04.bmp", RGB(255, 255, 255));
+		Spark_flyR.AddBitmap(".\\RES\\SparkKirby\\Spark_Fly_R_05.bmp", RGB(255, 255, 255));
+		Spark_flyR.AddBitmap(".\\RES\\SparkKirby\\Spark_Fly_R_06.bmp", RGB(255, 255, 255));
+		Spark_flyR.AddBitmap(".\\RES\\SparkKirby\\Spark_Fly_R_07.bmp", RGB(255, 255, 255));
+		Spark_flyR.AddBitmap(".\\RES\\SparkKirby\\Spark_Fly_R_08.bmp", RGB(255, 255, 255));
+		Spark_flyR.AddBitmap(".\\RES\\SparkKirby\\Spark_Fly_R_09.bmp", RGB(255, 255, 255));
+		Spark_flyR.AddBitmap(".\\RES\\SparkKirby\\Spark_Fly_R_10.bmp", RGB(255, 255, 255));
+		Spark_flyR.AddBitmap(".\\RES\\SparkKirby\\Spark_Fly_R_11.bmp", RGB(255, 255, 255));
+		Spark_flyR.AddBitmap(".\\RES\\SparkKirby\\Spark_Fly_R_12.bmp", RGB(255, 255, 255));
+		Spark_flyR.AddBitmap(".\\RES\\SparkKirby\\Spark_Fly_R_13.bmp", RGB(255, 255, 255));
+		Spark_flyR.AddBitmap(".\\RES\\SparkKirby\\Spark_Fly_R_14.bmp", RGB(255, 255, 255));
+		Spark_prepareFlyR.AddBitmap(".\\RES\\SparkKirby\\Spark_FlyPrepare_R_0.bmp", RGB(255, 255, 255));
+		Spark_prepareFlyR.AddBitmap(".\\RES\\SparkKirby\\Spark_FlyPrepare_R_1.bmp", RGB(255, 255, 255));
+		Spark_prepareFlyR.AddBitmap(".\\RES\\SparkKirby\\Spark_FlyPrepare_R_2.bmp", RGB(255, 255, 255));
+		Spark_prepareFlyR.AddBitmap(".\\RES\\SparkKirby\\Spark_FlyPrepare_R_3.bmp", RGB(255, 255, 255));
+		Spark_prepareFlyR.AddBitmap(".\\RES\\SparkKirby\\Spark_FlyPrepare_R_4.bmp", RGB(255, 255, 255));
+		Spark_flyL.AddBitmap(".\\RES\\SparkKirby\\Spark_Fly_L_00.bmp", RGB(255, 255, 255));
+		Spark_flyL.AddBitmap(".\\RES\\SparkKirby\\Spark_Fly_L_01.bmp", RGB(255, 255, 255));
+		Spark_flyL.AddBitmap(".\\RES\\SparkKirby\\Spark_Fly_L_02.bmp", RGB(255, 255, 255));
+		Spark_flyL.AddBitmap(".\\RES\\SparkKirby\\Spark_Fly_L_03.bmp", RGB(255, 255, 255));
+		Spark_flyL.AddBitmap(".\\RES\\SparkKirby\\Spark_Fly_L_04.bmp", RGB(255, 255, 255));
+		Spark_flyL.AddBitmap(".\\RES\\SparkKirby\\Spark_Fly_L_05.bmp", RGB(255, 255, 255));
+		Spark_flyL.AddBitmap(".\\RES\\SparkKirby\\Spark_Fly_L_06.bmp", RGB(255, 255, 255));
+		Spark_flyL.AddBitmap(".\\RES\\SparkKirby\\Spark_Fly_L_07.bmp", RGB(255, 255, 255));
+		Spark_flyL.AddBitmap(".\\RES\\SparkKirby\\Spark_Fly_L_08.bmp", RGB(255, 255, 255));
+		Spark_flyL.AddBitmap(".\\RES\\SparkKirby\\Spark_Fly_L_09.bmp", RGB(255, 255, 255));
+		Spark_flyL.AddBitmap(".\\RES\\SparkKirby\\Spark_Fly_L_10.bmp", RGB(255, 255, 255));
+		Spark_flyL.AddBitmap(".\\RES\\SparkKirby\\Spark_Fly_L_11.bmp", RGB(255, 255, 255));
+		Spark_flyL.AddBitmap(".\\RES\\SparkKirby\\Spark_Fly_L_12.bmp", RGB(255, 255, 255));
+		Spark_flyL.AddBitmap(".\\RES\\SparkKirby\\Spark_Fly_L_13.bmp", RGB(255, 255, 255));
+		Spark_flyL.AddBitmap(".\\RES\\SparkKirby\\Spark_Fly_L_14.bmp", RGB(255, 255, 255));
+		Spark_prepareFlyL.AddBitmap(".\\RES\\SparkKirby\\Spark_FlyPrepare_L_0.bmp", RGB(255, 255, 255));
+		Spark_prepareFlyL.AddBitmap(".\\RES\\SparkKirby\\Spark_FlyPrepare_L_1.bmp", RGB(255, 255, 255));
+		Spark_prepareFlyL.AddBitmap(".\\RES\\SparkKirby\\Spark_FlyPrepare_L_2.bmp", RGB(255, 255, 255));
+		Spark_prepareFlyL.AddBitmap(".\\RES\\SparkKirby\\Spark_FlyPrepare_L_3.bmp", RGB(255, 255, 255));
+		Spark_prepareFlyL.AddBitmap(".\\RES\\SparkKirby\\Spark_FlyPrepare_L_4.bmp", RGB(255, 255, 255));
+		Spark_runR.AddBitmap(".\\RES\\SparkKirby\\Spark_Run_R_0.bmp", RGB(255, 255, 255));
+		Spark_runR.AddBitmap(".\\RES\\SparkKirby\\Spark_Run_R_1.bmp", RGB(255, 255, 255));
+		Spark_runR.AddBitmap(".\\RES\\SparkKirby\\Spark_Run_R_2.bmp", RGB(255, 255, 255));
+		Spark_runR.AddBitmap(".\\RES\\SparkKirby\\Spark_Run_R_3.bmp", RGB(255, 255, 255));
+		Spark_runR.AddBitmap(".\\RES\\SparkKirby\\Spark_Run_R_4.bmp", RGB(255, 255, 255));
+		Spark_runR.AddBitmap(".\\RES\\SparkKirby\\Spark_Run_R_5.bmp", RGB(255, 255, 255));
+		Spark_runR.AddBitmap(".\\RES\\SparkKirby\\Spark_Run_R_6.bmp", RGB(255, 255, 255));
+		Spark_runR.AddBitmap(".\\RES\\SparkKirby\\Spark_Run_R_7.bmp", RGB(255, 255, 255));
+		Spark_runL.AddBitmap(".\\RES\\SparkKirby\\Spark_Run_L_0.bmp", RGB(255, 255, 255));
+		Spark_runL.AddBitmap(".\\RES\\SparkKirby\\Spark_Run_L_1.bmp", RGB(255, 255, 255));
+		Spark_runL.AddBitmap(".\\RES\\SparkKirby\\Spark_Run_L_2.bmp", RGB(255, 255, 255));
+		Spark_runL.AddBitmap(".\\RES\\SparkKirby\\Spark_Run_L_3.bmp", RGB(255, 255, 255));
+		Spark_runL.AddBitmap(".\\RES\\SparkKirby\\Spark_Run_L_4.bmp", RGB(255, 255, 255));
+		Spark_runL.AddBitmap(".\\RES\\SparkKirby\\Spark_Run_L_5.bmp", RGB(255, 255, 255));
+		Spark_runL.AddBitmap(".\\RES\\SparkKirby\\Spark_Run_L_6.bmp", RGB(255, 255, 255));
+		Spark_runL.AddBitmap(".\\RES\\SparkKirby\\Spark_Run_L_7.bmp", RGB(255, 255, 255));
 
 		blood0.LoadBitmap(".\\RES\\Blood_0.bmp", RGB(255, 255, 255));
 		blood1.LoadBitmap(".\\RES\\Blood_1.bmp", RGB(255, 255, 255));
@@ -278,12 +402,12 @@ namespace game_framework {
 			}
 			if (isJump && !isSuck)
 			{
-				jumpDistance-=3;
-				if (m->isEmpty_2(GetX1() + jumpR.Width() / 2, GetY1() - 3))  //會不會撞到頭
-					y -= 3;
+				jumpDistance-=5;
+				if (m->isEmpty_2(GetX1() + jumpR.Width() / 2, GetY1() - 5))  //會不會撞到頭
+					y -= 5;
 				if (jumpDistance == 0)
 				{
-					jumpDistance = 60;
+					jumpDistance = 120;
 					isJump = false;
 				}
 			}
@@ -596,6 +720,13 @@ namespace game_framework {
 			isAlive = false;
 	}
 
+	void Kirby::Die(Map *m)
+	{
+		GG.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
+		GG.ShowBitmap();
+		y -= 3;
+	}
+
 	void Kirby::SetMovingDown(bool flag)
 	{
 		isMovingDown = flag;
@@ -659,12 +790,12 @@ namespace game_framework {
 		if (isFly && isSpace)
 		{
 			gas.SetXY(x, y);
-			gasDistance = 70;
+			gasDistance = 176;
 			bulletDirection = rightOrLeft;
 		}
 		if (gasDistance != 0)
 		{
-			gasDistance -= STEP_SIZE;
+			gasDistance -= STEP_SIZE*2;
 			gas.OnMove(m, bulletDirection);
 			gas.OnShow(m);
 		}
@@ -673,12 +804,12 @@ namespace game_framework {
 		if (isBig && isAttack && !isSuck)
 		{
 			start.SetXY(x, y);
-			startDistance = 150;
+			startDistance = 376;
 			bulletDirection = rightOrLeft;
 		}
 		if (startDistance != 0)
 		{
-			startDistance -= STEP_SIZE;
+			startDistance -= STEP_SIZE*2;
 			start.OnMove(m, bulletDirection);
 			start.OnShow(m);
 		}
@@ -687,15 +818,15 @@ namespace game_framework {
 		if (!isFly && !isBig && (isMovingDown || isKick) && (isAttack || isKick) && !m->isEmpty(GetX2() - originR.Width() / 2, GetY2() + 1)) //在地面上蹲下按攻擊
 		{
 			isKick = true;
-			kickDistance -= 3;
-			if (rightOrLeft && m->isEmpty(GetX2() + 3, GetY2() - 2) && x + 3 <= m->GetWidth() - downAttackR.Width())  //右邊會不會踢牆(y-2是補償圖檔大小的差異)
-				x += 3;
-			else if (!rightOrLeft && m->isEmpty(GetX1() - 3, GetY2() - 2) && x - 3 >= 0)  //左邊會不會踢牆(y-2是補償圖檔大小的差異)
-				x -= 3;
+			kickDistance -= 5;
+			if (rightOrLeft && m->isEmpty(GetX2() + 5, GetY2() - 5) && x + 5 <= m->GetWidth() - downAttackR.Width())  //右邊會不會踢牆(y-2是補償圖檔大小的差異)
+				x += 5;
+			else if (!rightOrLeft && m->isEmpty(GetX1() - 5, GetY2() - 5) && x - 5 >= 0)  //左邊會不會踢牆(y-2是補償圖檔大小的差異)
+				x -= 5;
 			//踢完.踢到邊界.腳沒踏到地都不能使用踢擊
 			if (kickDistance == 0 || x <= 0 || x >= m->GetWidth() || m->isEmpty(GetX2() - originR.Width() / 2, GetY2() + 1))
 			{
-				kickDistance = 48;
+				kickDistance = 100;
 				isKick = false;
 			}
 		}
