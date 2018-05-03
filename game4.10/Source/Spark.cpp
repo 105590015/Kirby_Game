@@ -128,15 +128,18 @@ namespace game_framework {
 				if (!RightOrLeft)
 					index = &Sucked_L;
 
-				if (x > k->GetX1() )
-					x -= 3;
-				else
+				i = 0.9;
+
+				if (x < k->GetX1() )
 					x += 3;
+				else if(x > k->GetX2())
+					x -= 3;
 				
-				if (y > k->GetY1())
+				if (y > k->GetY2())
 					y -= 3;
-				else
+				else if(y<k->GetY1())
 					y += 3;
+
 				if (x >= k->GetX1() && x<=k->GetX2() && y >= k->GetY1() && y <= k->GetY2()) {
 					is_alive = false;
 					k->SetBig(true);
