@@ -13,8 +13,8 @@ namespace game_framework {
 		Kirby();
 		int  GetX1();					  // 左上角 x 座標
 		int  GetY1();				  	  // 左上角 y 座標
-		int  GetX2();				  	  // 右下角 x 座標
-		int  GetY2();					  // 右下角 y 座標
+		int  GetX2();			          // 右下角 x 座標
+		int  GetY2();			          // 右下角 y 座標
 		void Initialize(int ,int);		  // 設定為初始值
 		bool IsAlive();					  // 是否活著
 		bool IsFly();                     // 是否在飛
@@ -43,6 +43,10 @@ namespace game_framework {
 		CMovingBitmap bigOriginR, bigOriginL, bigJumpR, bigJumpL, bigLandingR, bigLandingL, threwR, threwL;
 		CAnimation bigGoL, bigGoR, swallowR, swallowL;
 		CMovingBitmap blood6, blood5, blood4, blood3, blood2, blood1, blood0;
+		// 雷電卡比
+		CMovingBitmap Spark_originR, Spark_originL;
+		CAnimation goL, goR;
+
 		Gas gas;
 		Start start;
 		int x, y;					// 左上角座標
@@ -71,7 +75,7 @@ namespace game_framework {
 		bool bulletDirection;       // 吐出物體方向
 		bool isInvincible;          // 是否無敵
 		int InvincibleTime;         // 無敵時間
-		virtual void Attack(Map *m);// 攻擊
+		void Attack(Map *m);        // 攻擊
 		int hp;
 	};
 }
