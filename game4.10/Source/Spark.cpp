@@ -143,7 +143,7 @@ namespace game_framework {
 
 			else {
 				if (IsRising && counter >= 50  && counter < 100) {
-					index->SetDelayCount(30);
+					index->SetDelayCount(80);
 
 					if (RightOrLeft)
 						index = &Jump_R;
