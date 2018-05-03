@@ -31,16 +31,16 @@ namespace game_framework {
 
 	void Start::OnMove(Map *m, bool direction)
 	{
-		if (direction && m->isEmpty(GetX2() + STEP_SIZE, GetY2() - start.Height() / 2))
-			x += STEP_SIZE;
-		else if (!direction && m->isEmpty(GetX2() - STEP_SIZE, GetY2() - start.Height() / 2))
-			x -= STEP_SIZE;
+		if (direction && m->isEmpty(GetX2() + STEP_SIZE*2, GetY2() - start.Height() / 2))
+			x += STEP_SIZE*2;
+		else if (!direction && m->isEmpty(GetX2() - STEP_SIZE*2, GetY2() - start.Height() / 2))
+			x -= STEP_SIZE*2;
 	}
 
 	void Start::OnShow(Map *m)
 	{		
 		start.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
-		if (m->isEmpty(GetX2() + STEP_SIZE, GetY2() - start.Height() / 2) && m->isEmpty(GetX2() - STEP_SIZE, GetY2() - start.Height() / 2))
+		if (m->isEmpty(GetX2() + STEP_SIZE*2, GetY2() - start.Height() / 2) && m->isEmpty(GetX2() - STEP_SIZE*2, GetY2() - start.Height() / 2))
 		{
 			start.OnMove();
 			start.OnShow();

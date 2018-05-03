@@ -24,6 +24,7 @@ namespace game_framework {
 		void OnMove(Map *m);		      // 移動
 		void OnShow(Map *m);			  // 將圖形貼到畫面
 		void Hurted();                    // 受傷
+		void Die(Map *m);			      // 死去
 		void SetMovingDown(bool flag);    // 設定是否正在往下移動
 		void SetMovingLeft(bool flag);	  // 設定是否正在往左移動
 		void SetMovingRight(bool flag);   // 設定是否正在往右移動
@@ -37,15 +38,15 @@ namespace game_framework {
 		void SetXY(int nx, int ny);		  // 設定左上角的座標
 	protected:	
 		// 普通卡比
-		CMovingBitmap originR, originL, exhaleR, exhaleL, jumpR, jumpL, downR, downL, landingR, landingL, downAttackR, downAttackL;
+		CMovingBitmap originR, originL, exhaleR, exhaleL, jumpR, jumpL, downR, downL, landingR, landingL, downAttackR, downAttackL, GG;
 		CAnimation goL, goR, flyR, prepareFlyR, flyL, prepareFlyL, hurtedL, hurtedR, runL, runR, suckR, suckL;
 		// 含東西卡比
 		CMovingBitmap bigOriginR, bigOriginL, bigJumpR, bigJumpL, bigLandingR, bigLandingL, threwR, threwL;
 		CAnimation bigGoL, bigGoR, swallowR, swallowL;
 		CMovingBitmap blood6, blood5, blood4, blood3, blood2, blood1, blood0;
 		// 雷電卡比
-		CMovingBitmap Spark_originR, Spark_originL;
-		CAnimation goL, goR;
+		CMovingBitmap Spark_exhaleR, Spark_exhaleL, Spark_downR, Spark_downL, Spark_landingR, Spark_landingL;
+		CAnimation Spark_originR, Spark_originL, Spark_goR, Spark_goL, Spark_jumpR, Spark_jumpL, Spark_downAttackR, Spark_downAttackL, Spark_flyR, Spark_prepareFlyR, Spark_flyL, Spark_prepareFlyL, Spark_runR, Spark_runL;
 
 		Gas gas;
 		Start start;

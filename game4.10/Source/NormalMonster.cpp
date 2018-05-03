@@ -121,20 +121,20 @@ namespace game_framework {
 			else if (is_sucked)
 			{
 				if (x > kirby->GetX1())
-					x -= STEP_SIZE;
+					x -= 3;
 				else if (x < kirby->GetX1())
-					x += STEP_SIZE;
+					x += 3;
 				if (y > kirby->GetY1())
-					y -= STEP_SIZE;
+					y -= 3;
 				else if (y < kirby->GetY1())
-					y += STEP_SIZE;
+					y += 3;
 				if ((x - kirby->GetX1() >= -1) && (x - kirby->GetX1() <= 1) && (y - kirby->GetY1() >= -1) && (y - kirby->GetY1() <= 1))
 				{
 					kirby->SetBig(true);
 					is_alive = false;
 				}
 			}
-			if (is_alive && is_sucked && m->isEmpty(GetX2() - goLeft.Width() / 2, GetY2() + 1)) //地吸引力
+			if (is_alive && !is_sucked && m->isEmpty((GetX1()+GetX2())/2 , GetY2() + 1)) //地吸引力
 				y += 1;
 		}
 	}

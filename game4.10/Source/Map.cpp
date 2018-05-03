@@ -139,13 +139,13 @@ namespace game_framework {
 		//		int x = j * 10 - sx; // 算出第(i, j)這一格的 x 螢幕座標
 		//		int y = i * 10 - sy; // 算出第(i, j)這一格的 y 螢幕座標
 		//		if (mx >= x && mx <= x + 20 && my >= y && my <= y + 20) { //判斷滑鼠位置
-		//			if (Lclick) {				//左鍵為設立障礙物
-		//				map[i][j] = 1;
-		//			}
-
 		//			//if (Lclick) {				//左鍵為設立障礙物
-		//			//	map[i][j] = 2;
+		//			//	map[i][j] = 1;
 		//			//}
+
+		//			if (Lclick) {				//左鍵為設立障礙物
+		//				map[i][j] = 2;
+		//			}
 
 		//			else if (Rclick) {			//右鍵為取消障礙物
 		//				map[i][j] = 0;

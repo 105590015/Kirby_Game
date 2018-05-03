@@ -164,7 +164,7 @@ void CGameStateOver::OnInit()
 
 void CGameStateOver::OnShow()
 {
-	/*CDC *pDC = CDDraw::GetBackCDC();			// 取得 Back Plain 的 CDC 
+	CDC *pDC = CDDraw::GetBackCDC();			// 取得 Back Plain 的 CDC 
 	CFont f,*fp;
 	f.CreatePointFont(160,"Times New Roman");	// 產生 font f; 160表示16 point的字
 	fp=pDC->SelectObject(&f);					// 選用 font f
@@ -174,7 +174,7 @@ void CGameStateOver::OnShow()
 	sprintf(str, "Game Over ! (%d)", counter / 30);
 	pDC->TextOut(240,210,str);
 	pDC->SelectObject(fp);						// 放掉 font f (千萬不要漏了放掉)
-	CDDraw::ReleaseBackCDC();					// 放掉 Back Plain 的 CDC*/
+	CDDraw::ReleaseBackCDC();					// 放掉 Back Plain 的 CDC
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -197,12 +197,12 @@ void CGameStateRun::OnBeginState()
 	spark.Initialize(640, 680);
 	kirby.Initialize(640,400);
 	door.Initialize(993,367, 1);
-	normalMonster[0].Initialize(50, 100, 50, 220, false);
-	normalMonster[1].Initialize(550, 100, 550, 690, false);
-	normalMonster[2].Initialize(1010, 100, 1010, 1208, false);
-	normalMonster[3].Initialize(40, 680, 0, 90, false);
-	normalMonster[4].Initialize(614, 680, 370, 888, false);
-	normalMonster[5].Initialize(1190, 680, 1170, 1250, false);
+	normalMonster[0].Initialize(50, 80, 50, 200, false);
+	normalMonster[1].Initialize(550, 80, 550, 670, false);
+	normalMonster[2].Initialize(1010, 80, 1010, 1188, false);
+	normalMonster[3].Initialize(40, 660, 0, 60, false);
+	normalMonster[4].Initialize(614, 660, 370, 870, false);
+	normalMonster[5].Initialize(1190, 660, 1170, 1230, false);
 	CAudio::Instance()->Play(AUDIO_BACKGROUND, true);
 
 }
@@ -361,5 +361,7 @@ void CGameStateRun::OnShow()
 	}
 	
 	if(kirby.IsAlive()) kirby.OnShow(index);
+	else if(kirby.GetY1()<=1) GotoGameState(GAME_STATE_OVER);
+	else kirby.Die(index);
 }
 }
