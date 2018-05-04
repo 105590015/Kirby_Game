@@ -123,6 +123,7 @@ namespace game_framework {
 				index = &Stand_L;
 
 			if (is_sucked) {
+				IsAttacking = false;
 				if (RightOrLeft)
 					index = &Sucked_R;
 				if (!RightOrLeft)

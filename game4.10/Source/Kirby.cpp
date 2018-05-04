@@ -593,7 +593,7 @@ namespace game_framework {
 		if (eat == 1)
 		{
 			type = 1;
-			y -= 40; // 卡比身高補償
+			y -= 40;
 		}
 	}
 
@@ -890,8 +890,8 @@ namespace game_framework {
 		Spark_prepareFlyR.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
 		Spark_flyL.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
 		Spark_prepareFlyL.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
-		Spark_runR.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
-		Spark_runL.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
+		Spark_runR.SetTopLeft(m->ScreenX(x), m->ScreenY(y+10));
+		Spark_runL.SetTopLeft(m->ScreenX(x), m->ScreenY(y+10));
 		Spark_attackR.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
 		Spark_attackL.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
 		hurtedL.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
@@ -928,11 +928,13 @@ namespace game_framework {
 			{
 				if (rightOrLeft)
 				{
+					Spark_attackR.SetDelayCount(5);
 					Spark_attackR.OnMove();
 					Spark_attackR.OnShow();
 				}
 				else
 				{
+					Spark_attackL.SetDelayCount(5);
 					Spark_attackL.OnMove();
 					Spark_attackL.OnShow();
 				}
