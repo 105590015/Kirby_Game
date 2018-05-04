@@ -36,6 +36,7 @@ namespace game_framework {
 		void SetBig(bool flag);		      // 設定是否含滷蛋
 		void SetRun(bool);				  // 設定是否按下C
 		void SetXY(int nx, int ny);		  // 設定左上角的座標
+		void SetEat(int t);		          // 設定吃了什麼怪物
 	protected:	
 		// 普通卡比
 		CMovingBitmap originR, originL, exhaleR, exhaleL, jumpR, jumpL, downR, downL, landingR, landingL, downAttackR, downAttackL, GG;
@@ -46,7 +47,7 @@ namespace game_framework {
 		CMovingBitmap blood6, blood5, blood4, blood3, blood2, blood1, blood0;
 		// 雷電卡比
 		CMovingBitmap Spark_exhaleR, Spark_exhaleL, Spark_downR, Spark_downL, Spark_landingR, Spark_landingL;
-		CAnimation Spark_originR, Spark_originL, Spark_goR, Spark_goL, Spark_jumpR, Spark_jumpL, Spark_downAttackR, Spark_downAttackL, Spark_flyR, Spark_prepareFlyR, Spark_flyL, Spark_prepareFlyL, Spark_runR, Spark_runL;
+		CAnimation Spark_originR, Spark_originL, Spark_goR, Spark_goL, Spark_jumpR, Spark_jumpL, Spark_downAttackR, Spark_downAttackL, Spark_flyR, Spark_prepareFlyR, Spark_flyL, Spark_prepareFlyL, Spark_runR, Spark_runL, Spark_attackR, Spark_attackL;
 
 		Gas gas;
 		Start start;
@@ -68,6 +69,8 @@ namespace game_framework {
 		bool isSwallow;             // 是否在吞怪
 		bool rightOrLeft;           // 判斷左右
 	private:
+		void ShowKirby(Map *m);     // 顯示普通卡比
+		void ShowSparkKirby(Map *m);// 顯示雷電卡比
 		int exhaleDelay;            // 吐氣的時間
 		int jumpDistance;           // 跳躍的距離
 		int kickDistance;           // 踢擊的距離
@@ -77,6 +80,11 @@ namespace game_framework {
 		bool isInvincible;          // 是否無敵
 		int InvincibleTime;         // 無敵時間
 		void Attack(Map *m);        // 攻擊
-		int hp;
+		void Transform();           // 變身
+		int hp;                     // 血量
+		int type;                   // 型態
+		int eat;                    // 吃了什麼
+		int height;                 // 記錄當下的身高
+		int width;                  // 記錄當下的寬度
 	};
 }

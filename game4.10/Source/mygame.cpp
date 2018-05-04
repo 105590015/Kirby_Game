@@ -278,7 +278,7 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 		kirby.SetAttack(true);
 	if (nChar == KEY_Run)
 		kirby.SetRun(true);
-	if (nChar == KEY_Jump && !kirby.IsFly() && !map.isEmpty(kirby.GetX1() + 10, kirby.GetY1() + 50 + 1)) //按下X,卡比不是在飛行且落地才可跳躍(20是卡比的身高)
+	if (nChar == KEY_Jump && !kirby.IsFly() && !map.isEmpty((kirby.GetX2() + kirby.GetX2()) / 2, kirby.GetY2() + 1)) //按下X,卡比不是在飛行且落地才可跳躍
 		kirby.SetJump(true);
 	if (nChar == KEY_ESC)
 		PostMessage(AfxGetMainWnd()->m_hWnd, WM_CLOSE, 0, 0);	// 關閉遊戲
