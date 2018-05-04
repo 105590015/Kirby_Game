@@ -128,8 +128,6 @@ namespace game_framework {
 				if (!RightOrLeft)
 					index = &Sucked_L;
 
-				i = 0.9;
-
 				if (x < k->GetX1() )
 					x += 3;
 				else if(x > k->GetX2())

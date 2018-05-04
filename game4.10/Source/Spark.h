@@ -25,7 +25,6 @@ namespace game_framework {
 		int StepSize;
 		int tempX, tempY;
 		int midX, midY;
-		double i = 1.0;
 		void Jump(Kirby*);
 		CAnimation *index;
 		CAnimation Jump_L, Jump_R, Sucked_L, Sucked_R,ATK,AttackRange,Stand_L,Stand_R;
