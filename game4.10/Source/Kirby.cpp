@@ -37,6 +37,11 @@ namespace game_framework {
 			return y + Spark_originR.Height();
 	}
 
+	int Kirby::GetType()
+	{
+		return type;
+	}
+
 	void Kirby::Initialize(int px, int py)  //設定在腳色在螢幕的初始位置
 	{
 		const int X_POS = px;
@@ -82,6 +87,11 @@ namespace game_framework {
 	bool Kirby::IsSuck()
 	{
 		return isSuck;
+	}
+
+	bool Kirby::IsAttack()
+	{
+		return isAttack;
 	}
 
 	void Kirby::LoadBitmap()
@@ -225,10 +235,16 @@ namespace game_framework {
 		// 雷電卡比
 		Spark_exhaleR.LoadBitmap(".\\RES\\SparkKirby\\Spark_FlyPrepare_R_4.bmp", RGB(255, 255, 255));
 		Spark_exhaleL.LoadBitmap(".\\RES\\SparkKirby\\Spark_FlyPrepare_L_4.bmp", RGB(255, 255, 255));
-		Spark_downR.LoadBitmap(".\\RES\\SparkKirby\\Spark_Down_R.bmp", RGB(255, 255, 255));
-		Spark_downL.LoadBitmap(".\\RES\\SparkKirby\\Spark_Down_L.bmp", RGB(255, 255, 255));
-		Spark_landingR.LoadBitmap(".\\RES\\SparkKirby\\Spark_Landing_R.bmp", RGB(255, 255, 255));
-		Spark_landingL.LoadBitmap(".\\RES\\SparkKirby\\Spark_Landing_L.bmp", RGB(255, 255, 255));
+		Spark_downR.AddBitmap(".\\RES\\SparkKirby\\Spark_Down_R.bmp", RGB(255, 255, 255));
+		Spark_downR.AddBitmap(".\\RES\\SparkKirby\\Spark_Down_R_1.bmp", RGB(255, 255, 255));
+		Spark_downR.AddBitmap(".\\RES\\SparkKirby\\Spark_Down_R_2.bmp", RGB(255, 255, 255));
+		Spark_downL.AddBitmap(".\\RES\\SparkKirby\\Spark_Down_L.bmp", RGB(255, 255, 255));
+		Spark_downL.AddBitmap(".\\RES\\SparkKirby\\Spark_Down_L_1.bmp", RGB(255, 255, 255));
+		Spark_downL.AddBitmap(".\\RES\\SparkKirby\\Spark_Down_L_2.bmp", RGB(255, 255, 255));
+		Spark_landingR.AddBitmap(".\\RES\\SparkKirby\\Spark_Landing_R.bmp", RGB(255, 255, 255));
+		Spark_landingR.AddBitmap(".\\RES\\SparkKirby\\Spark_Landing_R_1.bmp", RGB(255, 255, 255));
+		Spark_landingL.AddBitmap(".\\RES\\SparkKirby\\Spark_Landing_L.bmp", RGB(255, 255, 255));
+		Spark_landingL.AddBitmap(".\\RES\\SparkKirby\\Spark_Landing_L_1.bmp", RGB(255, 255, 255));
 		Spark_originR.AddBitmap(".\\RES\\SparkKirby\\Spark_stand_R_1.bmp", RGB(255, 255, 255));
 		Spark_originR.AddBitmap(".\\RES\\SparkKirby\\Spark_stand_R_2.bmp", RGB(255, 255, 255));
 		Spark_originR.AddBitmap(".\\RES\\SparkKirby\\Spark_stand_R_3.bmp", RGB(255, 255, 255));
@@ -278,14 +294,6 @@ namespace game_framework {
 		Spark_flyR.AddBitmap(".\\RES\\SparkKirby\\Spark_Fly_R_04.bmp", RGB(255, 255, 255));
 		Spark_flyR.AddBitmap(".\\RES\\SparkKirby\\Spark_Fly_R_05.bmp", RGB(255, 255, 255));
 		Spark_flyR.AddBitmap(".\\RES\\SparkKirby\\Spark_Fly_R_06.bmp", RGB(255, 255, 255));
-		Spark_flyR.AddBitmap(".\\RES\\SparkKirby\\Spark_Fly_R_07.bmp", RGB(255, 255, 255));
-		Spark_flyR.AddBitmap(".\\RES\\SparkKirby\\Spark_Fly_R_08.bmp", RGB(255, 255, 255));
-		Spark_flyR.AddBitmap(".\\RES\\SparkKirby\\Spark_Fly_R_09.bmp", RGB(255, 255, 255));
-		Spark_flyR.AddBitmap(".\\RES\\SparkKirby\\Spark_Fly_R_10.bmp", RGB(255, 255, 255));
-		Spark_flyR.AddBitmap(".\\RES\\SparkKirby\\Spark_Fly_R_11.bmp", RGB(255, 255, 255));
-		Spark_flyR.AddBitmap(".\\RES\\SparkKirby\\Spark_Fly_R_12.bmp", RGB(255, 255, 255));
-		Spark_flyR.AddBitmap(".\\RES\\SparkKirby\\Spark_Fly_R_13.bmp", RGB(255, 255, 255));
-		Spark_flyR.AddBitmap(".\\RES\\SparkKirby\\Spark_Fly_R_14.bmp", RGB(255, 255, 255));
 		Spark_prepareFlyR.AddBitmap(".\\RES\\SparkKirby\\Spark_FlyPrepare_R_0.bmp", RGB(255, 255, 255));
 		Spark_prepareFlyR.AddBitmap(".\\RES\\SparkKirby\\Spark_FlyPrepare_R_1.bmp", RGB(255, 255, 255));
 		Spark_prepareFlyR.AddBitmap(".\\RES\\SparkKirby\\Spark_FlyPrepare_R_2.bmp", RGB(255, 255, 255));
@@ -298,14 +306,6 @@ namespace game_framework {
 		Spark_flyL.AddBitmap(".\\RES\\SparkKirby\\Spark_Fly_L_04.bmp", RGB(255, 255, 255));
 		Spark_flyL.AddBitmap(".\\RES\\SparkKirby\\Spark_Fly_L_05.bmp", RGB(255, 255, 255));
 		Spark_flyL.AddBitmap(".\\RES\\SparkKirby\\Spark_Fly_L_06.bmp", RGB(255, 255, 255));
-		Spark_flyL.AddBitmap(".\\RES\\SparkKirby\\Spark_Fly_L_07.bmp", RGB(255, 255, 255));
-		Spark_flyL.AddBitmap(".\\RES\\SparkKirby\\Spark_Fly_L_08.bmp", RGB(255, 255, 255));
-		Spark_flyL.AddBitmap(".\\RES\\SparkKirby\\Spark_Fly_L_09.bmp", RGB(255, 255, 255));
-		Spark_flyL.AddBitmap(".\\RES\\SparkKirby\\Spark_Fly_L_10.bmp", RGB(255, 255, 255));
-		Spark_flyL.AddBitmap(".\\RES\\SparkKirby\\Spark_Fly_L_11.bmp", RGB(255, 255, 255));
-		Spark_flyL.AddBitmap(".\\RES\\SparkKirby\\Spark_Fly_L_12.bmp", RGB(255, 255, 255));
-		Spark_flyL.AddBitmap(".\\RES\\SparkKirby\\Spark_Fly_L_13.bmp", RGB(255, 255, 255));
-		Spark_flyL.AddBitmap(".\\RES\\SparkKirby\\Spark_Fly_L_14.bmp", RGB(255, 255, 255));
 		Spark_prepareFlyL.AddBitmap(".\\RES\\SparkKirby\\Spark_FlyPrepare_L_0.bmp", RGB(255, 255, 255));
 		Spark_prepareFlyL.AddBitmap(".\\RES\\SparkKirby\\Spark_FlyPrepare_L_1.bmp", RGB(255, 255, 255));
 		Spark_prepareFlyL.AddBitmap(".\\RES\\SparkKirby\\Spark_FlyPrepare_L_2.bmp", RGB(255, 255, 255));
@@ -375,7 +375,7 @@ namespace game_framework {
 		}
 		else
 		{
-			if (isMovingLeft && !isSuck && !isSwallow)
+			if (isMovingLeft && !isSuck && !isSwallow && !isAttack)
 			{
 				rightOrLeft = false;        //設定面向左邊
 				//先判斷左邊是否可走且沒有按Down，狀態要是向左飛行中或正常向左走
@@ -389,7 +389,7 @@ namespace game_framework {
 						x -= STEP_SIZE;
 				}
 			}
-			else if (isMovingRight && !isSuck && !isSwallow)
+			else if (isMovingRight && !isSuck && !isSwallow && !isAttack)
 			{
 				rightOrLeft = true;          //設定面向右邊
 				//先判斷右邊是否可走且沒有按Down，狀態要是向右飛行中或正常向右走
@@ -571,20 +571,60 @@ namespace game_framework {
 		}
 
 		//------踢擊------
-		if (!isFly && !isBig && (isMovingDown || isKick) && (isAttack || isKick) && !m->isEmpty(GetX2() - originR.Width() / 2, GetY2() + 1)) //在地面上蹲下按攻擊
+		if (!isFly && !isBig && (isMovingDown || isKick) && (isAttack || isKick) && !m->isEmpty(GetX2() - width / 2, GetY2() + 1)) //在地面上蹲下按攻擊
 		{
 			isKick = true;
 			kickDistance -= 5;
-			if (rightOrLeft && m->isEmpty(GetX2() + 5, GetY2() - 5) && x + 5 <= m->GetWidth() - downAttackR.Width())  //右邊會不會踢牆(y-2是補償圖檔大小的差異)
+			if (rightOrLeft && m->isEmpty(GetX2() + 5, GetY2() - 5) && x + 5 <= m->GetWidth() - downAttackR.Width())  //右邊會不會踢牆(y-5是補償卡比大小)
 				x += 5;
-			else if (!rightOrLeft && m->isEmpty(GetX1() - 5, GetY2() - 5) && x - 5 >= 0)  //左邊會不會踢牆(y-2是補償圖檔大小的差異)
+			else if (!rightOrLeft && m->isEmpty(GetX1() - 5, GetY2() - 5) && x - 5 >= 0)  //左邊會不會踢牆(y-5是補償卡比大小)
 				x -= 5;
 			//踢完.踢到邊界.腳沒踏到地都不能使用踢擊
-			if (kickDistance == 0 || x <= 0 || x >= m->GetWidth() || m->isEmpty(GetX2() - originR.Width() / 2, GetY2() + 1))
+			if (kickDistance == 0 || x <= 0 || x >= m->GetWidth() || m->isEmpty(GetX2() - width / 2, GetY2() + 1))
 			{
 				kickDistance = 100;
 				isKick = false;
 			}
+		}
+	}
+
+	void Kirby::Spark_Attack(Map *m)
+	{
+		//------空氣彈------
+		if (isFly && isSpace)
+		{
+			gas.SetXY(x, y+40);
+			gasDistance = 176;
+			bulletDirection = rightOrLeft;
+		}
+		if (gasDistance != 0)
+		{
+			gasDistance -= STEP_SIZE * 2;
+			gas.OnMove(m, bulletDirection);
+			gas.OnShow(m);
+		}
+
+		//------踢擊------
+		if (!isFly && !isBig && (isMovingDown || isKick) && (isAttack || isKick) && !m->isEmpty(GetX2() - width / 2, GetY2() + 1)) //在地面上蹲下按攻擊
+		{
+			isKick = true;
+			kickDistance -= 5;
+			if (rightOrLeft && m->isEmpty(GetX2() + 5, GetY2() - 5) && x + 5 <= m->GetWidth() - Spark_downAttackR.Width() + 40)  //右邊會不會踢牆(y-5是補償卡比大小)(+40是消除動畫補償)
+				x += 5;
+			else if (!rightOrLeft && m->isEmpty(GetX1() - 5 - 40, GetY2() - 5) && x - 5 >= 0)  //左邊會不會踢牆(y-5是補償卡比大小)(-40是消除動畫補償)
+				x -= 5;
+			//踢完.踢到邊界.腳沒踏到地都不能使用踢擊
+			if (kickDistance == 0 || x <= 0 || x >= m->GetWidth() || m->isEmpty(GetX2() - width / 2, GetY2() + 1))
+			{
+				kickDistance = 100;
+				isKick = false;
+			}
+		}
+
+		//------放電------
+		if (isAttack)
+		{
+
 		}
 	}
 
@@ -872,30 +912,32 @@ namespace game_framework {
 
 	void Kirby::ShowSparkKirby(Map *m)
 	{
+		// 雷電卡比圖片.動畫定位及大小補償
 		Spark_exhaleR.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
 		Spark_exhaleL.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
-		Spark_downR.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
-		Spark_downL.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
+		Spark_downR.SetTopLeft(m->ScreenX(x), m->ScreenY(y+20));
+		Spark_downL.SetTopLeft(m->ScreenX(x), m->ScreenY(y+20));
 		Spark_landingR.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
 		Spark_landingL.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
 		Spark_originR.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
 		Spark_originL.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
-		Spark_goR.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
-		Spark_goL.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
+		Spark_goR.SetTopLeft(m->ScreenX(x), m->ScreenY(y-5));
+		Spark_goL.SetTopLeft(m->ScreenX(x), m->ScreenY(y-5));
 		Spark_jumpR.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
 		Spark_jumpL.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
-		Spark_downAttackR.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
-		Spark_downAttackL.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
+		Spark_downAttackR.SetTopLeft(m->ScreenX(x-40), m->ScreenY(y+30));
+		Spark_downAttackL.SetTopLeft(m->ScreenX(x-40), m->ScreenY(y+30));
 		Spark_flyR.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
-		Spark_prepareFlyR.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
+		Spark_prepareFlyR.SetTopLeft(m->ScreenX(x), m->ScreenY(y+5));
 		Spark_flyL.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
-		Spark_prepareFlyL.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
-		Spark_runR.SetTopLeft(m->ScreenX(x), m->ScreenY(y+10));
-		Spark_runL.SetTopLeft(m->ScreenX(x), m->ScreenY(y+10));
-		Spark_attackR.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
-		Spark_attackL.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
+		Spark_prepareFlyL.SetTopLeft(m->ScreenX(x), m->ScreenY(y+5));
+		Spark_runR.SetTopLeft(m->ScreenX(x-20), m->ScreenY(y+10));
+		Spark_runL.SetTopLeft(m->ScreenX(x+10), m->ScreenY(y+10));
+		Spark_attackR.SetTopLeft(m->ScreenX(x-40), m->ScreenY(y-20));
+		Spark_attackL.SetTopLeft(m->ScreenX(x-40), m->ScreenY(y-20));
 		hurtedL.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
 		hurtedR.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
+		Spark_Attack(m);
 
 		if (!isMovingUp && !isFly)   //沒吸氣也沒飛行就要reset吸氣動畫
 		{
@@ -1014,9 +1056,15 @@ namespace game_framework {
 			else if (!isFly && m->isEmpty(GetX1() + Spark_originR.Width() / 2, GetY1() + Spark_originR.Height() + 1))  //自由落體
 			{
 				if (rightOrLeft)
-					Spark_landingR.ShowBitmap();
+				{
+					Spark_landingR.OnShow();
+					Spark_landingR.OnMove();
+				}
 				else
-					Spark_landingL.ShowBitmap();
+				{
+					Spark_landingL.OnShow();
+					Spark_landingL.OnMove();
+				}
 			}
 			else if (isKick && !isFly)   //踢擊
 			{
@@ -1034,9 +1082,15 @@ namespace game_framework {
 			else if (isMovingDown && !m->isEmpty(GetX1() + Spark_originR.Width() / 2, GetY1() + Spark_originR.Height() + 1))   //縮小
 			{
 				if (rightOrLeft)
-					Spark_downR.ShowBitmap();
+				{
+					Spark_downR.OnShow();
+					Spark_downR.OnMove();
+				}
 				else
-					Spark_downL.ShowBitmap();
+				{
+					Spark_downL.OnShow();
+					Spark_downL.OnMove();
+				}
 			}
 			else if (!isFly && isRunning && (isMovingLeft || isMovingRight))  //跑
 			{

@@ -15,11 +15,13 @@ namespace game_framework {
 		int  GetY1();				  	  // 左上角 y 座標
 		int  GetX2();			          // 右下角 x 座標
 		int  GetY2();			          // 右下角 y 座標
+		int  GetType();                   // 取得當前型態
 		void Initialize(int ,int);		  // 設定為初始值
 		bool IsAlive();					  // 是否活著
 		bool IsFly();                     // 是否在飛
 		bool IsKick();                    // 是否踢擊
 		bool IsSuck();                    // 是否吸怪
+		bool IsAttack();                  // 是否按Z鍵
 		void LoadBitmap();				  // 載入圖形
 		void OnMove(Map *m);		      // 移動
 		void OnShow(Map *m);			  // 將圖形貼到畫面
@@ -46,8 +48,8 @@ namespace game_framework {
 		CAnimation bigGoL, bigGoR, swallowR, swallowL;
 		CMovingBitmap blood6, blood5, blood4, blood3, blood2, blood1, blood0;
 		// 雷電卡比
-		CMovingBitmap Spark_exhaleR, Spark_exhaleL, Spark_downR, Spark_downL, Spark_landingR, Spark_landingL;
-		CAnimation Spark_originR, Spark_originL, Spark_goR, Spark_goL, Spark_jumpR, Spark_jumpL, Spark_downAttackR, Spark_downAttackL, Spark_flyR, Spark_prepareFlyR, Spark_flyL, Spark_prepareFlyL, Spark_runR, Spark_runL, Spark_attackR, Spark_attackL;
+		CMovingBitmap Spark_exhaleR, Spark_exhaleL;
+		CAnimation Spark_originR, Spark_originL, Spark_downR, Spark_downL, Spark_goR, Spark_goL, Spark_jumpR, Spark_jumpL, Spark_landingR, Spark_landingL, Spark_downAttackR, Spark_downAttackL, Spark_flyR, Spark_prepareFlyR, Spark_flyL, Spark_prepareFlyL, Spark_runR, Spark_runL, Spark_attackR, Spark_attackL;
 
 		Gas gas;
 		Start start;
@@ -79,7 +81,8 @@ namespace game_framework {
 		bool bulletDirection;       // 吐出物體方向
 		bool isInvincible;          // 是否無敵
 		int InvincibleTime;         // 無敵時間
-		void Attack(Map *m);        // 攻擊
+		void Attack(Map *m);        // 普通卡比攻擊
+		void Spark_Attack(Map *m);  // 雷電卡比攻擊
 		void Transform();           // 變身
 		int hp;                     // 血量
 		int type;                   // 型態
