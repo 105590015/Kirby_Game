@@ -35,7 +35,9 @@ namespace game_framework {
 	{
 		if (HitRectangle(kirby->GetX1(), kirby->GetY1(), kirby->GetX2(), kirby->GetY2()) && kirby->IsKick())
 			hp -= 10;
-		if ((kirby->IsKick() && hp <= 0) || (kirby->IsSuck() && x - kirby->GetX1() <= 1 && x - kirby->GetX1() >= -1 && y - kirby->GetY1() <= 1 && y - kirby->GetY1() >= -1))
+		if (kirby->GetType() == 1 && kirby->IsAttack() && HitRectangle(kirby->GetX1()-10, kirby->GetY1(), kirby->GetX1() + 145, kirby->GetY2() + 158))// -10補償圖片 +145.+158是雷電圖檔的大小
+			hp -= 10;
+		if ((kirby->GetType() == 1 && kirby->IsAttack() && hp <= 0) || (kirby->IsKick() && hp <= 0) || (kirby->IsSuck() && x - kirby->GetX1() <= 1 && x - kirby->GetX1() >= -1 && y - kirby->GetY1() <= 1 && y - kirby->GetY1() >= -1))
 			is_alive = false;
 	}
 
