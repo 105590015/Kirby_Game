@@ -70,14 +70,6 @@ namespace game_framework {
 		//sx = X_POS;
 		//sy = Y_POS;
 
-		//ofstream set(Mapfile);			//第一次建立地圖設立初始值
-		//for (int i = 0; i < mapSize_Y; i++) {
-		//	for (int j = 0; j < mapSize_X; j++) {
-		//		set << 0 << " ";
-		//	}
-		//	set << endl;
-		//}
-		//set.close();
 
 		ifstream file(Mapfile);			//將資料存入陣列
 		for (int i = 0; i<mapSize_Y; i++)
@@ -132,20 +124,29 @@ namespace game_framework {
 		foreground.ShowBitmap();
 
 		
-		
+		//ofstream set(Mapfile);			//第一次建立地圖設立初始值
+		//for (int i = 0; i < mapSize_Y; i++) {
+		//	for (int j = 0; j < mapSize_X; j++) {
+		//		set << 0 << " ";
+		//	}
+		//	set << endl;
+		//}
+		//set.close();
 
 		for (int i = 0; i < mapSize_Y; i++) {
 			for (int j = 0; j < mapSize_X; j++) {
 				int x = j * 10 - sx; // 算出第(i, j)這一格的 x 螢幕座標
 				int y = i * 10 - sy; // 算出第(i, j)這一格的 y 螢幕座標
 				if (mx >= x && mx <= x + 20 && my >= y && my <= y + 20) { //判斷滑鼠位置
-					if (Lclick) {				//左鍵為設立障礙物
-						map[i][j] = 1;
-					}
+					//if (Lclick) {				//左鍵為設立障礙物
+					//	map[i][j] = 1;
 
-					/*if (Lclick) {				//左鍵為設立障礙物
+					//	
+					//}
+
+					if (Lclick) {				//左鍵為設立障礙物
 						map[i][j] = 2;
-					}*/
+					}
 
 					else if (Rclick) {			//右鍵為取消障礙物
 						map[i][j] = 0;

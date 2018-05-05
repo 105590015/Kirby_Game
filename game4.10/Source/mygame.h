@@ -105,6 +105,7 @@ namespace game_framework {
 		Map *index;
 		NormalMonster normalMonster[6];                 // 怪物
 		Door door;
+		Door door1;
 		Spark spark;
 		int mapNum;							//設定現在為第幾號地圖
 	};

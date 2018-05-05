@@ -24,12 +24,28 @@ namespace game_framework {
 		return door.Width();
 	}
 
+	int Door::GetX() {
+		return x;
+	}
+
+	int Door::GetY() {
+		return y;
+	}
+
+	int Door::GetNextX() {
+		return NextDoor->GetX();
+	}
+
+	int Door::GetNextY() {
+		return NextDoor->GetY();
+	}
 
 
-	void Door::Initialize(int px,int py,int num) {
+	void Door::Initialize(int px,int py,int num ,Door* h) {
 		x = px;
 		y = py;
 		mapNum = num;
+		NextDoor = h;
 	}
 
 	void Door::LoadBitmap() {

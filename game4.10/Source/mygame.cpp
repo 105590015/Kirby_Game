@@ -192,7 +192,8 @@ void CGameStateRun::OnBeginState()
 	map1.Initialize();
 	spark.Initialize(640, 680);
 	kirby.Initialize(640,400);
-	door.Initialize(993,367, 1);
+	door.Initialize(993,367, 1, &door1);
+	door1.Initialize(200, 200, 0, &door);
 	normalMonster[0].Initialize(50, 80, 50, 200, false);
 	normalMonster[1].Initialize(550, 80, 550, 670, false);
 	normalMonster[2].Initialize(1010, 80, 1010, 1188, false);
@@ -206,9 +207,9 @@ void CGameStateRun::OnBeginState()
 void CGameStateRun::OnMove()							// 移動遊戲元素
 {
 
-	
 	index->OnMove(kirby.GetX1(),kirby.GetY1());
-	if(kirby.IsAlive())  kirby.OnMove(index);
+	if(kirby.IsAlive())
+		kirby.OnMove(index);
 	if (mapNum == 0)
 	{
 		door.OnMove();
@@ -219,11 +220,21 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 		normalMonster[3].OnMove(index, &kirby);
 		normalMonster[4].OnMove(index, &kirby);
 		normalMonster[5].OnMove(index, &kirby);
+
+		if (door.IsEnter(&kirby)) {
+			mapNum = door.GetMapNum();
+			index = &map1;
+			kirby.SetXY(door.GetNextX()-50,door.GetNextY());
+		}
 	}
-	if (door.IsEnter(&kirby)) {
-		index = &map1;
-		kirby.SetXY(10, 10);
-		mapNum = door.GetMapNum();
+	if (mapNum == 1) {
+		door1.OnMove();
+
+		if (door1.IsEnter(&kirby)) {
+			mapNum = door1.GetMapNum();
+			index = &map;
+			kirby.SetXY(door1.GetNextX()-50, door1.GetNextY());
+		}
 	}
 }
 
@@ -240,6 +251,7 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 		normalMonster[4].LoadBitmap();
 		normalMonster[5].LoadBitmap();
 		door.LoadBitmap();
+		door1.LoadBitmap();
 		spark.LoadBitmap();
 		index = &map;
 		mapNum = 0;
@@ -265,6 +277,7 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 	if (nChar == KEY_UP) {
 		kirby.SetMovingUp(true);
 		door.SetEnter(true);
+		door1.SetEnter(true);
 	}
 	if (nChar == KEY_DOWN)
 		kirby.SetMovingDown(true);
@@ -295,6 +308,7 @@ void CGameStateRun::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 		kirby.SetMovingRight(false);
 	if (nChar == KEY_UP) {
 		kirby.SetMovingUp(false);
+		door.SetEnter(false);
 		door.SetEnter(false);
 	}
 	if (nChar == KEY_DOWN)
@@ -354,6 +368,10 @@ void CGameStateRun::OnShow()
 		normalMonster[3].OnShow(index, &kirby);
 		normalMonster[4].OnShow(index, &kirby);
 		normalMonster[5].OnShow(index, &kirby);
+	}
+
+	if (mapNum == 1) {
+		door1.OnShow(index);
 	}
 	
 	if(kirby.IsAlive()) kirby.OnShow(index);
