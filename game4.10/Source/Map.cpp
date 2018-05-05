@@ -138,7 +138,7 @@ namespace game_framework {
 			for (int j = 0; j < mapSize_X; j++) {
 				int x = j * 10 - sx; // 算出第(i, j)這一格的 x 螢幕座標
 				int y = i * 10 - sy; // 算出第(i, j)這一格的 y 螢幕座標
-				if (mx >= x && mx <= x + 10 && my >= y && my <= y + 10) { //判斷滑鼠位置
+				if (mx >= x && mx <= x + 20 && my >= y && my <= y + 20) { //判斷滑鼠位置
 					if (Lclick) {				//左鍵為設立障礙物
 						map[i][j] = 1;
 					}

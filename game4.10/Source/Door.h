@@ -17,6 +17,8 @@ namespace game_framework {
 		int  GetY();
 		int  GetNextX();
 		int  GetNextY();
+		int  GetX2();
+		int  GetY2();
 		void Initialize(int x,int y,int Num,Door* );					// 設定為初始值
 		void LoadBitmap();			// 載入圖形
 		void OnMove();               // 地圖移動

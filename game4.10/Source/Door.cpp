@@ -32,6 +32,14 @@ namespace game_framework {
 		return y;
 	}
 
+	int Door::GetX2() {
+		return x + door.Width();
+	}
+
+	int Door::GetY2() {
+		return y + door.Height();
+	}
+
 	int Door::GetNextX() {
 		return NextDoor->GetX();
 	}
