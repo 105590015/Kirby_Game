@@ -108,6 +108,8 @@ namespace game_framework {
 		Door door1;
 		Spark spark;
 		int mapNum;							//設定現在為第幾號地圖
+		CAnimation Transition;
+		bool Istransiting=false;
 	};
 
 	/////////////////////////////////////////////////////////////////////////////

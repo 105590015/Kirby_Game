@@ -53,6 +53,8 @@ namespace game_framework {
 		door.AddBitmap(".\\RES\\Door\\door_1.bmp", RGB(255, 255, 255));
 		door.AddBitmap(".\\RES\\Door\\door_2.bmp", RGB(255, 255, 255));
 		door.AddBitmap(".\\RES\\Door\\door_3.bmp", RGB(255, 255, 255));
+
+		
 	}
 
 	void Door::OnMove() {

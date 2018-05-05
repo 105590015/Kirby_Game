@@ -206,7 +206,7 @@ void CGameStateRun::OnBeginState()
 
 void CGameStateRun::OnMove()							// 移動遊戲元素
 {
-
+	Transition.OnMove();
 	index->OnMove(kirby.GetX1(),kirby.GetY1());
 	if(kirby.IsAlive())
 		kirby.OnMove(index);
@@ -222,6 +222,8 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 		normalMonster[5].OnMove(index, &kirby);
 
 		if (door.IsEnter(&kirby)) {
+			Istransiting = true;
+
 			mapNum = door.GetMapNum();
 			index = &map1;
 			kirby.SetXY(door.GetNextX()-50,door.GetNextY());
@@ -231,16 +233,32 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 		door1.OnMove();
 
 		if (door1.IsEnter(&kirby)) {
+			Istransiting = true;
+
 			mapNum = door1.GetMapNum();
 			index = &map;
 			kirby.SetXY(door1.GetNextX()-50, door1.GetNextY());
 		}
+	}
+
+	if (Transition.IsFinalBitmap()) {
+		Istransiting = false;
 	}
 }
 
 void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 {
 	// 載入資料
+
+		Transition.AddBitmap(".//Map//Transition_0.bmp", RGB(0, 0, 0));
+		Transition.AddBitmap(".//Map//Transition_1.bmp", RGB(0, 0, 0));
+		Transition.AddBitmap(".//Map//Transition_2.bmp", RGB(0, 0, 0));
+		Transition.AddBitmap(".//Map//Transition_3.bmp", RGB(0, 0, 0));
+		Transition.AddBitmap(".//Map//Transition_4.bmp", RGB(0, 0, 0));
+		Transition.AddBitmap(".//Map//Transition_5.bmp", RGB(0, 0, 0));
+		Transition.AddBitmap(".//Map//Transition_6.bmp", RGB(0, 0, 0));
+		Transition.AddBitmap(".//Map//Transition_7.bmp", RGB(0, 0, 0));
+		
 		map.LoadBitmap(".//Map//foreground.bmp", RGB(255, 255, 255), ".//Map//background.bmp", ".//Map//map.txt");
 		map1.LoadBitmap(".//Map//map1.bmp", RGB(255, 255, 255), ".//Map//background_1.bmp", ".//Map//map1.txt");
 		kirby.LoadBitmap();
@@ -253,8 +271,8 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 		door.LoadBitmap();
 		door1.LoadBitmap();
 		spark.LoadBitmap();
-		index = &map;
-		mapNum = 0;
+		index = &map1;
+		mapNum = 1;
 
 	CAudio::Instance()->Load(AUDIO_BACKGROUND, "sounds\\Kirby_background.mp3");  //背景音樂
 }
@@ -309,7 +327,7 @@ void CGameStateRun::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 	if (nChar == KEY_UP) {
 		kirby.SetMovingUp(false);
 		door.SetEnter(false);
-		door.SetEnter(false);
+		door1.SetEnter(false);
 	}
 	if (nChar == KEY_DOWN)
 		kirby.SetMovingDown(false);
@@ -377,5 +395,10 @@ void CGameStateRun::OnShow()
 	if(kirby.IsAlive()) kirby.OnShow(index);
 	else if(kirby.GetY1()<=1) GotoGameState(GAME_STATE_OVER);
 	else kirby.Die(index);
+
+
+	if (Istransiting) {
+		Transition.OnShow();
+	}
 }
 }

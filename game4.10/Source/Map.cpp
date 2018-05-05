@@ -29,7 +29,7 @@ namespace game_framework {
 			}
 			output << endl;
 		}
-
+		output.close();
 	}
 
 	void Map::IsRclick(bool flag) {		//設定右鍵是否按下
@@ -43,6 +43,7 @@ namespace game_framework {
 			}
 			output << endl;
 		}
+		output.close();
 	}
 
 	int Map::GetWidth() {				//取得背景寬度
@@ -70,7 +71,7 @@ namespace game_framework {
 		//sx = X_POS;
 		//sy = Y_POS;
 
-
+		
 		ifstream file(Mapfile);			//將資料存入陣列
 		for (int i = 0; i<mapSize_Y; i++)
 		{
@@ -137,16 +138,14 @@ namespace game_framework {
 			for (int j = 0; j < mapSize_X; j++) {
 				int x = j * 10 - sx; // 算出第(i, j)這一格的 x 螢幕座標
 				int y = i * 10 - sy; // 算出第(i, j)這一格的 y 螢幕座標
-				if (mx >= x && mx <= x + 20 && my >= y && my <= y + 20) { //判斷滑鼠位置
-					//if (Lclick) {				//左鍵為設立障礙物
-					//	map[i][j] = 1;
-
-					//	
-					//}
-
+				if (mx >= x && mx <= x + 10 && my >= y && my <= y + 10) { //判斷滑鼠位置
 					if (Lclick) {				//左鍵為設立障礙物
-						map[i][j] = 2;
+						map[i][j] = 1;
 					}
+
+					//if (Lclick) {				//左鍵為設立障礙物
+					//	map[i][j] = 2;
+					//}
 
 					else if (Rclick) {			//右鍵為取消障礙物
 						map[i][j] = 0;
