@@ -103,8 +103,8 @@ namespace game_framework {
 		Map map[2];                                        // 地圖
 		Map *index;
 		NormalMonster normalMonster[6];                 // 怪物
-		Door door;
-		Door door1;
+		Door door[10];
+		Door door1[2];
 		Door *gate;
 		Spark spark;
 		int mapNum;							//設定現在為第幾號地圖

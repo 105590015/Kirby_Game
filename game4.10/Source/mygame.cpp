@@ -192,8 +192,19 @@ void CGameStateRun::OnBeginState()
 	map[1].Initialize();
 	spark.Initialize(640, 680);
 	kirby.Initialize(640,400);
-	door.Initialize(993,367, 1, &door1);
-	door1.Initialize(200, 200, 0, &door);
+
+	door[0].Initialize(123,  37, 1, 0, &door1[0]);
+	door[1].Initialize(621,  37, 1, 0, &door1[0]);
+	door[2].Initialize(1118,  37, 1, 0, &door1[0]);
+	door[3].Initialize(83, 328, 1, 0, &door1[0]);
+	door[4].Initialize(248, 369, 1, 0, &door1[0]);
+	door[5].Initialize(993, 367, 1, 0, &door1[0]);
+	door[6].Initialize(1159, 326, 1, 0, &door1[1]);
+	door[7].Initialize(993, 367, 1, 0, &door1[0]);
+	door[8].Initialize(993, 367, 1, 0, &door1[0]);
+	door[9].Initialize(993, 367, 1, 0, &door1[0]);
+	door1[0].Initialize(30, 419, 0,1, &door[5]);
+	door1[1].Initialize(4450, 350, 0, 1, &door[6]);
 	normalMonster[0].Initialize(50, 80, 50, 200, false);
 	normalMonster[1].Initialize(550, 80, 550, 670, false);
 	normalMonster[2].Initialize(1010, 80, 1010, 1188, false);
@@ -206,18 +217,19 @@ void CGameStateRun::OnBeginState()
 
 void CGameStateRun::OnMove()							// 移動遊戲元素
 {
+	index->OnMove(kirby.GetX1(), kirby.GetY1());
 	if (Istransiting) {
 		Transition.OnMove();
 		Transition.SetDelayCount(8);
 	}
 	
 	else {
-		index->OnMove(kirby.GetX1(), kirby.GetY1());
+		
 		if (kirby.IsAlive())
 			kirby.OnMove(index);
 		if (mapNum == 0)
 		{
-			door.OnMove();
+			
 			spark.OnMove(index, &kirby);
 			normalMonster[0].OnMove(index, &kirby);
 			normalMonster[1].OnMove(index, &kirby);
@@ -226,25 +238,30 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 			normalMonster[4].OnMove(index, &kirby);
 			normalMonster[5].OnMove(index, &kirby);
 
-			if (door.IsEnter(&kirby)) {
-				Istransiting = true;
-				Transition.Reset();
-				gate = &door;
-				//mapNum = door.GetMapNum();
-				//index = &map[1];
-				//kirby.SetXY(door.GetNextX()-50,door.GetNextY());
+			for (int i = 0; i < 10; i++) {
+				door[i].OnMove();
+				if (door[i].IsEnter(&kirby)) {
+					Istransiting = true;
+					Transition.Reset();
+					gate = &door[i];
+					//mapNum = door.GetMapNum();
+					//index = &map[1];
+					//kirby.SetXY(door.GetNextX()-50,door.GetNextY());
+				}
 			}
 		}
 		if (mapNum == 1) {
-			door1.OnMove();
-
-			if (door1.IsEnter(&kirby)) {
-				Istransiting = true;
-				Transition.Reset();
-				gate = &door1;
-				//mapNum = door1.GetMapNum();
-				//index = &map[0];
-				//kirby.SetXY(door1.GetNextX()-50, door1.GetNextY());
+			
+			for (int i = 0; i < 2; i++) {
+				door1[i].OnMove();
+				if (door1[i].IsEnter(&kirby)) {
+					Istransiting = true;
+					Transition.Reset();
+					gate = &door1[i];
+					//mapNum = door1.GetMapNum();
+					//index = &map[0];
+					//kirby.SetXY(door1.GetNextX()-50, door1.GetNextY());
+				}
 			}
 		}
 	}
@@ -256,7 +273,7 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 	if (Transition.GetCurrentBitmapNumber() == 7) {
 		mapNum = gate->GetMapNum();
 		index = &map[mapNum];
-		kirby.SetXY(gate->GetNextX() - 50, gate->GetNextY());
+		kirby.SetXY(gate->GetNextX() - 50, gate->GetNextY()+42);
 	}
 }
 
@@ -289,12 +306,14 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 		normalMonster[3].LoadBitmap();
 		normalMonster[4].LoadBitmap();
 		normalMonster[5].LoadBitmap();
-		door.LoadBitmap();
-		door1.LoadBitmap();
+		for (int i = 0; i < 10;i++)
+			door[i].LoadBitmap();
+		door1[0].LoadBitmap();
+		door1[1].LoadBitmap();
 		spark.LoadBitmap();
 		index = &map[0];
 		mapNum = 0;
-		gate = &door;
+		gate = &door[5];
 
 	CAudio::Instance()->Load(AUDIO_BACKGROUND, "sounds\\Kirby_background.mp3");  //背景音樂
 }
@@ -316,8 +335,13 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 		kirby.SetMovingRight(true);
 	if (nChar == KEY_UP) {
 		kirby.SetMovingUp(true);
-		door.SetEnter(true);
-		door1.SetEnter(true);
+		if(mapNum==0)
+			for (int i = 0; i < 10;i++)
+				door[i].SetEnter(true);
+
+		if (mapNum == 1)
+			for (int i = 0; i < 2;i++)
+				door1[i].SetEnter(true);
 	}
 	if (nChar == KEY_DOWN)
 		kirby.SetMovingDown(true);
@@ -348,8 +372,12 @@ void CGameStateRun::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 		kirby.SetMovingRight(false);
 	if (nChar == KEY_UP) {
 		kirby.SetMovingUp(false);
-		door.SetEnter(false);
-		door1.SetEnter(false);
+		if(mapNum==0)
+			for (int i = 0; i < 10;i++)
+				door[i].SetEnter(false);
+		if (mapNum == 1)
+			for (int i = 0; i < 2;i++)
+				door1[i].SetEnter(false);
 	}
 	if (nChar == KEY_DOWN)
 		kirby.SetMovingDown(false);
@@ -400,7 +428,8 @@ void CGameStateRun::OnShow()
 	//map.OnShow();
 	index->OnShow();
 	if (mapNum == 0) {
-		door.OnShow(index);
+		for (int i = 0; i < 10;i++)
+			door[i].OnShow(index);
 		spark.OnShow(index);
 		normalMonster[0].OnShow(index, &kirby);
 		normalMonster[1].OnShow(index, &kirby);
@@ -411,7 +440,8 @@ void CGameStateRun::OnShow()
 	}
 
 	if (mapNum == 1) {
-		door1.OnShow(index);
+		for (int i = 0; i < 2;i++)
+			door1[i].OnShow(index);
 	}
 	
 	if(kirby.IsAlive()) kirby.OnShow(index);
