@@ -12,7 +12,7 @@ namespace game_framework {
 		void OnShow(Map*);
 		void OnMove(Map*,Kirby*);
 		void Initialize(int ,int);
-		void Attack(Kirby*);
+		void Attack(Map*, Kirby*);
 		int GetX2();
 		int GetY2();
 
@@ -27,7 +27,7 @@ namespace game_framework {
 		int midX, midY;
 		void Jump(Kirby*);
 		CAnimation *index;
-		CAnimation Jump_L, Jump_R, Sucked_L, Sucked_R,ATK,AttackRange,Stand_L,Stand_R;
+		CAnimation Jump_L, Jump_R, Sucked_L, Sucked_R,ATK,AttackRange,Stand_L,Stand_R,die;
 
 	};
 

@@ -207,7 +207,7 @@ void CGameStateRun::OnBeginState()
 	door1[1].Initialize(4450, 350, 0, 1, &door[6]);
 	normalMonster[0].Initialize(50, 80, 50, 200, false);
 	normalMonster[1].Initialize(550, 80, 550, 670, false);
-	normalMonster[2].Initialize(1010, 80, 1010, 1188, false);
+	normalMonster[2].Initialize(1020, 80, 1015, 1188, false);
 	normalMonster[3].Initialize(40, 660, 0, 60, false);
 	normalMonster[4].Initialize(614, 660, 370, 870, false);
 	normalMonster[5].Initialize(1190, 660, 1170, 1230, false);

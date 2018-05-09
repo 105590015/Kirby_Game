@@ -33,11 +33,21 @@ namespace game_framework {
 
 	void Enemy::Hurted(Kirby* kirby)
 	{
+		// 被吸
 		if (HitRectangle(kirby->GetX1(), kirby->GetY1(), kirby->GetX2(), kirby->GetY2()) && kirby->IsKick())
 			hp -= 10;
+		// 被空氣砲擊中
+		if (kirby->GetGas()->IsAlive() && HitRectangle(kirby->GetGas()->GetX1() - 15, kirby->GetGas()->GetY1() - 15, kirby->GetGas()->GetX2() - 15, kirby->GetGas()->GetY2() - 15))
+			hp -= 10;
+		// 被星星擊中
+		if (kirby->GetStar()->IsAlive() && HitRectangle(kirby->GetStar()->GetX1() - 15, kirby->GetStar()->GetY1() - 15, kirby->GetStar()->GetX2() - 15, kirby->GetStar()->GetY2() - 15))
+			hp -= 20;
+		// 被電
 		if (kirby->GetType() == 1 && kirby->IsAttack() && HitRectangle(kirby->GetX1()-10, kirby->GetY1(), kirby->GetX1() + 145, kirby->GetY2() + 158))// -10補償圖片 +145.+158是雷電圖檔的大小
 			hp -= 10;
-		if ((kirby->GetType() == 1 && kirby->IsAttack() && hp <= 0) || (kirby->IsKick() && hp <= 0) || (kirby->IsSuck() && x - kirby->GetX1() <= 1 && x - kirby->GetX1() >= -1 && y - kirby->GetY1() <= 1 && y - kirby->GetY1() >= -1))
+		if (kirby->IsSuck() && (x - kirby->GetX1() > 2 || x - kirby->GetX1() < -2 || y - kirby->GetY1() > 2 || y - kirby->GetY1() < -2))
+			is_alive = true;
+		else if (hp <= 0)
 			is_alive = false;
 	}
 

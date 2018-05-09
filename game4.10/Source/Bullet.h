@@ -10,6 +10,7 @@ namespace game_framework {
 		virtual int  GetX2();	// 右下角 x 座標
 		virtual int  GetY2();	// 右下角 y 座標
 		void SetXY(int sx, int sy);           // 設定座標
+		bool IsAlive();
 	protected:
 		int x, y;
 		bool isAlive;

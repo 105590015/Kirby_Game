@@ -52,14 +52,15 @@ namespace game_framework {
 		jumpDistance = 120;
 		kickDistance = 100;
 		exhaleDelay = 10;
-		gasDistance = startDistance = 0;
+		gasDistance = starDistance = 0;
 		InvincibleTime = 0;
 		type = 0;
 		eat = -1;
 		isMovingLeft = isMovingRight = isMovingUp = isMovingDown = isSpace = isJump = isAttack = isKick = isFly = isHurted = isSuck = isBig = isSwallow = isRunning = isInvincible = false;
 		isAlive = rightOrLeft = true;
 		gas.LoadBitmap();
-		start.LoadBitmap();
+		star.LoadBitmap();
+		lost.LoadBitmap();
 		blood0.SetTopLeft(SIZE_X / 2 - blood0.Width() / 2, SIZE_Y - blood0.Height());
 		blood1.SetTopLeft(SIZE_X / 2 - blood1.Width() / 2, SIZE_Y - blood1.Height());
 		blood2.SetTopLeft(SIZE_X / 2 - blood2.Width() / 2, SIZE_Y - blood2.Height());
@@ -454,10 +455,23 @@ namespace game_framework {
 
 		if (type == 0) ShowKirby(m);
 		else if (type == 1) ShowSparkKirby(m);
+
+		if (lost.IsAlive())
+		{
+			lost.OnMove(m, x, y, isSuck);
+			lost.OnShow(m);
+		}
+		
 	}
 
-	void Kirby::Hurted()
+	void Kirby::Hurted(Map *m)
 	{
+		if (type != 0)
+		{
+			lost.Initialize(type, x, y);
+			type = 0;
+		}
+
 		if (!isInvincible)
 		{
 			hp--;
@@ -540,6 +554,16 @@ namespace game_framework {
 		eat = t;
 	}
 
+	Gas* Kirby::GetGas()
+	{
+		return &gas;
+	}
+
+	Star* Kirby::GetStar()
+	{
+		return &star;
+	}
+
 	void Kirby::Attack(Map *m)
 	{
 		//------空氣彈------
@@ -559,15 +583,15 @@ namespace game_framework {
 		//------星星------
 		if (isBig && isAttack && !isSuck)
 		{
-			start.SetXY(x, y);
-			startDistance = 376;
+			star.SetXY(x, y);
+			starDistance = 376;
 			bulletDirection = rightOrLeft;
 		}
-		if (startDistance != 0)
+		if (starDistance != 0)
 		{
-			startDistance -= STEP_SIZE * 2;
-			start.OnMove(m, bulletDirection);
-			start.OnShow(m);
+			starDistance -= STEP_SIZE * 2;
+			star.OnMove(m, bulletDirection);
+			star.OnShow(m);
 		}
 
 		//------踢擊------
@@ -619,12 +643,6 @@ namespace game_framework {
 				kickDistance = 100;
 				isKick = false;
 			}
-		}
-
-		//------放電------
-		if (isAttack)
-		{
-
 		}
 	}
 
@@ -706,7 +724,7 @@ namespace game_framework {
 		}
 		else if (isBig)
 		{
-			if (isSuck)
+			if(isSuck)
 				isAttack = false;
 			if (isJump)   //跳躍
 			{
@@ -790,6 +808,12 @@ namespace game_framework {
 				{
 					suckL.OnMove();
 					suckL.OnShow();
+				}
+				if (lost.IsAlive() && (lost.GetX() - x >= -2) && (lost.GetX() - x <= 2) && (lost.GetY() - y >= -2) && (lost.GetY() - y <= 2))
+				{
+					lost.SetAlive(false);
+					SetBig(true);
+					SetEat(lost.type);
 				}
 			}
 			else if (isJump)   //跳躍
@@ -947,6 +971,7 @@ namespace game_framework {
 
 		if (isHurted)   // 被攻擊
 		{
+			y += 40;  //還原補償的高度
 			if (rightOrLeft)
 			{
 				hurtedR.OnMove();

@@ -1,7 +1,9 @@
 #pragma once
 #include "Map.h"
 #include "Gas.h"
-#include "Start.h"
+#include "Star.h"
+#include "LostAbility.h"
+
 namespace game_framework {
 	/////////////////////////////////////////////////////////////////////////////
 	// 卡比的所有資料
@@ -25,7 +27,7 @@ namespace game_framework {
 		void LoadBitmap();				  // 載入圖形
 		void OnMove(Map *m);		      // 移動
 		void OnShow(Map *m);			  // 將圖形貼到畫面
-		void Hurted();                    // 受傷
+		void Hurted(Map *m);              // 受傷
 		void Die(Map *m);			      // 死去
 		void SetMovingDown(bool flag);    // 設定是否正在往下移動
 		void SetMovingLeft(bool flag);	  // 設定是否正在往左移動
@@ -39,6 +41,8 @@ namespace game_framework {
 		void SetRun(bool);				  // 設定是否按下C
 		void SetXY(int nx, int ny);		  // 設定左上角的座標
 		void SetEat(int t);		          // 設定吃了什麼怪物
+		Gas* GetGas();
+		Star* GetStar();
 	protected:	
 		// 普通卡比
 		CMovingBitmap originR, originL, exhaleR, exhaleL, jumpR, jumpL, downR, downL, landingR, landingL, downAttackR, downAttackL, GG;
@@ -52,7 +56,8 @@ namespace game_framework {
 		CAnimation Spark_originR, Spark_originL, Spark_downR, Spark_downL, Spark_goR, Spark_goL, Spark_jumpR, Spark_jumpL, Spark_landingR, Spark_landingL, Spark_downAttackR, Spark_downAttackL, Spark_flyR, Spark_prepareFlyR, Spark_flyL, Spark_prepareFlyL, Spark_runR, Spark_runL, Spark_attackR, Spark_attackL;
 
 		Gas gas;
-		Start start;
+		Star star;
+		LostAbility lost;
 		int x, y;					// 左上角座標
 		bool isMovingDown;			// 是否正在往下移動
 		bool isMovingLeft;			// 是否正在往左移動
@@ -77,7 +82,7 @@ namespace game_framework {
 		int jumpDistance;           // 跳躍的距離
 		int kickDistance;           // 踢擊的距離
 		int gasDistance;            // 氣體飛行距離
-		int startDistance;          // 星星飛行距離
+		int starDistance;          // 星星飛行距離
 		bool bulletDirection;       // 吐出物體方向
 		bool isInvincible;          // 是否無敵
 		int InvincibleTime;         // 無敵時間

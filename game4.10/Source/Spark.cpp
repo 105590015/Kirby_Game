@@ -72,6 +72,9 @@ namespace game_framework {
 		Stand_L.AddBitmap(".\\RES\\Spirky\\Spirky_L_1.bmp", RGB(255, 255, 255));
 		Stand_R.AddBitmap(".\\RES\\Spirky\\Spirky_R_0.bmp", RGB(255, 255, 255));
 		Stand_R.AddBitmap(".\\RES\\Spirky\\Spirky_R_1.bmp", RGB(255, 255, 255));
+		die.AddBitmap(".\\RES\\die1.bmp", RGB(255, 255, 255));
+		die.AddBitmap(".\\RES\\die2.bmp", RGB(255, 255, 255));
+		die.AddBitmap(".\\RES\\die3.bmp", RGB(255, 255, 255));
 	}
 
 	void Spark::Initialize(int px,int py) {
@@ -91,9 +94,9 @@ namespace game_framework {
 
 	}
 
-	void Spark::Attack(Kirby* k) {
+	void Spark::Attack(Map *m, Kirby* k) {
 		if (HitRectangle(k->GetX1(), k->GetY1(), k->GetX2(), k->GetY2()) && !k->IsKick())
-			k->Hurted();
+			k->Hurted(m);
 	}
 
 	void Spark::Jump(Kirby* k) {
@@ -147,7 +150,7 @@ namespace game_framework {
 			}
 
 			else {
-				Attack(k);
+				Attack(m, k);
 				
 				if (counter==100) {
 					velocity = 10;
@@ -236,6 +239,7 @@ namespace game_framework {
 
 	}
 	void Spark::OnShow(Map* m) {
+		die.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
 		if (is_alive) {
 
 			index->SetTopLeft(m->ScreenX(x), m->ScreenY(y));
@@ -246,6 +250,13 @@ namespace game_framework {
 				ATK.OnShow();
 			}
 		}
-
+		else
+		{
+			if (!die.IsFinalBitmap() && !is_sucked)
+			{
+				die.OnShow();
+				die.OnMove();
+			}
+		}
 	}
 }

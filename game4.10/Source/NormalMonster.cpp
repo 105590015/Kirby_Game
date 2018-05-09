@@ -87,7 +87,6 @@ namespace game_framework {
 		}
 		else
 		{
-			die.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
 			if (!die.IsFinalBitmap() && !is_sucked)
 			{
 				die.OnShow();
@@ -103,7 +102,7 @@ namespace game_framework {
 			Hurted(kirby);
 			Sucked(kirby);
 			if(!is_sucked)
-				Attack(kirby);
+				Attack(m, kirby);
 			if (is_alive && !is_sucked && !RightOrLeft && m->isEmpty(GetX1() - 1, GetY1() + goLeft.Height() / 2))
 			{
 				if (x <= startX) //走到限制區域最左要掉頭
@@ -128,7 +127,7 @@ namespace game_framework {
 					y -= 3;
 				else if (y < kirby->GetY1())
 					y += 3;
-				if ((x - kirby->GetX1() >= -1) && (x - kirby->GetX1() <= 1) && (y - kirby->GetY1() >= -1) && (y - kirby->GetY1() <= 1))
+				if ((x - kirby->GetX1() >= -2) && (x - kirby->GetX1() <= 2) && (y - kirby->GetY1() >= -2) && (y - kirby->GetY1() <= 2))
 				{
 					kirby->SetBig(true);
 					kirby->SetEat(0);
@@ -140,9 +139,9 @@ namespace game_framework {
 		}
 	}
 
-	void NormalMonster::Attack(Kirby* kirby)
+	void NormalMonster::Attack(Map *m, Kirby* kirby)
 	{
 		if (HitRectangle(kirby->GetX1(), kirby->GetY1(), kirby->GetX2(), kirby->GetY2()) && !kirby->IsKick())
-			kirby->Hurted();
+			kirby->Hurted(m);
 	}
 }

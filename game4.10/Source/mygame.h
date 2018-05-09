@@ -46,8 +46,10 @@
 #include "NormalMonster.h"
 #include "Door.h"
 #include "Gas.h"
-#include "Start.h"
+#include "Star.h"
+#include "LostAbility.h"
 #include "Spark.h"
+
 
 namespace game_framework {
 	/////////////////////////////////////////////////////////////////////////////
