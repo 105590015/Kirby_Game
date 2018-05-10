@@ -42,6 +42,16 @@ namespace game_framework {
 		return type;
 	}
 
+	int Kirby::GetHeight()
+	{
+		return height;
+	}
+
+	int Kirby::GetWidth()
+	{
+		return width;
+	}
+
 	void Kirby::Initialize(int px, int py)  //設定在腳色在螢幕的初始位置
 	{
 		const int X_POS = px;
@@ -352,17 +362,17 @@ namespace game_framework {
 
 	void Kirby::OnMove(Map *m)
 	{
-		// 設定身材
 		if (type == 0)
 		{
 			height = originR.Height();
 			width = originR.Width();
 		}
-		else if(type==1)
+		else if (type == 1)
 		{
 			height = Spark_originR.Height();
 			width = Spark_originR.Width();
 		}
+			
 		//被攻擊且不是在空中也沒超出邊界時
 		if (isHurted)
 		{
@@ -476,7 +486,7 @@ namespace game_framework {
 		{
 			hp--;
 			isInvincible = true;
-			InvincibleTime = 45;
+			InvincibleTime = 60;
 		}
 
 		if (hp > 0)

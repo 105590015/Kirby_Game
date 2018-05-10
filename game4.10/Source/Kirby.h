@@ -18,6 +18,8 @@ namespace game_framework {
 		int  GetX2();			          // 右下角 x 座標
 		int  GetY2();			          // 右下角 y 座標
 		int  GetType();                   // 取得當前型態
+		int  GetHeight();                 // 取得身高
+		int  GetWidth();                  // 取得寬度
 		void Initialize(int ,int);		  // 設定為初始值
 		bool IsAlive();					  // 是否活著
 		bool IsFly();                     // 是否在飛
