@@ -203,7 +203,7 @@ void CGameStateRun::OnBeginState()
 	door[7].Initialize(993, 367, 1, 0, &door1[0]);
 	door[8].Initialize(993, 367, 1, 0, &door1[0]);
 	door[9].Initialize(993, 367, 1, 0, &door1[0]);
-	door1[0].Initialize(30, 419, 0,1, &door[5]);
+	door1[0].Initialize(30, 425, 0,1, &door[5]);
 	door1[1].Initialize(4450, 350, 0, 1, &door[6]);
 	normalMonster[0].Initialize(50, 80, 50, 200, false);
 	normalMonster[1].Initialize(550, 80, 550, 670, false);
@@ -273,7 +273,7 @@ void CGameStateRun::OnMove()							// ²¾°Ê¹CÀ¸¤¸¯À
 	if (Transition.GetCurrentBitmapNumber() == 7) {
 		mapNum = gate->GetMapNum();
 		index = &map[mapNum];
-		kirby.SetXY(gate->GetNextX() - 50, gate->GetNextY()+42);
+		kirby.SetXY(gate->GetNextDoor().GetX() - 50, gate->GetNextDoor().GetY2()-kirby.GetHeight());
 	}
 }
 
