@@ -427,9 +427,9 @@ namespace game_framework {
 			if (isJump && !isSuck)
 			{
 				jumpDistance -= 5;
-				if (m->isEmpty_2(GetX1() + width / 2, GetY1() - 5))  //會不會撞到頭
+				if (m->isEmpty_2(GetX1() + width / 2, GetY1() - 5) && y - 5 > 0)  //會不會撞到頭
 					y -= 5;
-				if (jumpDistance == 0)
+				if (jumpDistance == 0 || y - 5 <= 0)
 				{
 					jumpDistance = 120;
 					isJump = false;
@@ -589,6 +589,8 @@ namespace game_framework {
 			gas.OnMove(m, bulletDirection);
 			gas.OnShow(m);
 		}
+		else
+			gas.SetAlive(false);
 
 		//------星星------
 		if (isBig && isAttack && !isSuck)
@@ -603,6 +605,8 @@ namespace game_framework {
 			star.OnMove(m, bulletDirection);
 			star.OnShow(m);
 		}
+		else
+			star.SetAlive(false);
 
 		//------踢擊------
 		if (!isFly && !isBig && (isMovingDown || isKick) && (isAttack || isKick) && !m->isEmpty(GetX2() - width / 2, GetY2() + 1)) //在地面上蹲下按攻擊
@@ -637,6 +641,8 @@ namespace game_framework {
 			gas.OnMove(m, bulletDirection);
 			gas.OnShow(m);
 		}
+		else
+			gas.SetAlive(false);
 
 		//------踢擊------
 		if (!isFly && !isBig && (isMovingDown || isKick) && (isAttack || isKick) && !m->isEmpty(GetX2() - width / 2, GetY2() + 1)) //在地面上蹲下按攻擊
