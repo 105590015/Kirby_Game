@@ -25,6 +25,7 @@ namespace game_framework {
 		void OnShow(Map *);						// 將圖形貼到畫面
 		void SetEnter(bool flag);	// 設定是否正進入傳送門
 		bool IsEnter(Kirby*);
+		Door GetNextDoor();
 
 
 	protected:
