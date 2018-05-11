@@ -190,7 +190,7 @@ void CGameStateRun::OnBeginState()
 {
 	map[0].Initialize();
 	map[1].Initialize();
-	spark.Initialize(640, 680);
+	
 	kirby.Initialize(640,400);
 
 	door[0].Initialize(123,  37, 1, 0, &door1[0]);
@@ -203,14 +203,21 @@ void CGameStateRun::OnBeginState()
 	door[7].Initialize(993, 367, 1, 0, &door1[0]);
 	door[8].Initialize(993, 367, 1, 0, &door1[0]);
 	door[9].Initialize(993, 367, 1, 0, &door1[0]);
+
 	door1[0].Initialize(30, 425, 0,1, &door[5]);
 	door1[1].Initialize(4450, 350, 0, 1, &door[6]);
+
 	normalMonster[0].Initialize(50, 80, 50, 200, false);
 	normalMonster[1].Initialize(550, 80, 550, 670, false);
 	normalMonster[2].Initialize(1020, 80, 1015, 1188, false);
-	normalMonster[3].Initialize(40, 660, 0, 60, false);
-	normalMonster[4].Initialize(614, 660, 370, 870, false);
-	normalMonster[5].Initialize(1190, 660, 1170, 1230, false);
+	normalMonster[3].Initialize(1240, 60, 0, 60, false);
+	normalMonster[4].Initialize(1614, 60, 370, 870, false);
+	normalMonster[5].Initialize(2190, 60, 1170, 1230, false);
+
+	spark.Initialize(640, 80);
+
+
+
 	CAudio::Instance()->Play(AUDIO_BACKGROUND, true);
 
 }
@@ -229,15 +236,6 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 			kirby.OnMove(index);
 		if (mapNum == 0)
 		{
-			
-			spark.OnMove(index, &kirby);
-			normalMonster[0].OnMove(index, &kirby);
-			normalMonster[1].OnMove(index, &kirby);
-			normalMonster[2].OnMove(index, &kirby);
-			normalMonster[3].OnMove(index, &kirby);
-			normalMonster[4].OnMove(index, &kirby);
-			normalMonster[5].OnMove(index, &kirby);
-
 			for (int i = 0; i < 10; i++) {
 				door[i].OnMove();
 				if (door[i].IsEnter(&kirby)) {
@@ -252,6 +250,13 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 		}
 		if (mapNum == 1) {
 			
+			spark.OnMove(index, &kirby);
+			normalMonster[0].OnMove(index, &kirby);
+			normalMonster[1].OnMove(index, &kirby);
+			normalMonster[2].OnMove(index, &kirby);
+			normalMonster[3].OnMove(index, &kirby);
+			normalMonster[4].OnMove(index, &kirby);
+			normalMonster[5].OnMove(index, &kirby);
 			for (int i = 0; i < 2; i++) {
 				door1[i].OnMove();
 				if (door1[i].IsEnter(&kirby)) {
@@ -430,6 +435,13 @@ void CGameStateRun::OnShow()
 	if (mapNum == 0) {
 		for (int i = 0; i < 10;i++)
 			door[i].OnShow(index);
+		
+	}
+
+	if (mapNum == 1) {
+		for (int i = 0; i < 2;i++)
+			door1[i].OnShow(index);
+
 		spark.OnShow(index);
 		normalMonster[0].OnShow(index, &kirby);
 		normalMonster[1].OnShow(index, &kirby);
@@ -437,11 +449,6 @@ void CGameStateRun::OnShow()
 		normalMonster[3].OnShow(index, &kirby);
 		normalMonster[4].OnShow(index, &kirby);
 		normalMonster[5].OnShow(index, &kirby);
-	}
-
-	if (mapNum == 1) {
-		for (int i = 0; i < 2;i++)
-			door1[i].OnShow(index);
 	}
 	
 	if(kirby.IsAlive()) kirby.OnShow(index);
