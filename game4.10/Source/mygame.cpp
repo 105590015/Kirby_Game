@@ -179,7 +179,7 @@ void CGameStateOver::OnShow()
 
 CGameStateRun::CGameStateRun(CGame *g)
 : CGameState(g)
-{
+{	
 }
 
 CGameStateRun::~CGameStateRun()
@@ -190,7 +190,7 @@ void CGameStateRun::OnBeginState()
 {
 	map[0].Initialize();
 	map[1].Initialize();
-	spark.Initialize(640, 680);
+	
 	kirby.Initialize(640,400);
 
 	door[0].Initialize(123,  37, 1, 0, &door1[0]);
@@ -203,16 +203,22 @@ void CGameStateRun::OnBeginState()
 	door[7].Initialize(993, 367, 1, 0, &door1[0]);
 	door[8].Initialize(993, 367, 1, 0, &door1[0]);
 	door[9].Initialize(993, 367, 1, 0, &door1[0]);
+
 	door1[0].Initialize(30, 425, 0,1, &door[5]);
 	door1[1].Initialize(4450, 350, 0, 1, &door[6]);
-	normalMonster[0].Initialize(50, 80, 50, 200, false);
-	normalMonster[1].Initialize(550, 80, 550, 670, false);
-	normalMonster[2].Initialize(1020, 80, 1015, 1188, false);
-	normalMonster[3].Initialize(40, 660, 0, 60, false);
-	normalMonster[4].Initialize(614, 660, 370, 870, false);
-	normalMonster[5].Initialize(1190, 660, 1170, 1230, false);
-	CAudio::Instance()->Play(AUDIO_BACKGROUND, true);
 
+	normalMonster1.Initialize(417, 467, 287, 571, false);
+	normalMonster2.Initialize(947, 467, 795, 1125, false);
+	normalMonster3.Initialize(2459, 517, 2367, 2571, false);
+	normalMonster4.Initialize(2903, 517, 2725, 3073, false);
+	normalMonster5.Initialize(3495, 59, 3377, 3635, false);
+	normalMonster6.Initialize(3745, 477, 3659, 4151, false);
+	spark1.Initialize(675, 393);
+	spark2.Initialize(1673, 163);
+	spark3.Initialize(3247, 269);
+	spark4.Initialize(4045, 477);
+
+	CAudio::Instance()->Play(AUDIO_BACKGROUND, true);
 }
 
 void CGameStateRun::OnMove()							// 移動遊戲元素
@@ -229,15 +235,6 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 			kirby.OnMove(index);
 		if (mapNum == 0)
 		{
-			
-			spark.OnMove(index, &kirby);
-			normalMonster[0].OnMove(index, &kirby);
-			normalMonster[1].OnMove(index, &kirby);
-			normalMonster[2].OnMove(index, &kirby);
-			normalMonster[3].OnMove(index, &kirby);
-			normalMonster[4].OnMove(index, &kirby);
-			normalMonster[5].OnMove(index, &kirby);
-
 			for (int i = 0; i < 10; i++) {
 				door[i].OnMove();
 				if (door[i].IsEnter(&kirby)) {
@@ -251,7 +248,18 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 			}
 		}
 		if (mapNum == 1) {
-			
+			monster[0] = &normalMonster1;
+			monster[1] = &normalMonster2;
+			monster[2] = &normalMonster3;
+			monster[3] = &normalMonster4;
+			monster[4] = &normalMonster5;
+			monster[5] = &normalMonster6;
+			monster[6] = &spark1;
+			monster[7] = &spark2;
+			monster[8] = &spark3;
+			monster[9] = &spark4;
+			for (int m = 0; m < 10; m++)
+				monster[m]->OnMove(index, &kirby);
 			for (int i = 0; i < 2; i++) {
 				door1[i].OnMove();
 				if (door1[i].IsEnter(&kirby)) {
@@ -278,9 +286,7 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 }
 
 void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
-{
-	// 載入資料
-		
+{		
 		Transition.AddBitmap(".//Map//Transition_7.bmp", RGB(0, 0, 0));
 		Transition.AddBitmap(".//Map//Transition_6.bmp", RGB(0, 0, 0));
 		Transition.AddBitmap(".//Map//Transition_5.bmp", RGB(0, 0, 0));
@@ -300,17 +306,22 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 		map[0].LoadBitmap(".//Map//foreground.bmp", RGB(255, 255, 255), ".//Map//background.bmp", ".//Map//map.txt");
 		map[1].LoadBitmap(".//Map//map1.bmp", RGB(255, 255, 255), ".//Map//background_1.bmp", ".//Map//map1.txt");
 		kirby.LoadBitmap();
-		normalMonster[0].LoadBitmap();
-		normalMonster[1].LoadBitmap();
-		normalMonster[2].LoadBitmap();
-		normalMonster[3].LoadBitmap();
-		normalMonster[4].LoadBitmap();
-		normalMonster[5].LoadBitmap();
+		monster[0] = &normalMonster1;
+		monster[1] = &normalMonster2;
+		monster[2] = &normalMonster3;
+		monster[3] = &normalMonster4;
+		monster[4] = &normalMonster5;
+		monster[5] = &normalMonster6;
+		monster[6] = &spark1;
+		monster[7] = &spark2;
+		monster[8] = &spark3;
+		monster[9] = &spark4;
+		for (int m = 0; m < 10; m++)
+			monster[m]->LoadBitmap();
 		for (int i = 0; i < 10;i++)
 			door[i].LoadBitmap();
 		door1[0].LoadBitmap();
 		door1[1].LoadBitmap();
-		spark.LoadBitmap();
 		index = &map[0];
 		mapNum = 0;
 		gate = &door[5];
@@ -430,18 +441,24 @@ void CGameStateRun::OnShow()
 	if (mapNum == 0) {
 		for (int i = 0; i < 10;i++)
 			door[i].OnShow(index);
-		spark.OnShow(index);
-		normalMonster[0].OnShow(index, &kirby);
-		normalMonster[1].OnShow(index, &kirby);
-		normalMonster[2].OnShow(index, &kirby);
-		normalMonster[3].OnShow(index, &kirby);
-		normalMonster[4].OnShow(index, &kirby);
-		normalMonster[5].OnShow(index, &kirby);
+		
 	}
 
 	if (mapNum == 1) {
 		for (int i = 0; i < 2;i++)
 			door1[i].OnShow(index);
+		monster[0] = &normalMonster1;
+		monster[1] = &normalMonster2;
+		monster[2] = &normalMonster3;
+		monster[3] = &normalMonster4;
+		monster[4] = &normalMonster5;
+		monster[5] = &normalMonster6;
+		monster[6] = &spark1;
+		monster[7] = &spark2;
+		monster[8] = &spark3;
+		monster[9] = &spark4;
+		for (int m = 0; m < 10; m++)
+			monster[m]->OnShow(index, &kirby);
 	}
 	
 	if(kirby.IsAlive()) kirby.OnShow(index);

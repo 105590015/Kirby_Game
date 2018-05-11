@@ -102,13 +102,14 @@ namespace game_framework {
 		void OnShow();									// 顯示這個狀態的遊戲畫面
 	private:
 		Kirby kirby;                                    // 卡比
-		Map map[2];                                        // 地圖
+		Map map[2];                                     // 地圖
 		Map *index;
-		NormalMonster normalMonster[6];                 // 怪物
+		Enemy *monster[10];                             // 怪物
+		NormalMonster normalMonster1, normalMonster2, normalMonster3, normalMonster4, normalMonster5, normalMonster6;
+		Spark spark1, spark2, spark3, spark4;
 		Door door[10];
 		Door door1[2];
 		Door *gate;
-		Spark spark;
 		int mapNum;							//設定現在為第幾號地圖
 		int tempNum;
 		CAnimation Transition;

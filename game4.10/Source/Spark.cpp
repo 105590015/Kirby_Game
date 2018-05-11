@@ -238,7 +238,7 @@ namespace game_framework {
 		
 
 	}
-	void Spark::OnShow(Map* m) {
+	void Spark::OnShow(Map* m, Kirby* k) {
 		die.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
 		if (is_alive) {
 
