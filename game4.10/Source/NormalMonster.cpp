@@ -19,6 +19,8 @@ namespace game_framework {
 		endX = ex;
 		RightOrLeft = direction;
 		hp = 10;
+		count = 0;
+		velocity = 2;
 		is_alive = true;
 		is_sucked = false;
 	}
@@ -103,16 +105,16 @@ namespace game_framework {
 			Sucked(kirby);
 			if(!is_sucked)
 				Attack(m, kirby);
-			if (is_alive && !is_sucked && !RightOrLeft && m->isEmpty(GetX1() - 1, GetY1() + goLeft.Height() / 2))
+			if (is_alive && !is_sucked && !RightOrLeft)
 			{
-				if (x <= startX) //走到限制區域最左要掉頭
+				if (x <= startX || !m->isEmpty(GetX1() - 1, GetY1() + goLeft.Height() / 2)) //走到限制區域最左要掉頭
 					RightOrLeft = true;
 				else
 					x -= 1;
 			}
-			else if (is_alive && !is_sucked && RightOrLeft && m->isEmpty(GetX2() + 1, GetY2() - goLeft.Height() / 2))
+			else if (is_alive && !is_sucked && RightOrLeft)
 			{
-				if (x >= endX)  //走到限制區域最右要掉頭
+				if (x >= endX || !m->isEmpty(GetX2() + 1, GetY2() - goLeft.Height() / 2))  //走到限制區域最右要掉頭
 					RightOrLeft = false;
 				else
 					x += 1;
@@ -134,8 +136,23 @@ namespace game_framework {
 					is_alive = false;
 				}
 			}
-			if (is_alive && !is_sucked && m->isEmpty((GetX1()+GetX2())/2 , GetY2() + 1)) //地吸引力
+			if (is_alive && !is_sucked && m->isEmpty(GetX1(), GetY2() + velocity) && m->isEmpty(GetX2(), GetY2() + velocity))  //地吸引力
+			{
+				count++;
+				y += velocity;	// y軸下降(移動velocity個點，velocity的單位為 點/次)
+				if (velocity < 5 && count == 30)
+				{
+					velocity++; // 受重力影響，下次的下降速度增加
+					count = 0;
+				}
+			}
+			else if (m->isEmpty(GetX1(), GetY2() + 1) && m->isEmpty(GetX2(), GetY2() + 1))  // 當y座標還沒碰到地板
 				y += 1;
+			else
+			{
+				velocity = 2; // 重設重力加速度
+				count = 0;
+			}
 		}
 	}
 

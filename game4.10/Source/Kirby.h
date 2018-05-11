@@ -56,6 +56,8 @@ namespace game_framework {
 		// 雷電卡比
 		CMovingBitmap Spark_exhaleR, Spark_exhaleL;
 		CAnimation Spark_originR, Spark_originL, Spark_downR, Spark_downL, Spark_goR, Spark_goL, Spark_jumpR, Spark_jumpL, Spark_landingR, Spark_landingL, Spark_downAttackR, Spark_downAttackL, Spark_flyR, Spark_prepareFlyR, Spark_flyL, Spark_prepareFlyL, Spark_runR, Spark_runL, Spark_attackR, Spark_attackL;
+		// 火焰卡比
+		CAnimation fire_attack1, fire_attack2, fire_attack3;
 
 		Gas gas;
 		Star star;
@@ -80,11 +82,12 @@ namespace game_framework {
 	private:
 		void ShowKirby(Map *m);     // 顯示普通卡比
 		void ShowSparkKirby(Map *m);// 顯示雷電卡比
+		void ShowFireKirby(Map *m); // 顯示火焰卡比
 		int exhaleDelay;            // 吐氣的時間
 		int jumpDistance;           // 跳躍的距離
 		int kickDistance;           // 踢擊的距離
 		int gasDistance;            // 氣體飛行距離
-		int starDistance;          // 星星飛行距離
+		int starDistance;           // 星星飛行距離
 		bool bulletDirection;       // 吐出物體方向
 		bool isInvincible;          // 是否無敵
 		int InvincibleTime;         // 無敵時間
@@ -94,6 +97,8 @@ namespace game_framework {
 		int hp;                     // 血量
 		int type;                   // 型態
 		int eat;                    // 吃了什麼
+		int velocity;               // 重力加速度
+		int count;                  // 計數是否一秒
 		int height;                 // 記錄當下的身高
 		int width;                  // 記錄當下的寬度
 	};

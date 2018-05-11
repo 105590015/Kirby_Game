@@ -15,6 +15,7 @@ namespace game_framework {
 		virtual int GetY2();                          // 右下角 y 座標
 		virtual void OnShow(Map *m, Kirby *kirby);    // 顯示
 		virtual void OnMove(Map *m, Kirby* kirby);    // 移動
+		virtual void LoadBitmap();                    // 讀圖
 		virtual void Attack(Kirby* kirby);            // 攻擊
 	protected:
 		int x, y, hp;				// 左上角座標.血量

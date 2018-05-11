@@ -179,7 +179,7 @@ void CGameStateOver::OnShow()
 
 CGameStateRun::CGameStateRun(CGame *g)
 : CGameState(g)
-{
+{	
 }
 
 CGameStateRun::~CGameStateRun()
@@ -206,6 +206,8 @@ void CGameStateRun::OnBeginState()
 
 	door1[0].Initialize(30, 425, 0,1, &door[5]);
 	door1[1].Initialize(4450, 350, 0, 1, &door[6]);
+<<<<<<< HEAD
+=======
 
 	normalMonster[0].Initialize(50, 80, 50, 200, false);
 	normalMonster[1].Initialize(550, 80, 550, 670, false);
@@ -219,7 +221,20 @@ void CGameStateRun::OnBeginState()
 
 
 	CAudio::Instance()->Play(AUDIO_BACKGROUND, true);
+>>>>>>> 277b838514a2591e1c7221f0c8d96f6957c84bc7
 
+	normalMonster1.Initialize(417, 467, 287, 571, false);
+	normalMonster2.Initialize(947, 467, 795, 1125, false);
+	normalMonster3.Initialize(2459, 517, 2367, 2571, false);
+	normalMonster4.Initialize(2903, 517, 2725, 3073, false);
+	normalMonster5.Initialize(3495, 59, 3377, 3635, false);
+	normalMonster6.Initialize(3745, 477, 3659, 4151, false);
+	spark1.Initialize(675, 393);
+	spark2.Initialize(1673, 163);
+	spark3.Initialize(3247, 269);
+	spark4.Initialize(4045, 477);
+
+	CAudio::Instance()->Play(AUDIO_BACKGROUND, true);
 }
 
 void CGameStateRun::OnMove()							// 移動遊戲元素
@@ -249,6 +264,20 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 			}
 		}
 		if (mapNum == 1) {
+<<<<<<< HEAD
+			monster[0] = &normalMonster1;
+			monster[1] = &normalMonster2;
+			monster[2] = &normalMonster3;
+			monster[3] = &normalMonster4;
+			monster[4] = &normalMonster5;
+			monster[5] = &normalMonster6;
+			monster[6] = &spark1;
+			monster[7] = &spark2;
+			monster[8] = &spark3;
+			monster[9] = &spark4;
+			for (int m = 0; m < 10; m++)
+				monster[m]->OnMove(index, &kirby);
+=======
 			
 			spark.OnMove(index, &kirby);
 			normalMonster[0].OnMove(index, &kirby);
@@ -257,6 +286,7 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 			normalMonster[3].OnMove(index, &kirby);
 			normalMonster[4].OnMove(index, &kirby);
 			normalMonster[5].OnMove(index, &kirby);
+>>>>>>> 277b838514a2591e1c7221f0c8d96f6957c84bc7
 			for (int i = 0; i < 2; i++) {
 				door1[i].OnMove();
 				if (door1[i].IsEnter(&kirby)) {
@@ -283,9 +313,7 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 }
 
 void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
-{
-	// 載入資料
-		
+{		
 		Transition.AddBitmap(".//Map//Transition_7.bmp", RGB(0, 0, 0));
 		Transition.AddBitmap(".//Map//Transition_6.bmp", RGB(0, 0, 0));
 		Transition.AddBitmap(".//Map//Transition_5.bmp", RGB(0, 0, 0));
@@ -305,17 +333,22 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 		map[0].LoadBitmap(".//Map//foreground.bmp", RGB(255, 255, 255), ".//Map//background.bmp", ".//Map//map.txt");
 		map[1].LoadBitmap(".//Map//map1.bmp", RGB(255, 255, 255), ".//Map//background_1.bmp", ".//Map//map1.txt");
 		kirby.LoadBitmap();
-		normalMonster[0].LoadBitmap();
-		normalMonster[1].LoadBitmap();
-		normalMonster[2].LoadBitmap();
-		normalMonster[3].LoadBitmap();
-		normalMonster[4].LoadBitmap();
-		normalMonster[5].LoadBitmap();
+		monster[0] = &normalMonster1;
+		monster[1] = &normalMonster2;
+		monster[2] = &normalMonster3;
+		monster[3] = &normalMonster4;
+		monster[4] = &normalMonster5;
+		monster[5] = &normalMonster6;
+		monster[6] = &spark1;
+		monster[7] = &spark2;
+		monster[8] = &spark3;
+		monster[9] = &spark4;
+		for (int m = 0; m < 10; m++)
+			monster[m]->LoadBitmap();
 		for (int i = 0; i < 10;i++)
 			door[i].LoadBitmap();
 		door1[0].LoadBitmap();
 		door1[1].LoadBitmap();
-		spark.LoadBitmap();
 		index = &map[0];
 		mapNum = 0;
 		gate = &door[5];
@@ -436,6 +469,26 @@ void CGameStateRun::OnShow()
 		for (int i = 0; i < 10;i++)
 			door[i].OnShow(index);
 		
+<<<<<<< HEAD
+	}
+
+	if (mapNum == 1) {
+		for (int i = 0; i < 2;i++)
+			door1[i].OnShow(index);
+		monster[0] = &normalMonster1;
+		monster[1] = &normalMonster2;
+		monster[2] = &normalMonster3;
+		monster[3] = &normalMonster4;
+		monster[4] = &normalMonster5;
+		monster[5] = &normalMonster6;
+		monster[6] = &spark1;
+		monster[7] = &spark2;
+		monster[8] = &spark3;
+		monster[9] = &spark4;
+		for (int m = 0; m < 10; m++)
+			monster[m]->OnShow(index, &kirby);
+	}
+=======
 	}
 
 	if (mapNum == 1) {
@@ -450,6 +503,7 @@ void CGameStateRun::OnShow()
 		normalMonster[4].OnShow(index, &kirby);
 		normalMonster[5].OnShow(index, &kirby);
 	}
+>>>>>>> 277b838514a2591e1c7221f0c8d96f6957c84bc7
 	
 	if(kirby.IsAlive()) kirby.OnShow(index);
 	else if(kirby.GetY1()<=1) GotoGameState(GAME_STATE_OVER);

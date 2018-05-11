@@ -66,6 +66,8 @@ namespace game_framework {
 		InvincibleTime = 0;
 		type = 0;
 		eat = -1;
+		velocity = 2;
+		count = 0;
 		isMovingLeft = isMovingRight = isMovingUp = isMovingDown = isSpace = isJump = isAttack = isKick = isFly = isHurted = isSuck = isBig = isSwallow = isRunning = isInvincible = false;
 		isAlive = rightOrLeft = true;
 		gas.LoadBitmap();
@@ -350,6 +352,28 @@ namespace game_framework {
 		Spark_attackL.AddBitmap(".\\RES\\SparkKirby\\Spark_Attack_L_4.bmp", RGB(255, 255, 255));
 		Spark_attackL.AddBitmap(".\\RES\\SparkKirby\\Spark_Attack_L_5.bmp", RGB(255, 255, 255));
 		Spark_attackL.AddBitmap(".\\RES\\SparkKirby\\Spark_Attack_L_6.bmp", RGB(255, 255, 255));
+		// 火焰卡比
+		fire_attack1.AddBitmap(".\\RES\\FireKirby\\attack1_0.bmp", RGB(0, 0, 115));
+		fire_attack1.AddBitmap(".\\RES\\FireKirby\\attack1_1.bmp", RGB(0, 0, 115));
+		fire_attack1.AddBitmap(".\\RES\\FireKirby\\attack1_2.bmp", RGB(0, 0, 115));
+		fire_attack1.AddBitmap(".\\RES\\FireKirby\\attack1_3.bmp", RGB(0, 0, 115));
+		fire_attack1.AddBitmap(".\\RES\\FireKirby\\attack1_4.bmp", RGB(0, 0, 115));
+		fire_attack1.AddBitmap(".\\RES\\FireKirby\\attack1_5.bmp", RGB(0, 0, 115));
+		fire_attack1.AddBitmap(".\\RES\\FireKirby\\attack1_6.bmp", RGB(0, 0, 115));
+		fire_attack2.AddBitmap(".\\RES\\FireKirby\\attack2_0.bmp", RGB(0, 0, 115));
+		fire_attack2.AddBitmap(".\\RES\\FireKirby\\attack2_1.bmp", RGB(0, 0, 115));
+		fire_attack2.AddBitmap(".\\RES\\FireKirby\\attack2_2.bmp", RGB(0, 0, 115));
+		fire_attack2.AddBitmap(".\\RES\\FireKirby\\attack2_3.bmp", RGB(0, 0, 115));
+		fire_attack2.AddBitmap(".\\RES\\FireKirby\\attack2_4.bmp", RGB(0, 0, 115));
+		fire_attack2.AddBitmap(".\\RES\\FireKirby\\attack2_5.bmp", RGB(0, 0, 115));
+		fire_attack2.AddBitmap(".\\RES\\FireKirby\\attack2_6.bmp", RGB(0, 0, 115));
+		fire_attack3.AddBitmap(".\\RES\\FireKirby\\attack3_0.bmp", RGB(0, 0, 115));
+		fire_attack3.AddBitmap(".\\RES\\FireKirby\\attack3_1.bmp", RGB(0, 0, 115));
+		fire_attack3.AddBitmap(".\\RES\\FireKirby\\attack3_2.bmp", RGB(0, 0, 115));
+		fire_attack3.AddBitmap(".\\RES\\FireKirby\\attack3_3.bmp", RGB(0, 0, 115));
+		fire_attack3.AddBitmap(".\\RES\\FireKirby\\attack3_4.bmp", RGB(0, 0, 115));
+		fire_attack3.AddBitmap(".\\RES\\FireKirby\\attack3_5.bmp", RGB(0, 0, 115));
+		fire_attack3.AddBitmap(".\\RES\\FireKirby\\attack3_6.bmp", RGB(0, 0, 115));
 
 		blood0.LoadBitmap(".\\RES\\Blood_0.bmp", RGB(255, 255, 255));
 		blood1.LoadBitmap(".\\RES\\Blood_1.bmp", RGB(255, 255, 255));
@@ -358,6 +382,8 @@ namespace game_framework {
 		blood4.LoadBitmap(".\\RES\\Blood_4.bmp", RGB(255, 255, 255));
 		blood5.LoadBitmap(".\\RES\\Blood_5.bmp", RGB(255, 255, 255));
 		blood6.LoadBitmap(".\\RES\\Blood_6.bmp", RGB(255, 255, 255));
+
+		
 	}
 
 	void Kirby::OnMove(Map *m)
@@ -436,17 +462,28 @@ namespace game_framework {
 				}
 			}
 		}
-		if (!(isMovingUp || isJump) && m->isEmpty(GetX2() - width / 2, GetY2() + 1))  //地吸引力
+
+		if (!(isMovingUp || isJump) && m->isEmpty(x, y + height + velocity) && m->isEmpty(x + width, y + height + velocity))  //地吸引力
 		{
+			count++;
 			if (isFly)
 				y += 1;
 			else
 			{
-				if (y >= m->GetHeight() - height)
-					y = m->GetHeight() - height;
-				else
-					y += STEP_SIZE;
+				y += velocity;	// y軸下降(移動velocity個點，velocity的單位為 點/次)
+				if (velocity < 5 && count == 30)
+				{
+					velocity++; // 受重力影響，下次的下降速度增加
+					count = 0;
+				}
 			}
+		}
+		else if (!isFly && m->isEmpty(x, y + height + 1) && m->isEmpty(x + width, y + height + 1))  // 當y座標還沒碰到地板
+			y += 1;
+		else
+		{
+			velocity = 2; // 重設重力加速度
+			count = 0;
 		}
 	}
 
@@ -1167,5 +1204,21 @@ namespace game_framework {
 				Spark_originL.OnShow();
 			}
 		}
+	}
+
+	void Kirby::ShowFireKirby(Map *m)
+	{
+		fire_attack1.SetTopLeft(m->ScreenX(x + 20), m->ScreenY(y+20));
+		fire_attack2.SetTopLeft(m->ScreenX(x + 40), m->ScreenY(y));
+		fire_attack3.SetTopLeft(m->ScreenX(x + 90), m->ScreenY(y));
+		fire_attack1.SetDelayCount(5);
+		fire_attack2.SetDelayCount(5);
+		fire_attack3.SetDelayCount(5);
+		fire_attack1.OnMove();
+		fire_attack1.OnShow();
+		fire_attack2.OnMove();
+		fire_attack2.OnShow();
+		fire_attack3.OnMove();
+		fire_attack3.OnShow();
 	}
 }

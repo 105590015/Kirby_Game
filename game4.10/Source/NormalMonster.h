@@ -20,5 +20,6 @@ namespace game_framework {
 		CAnimation goLeft, goRight, die;
 	private:
 		int startX, endX;
+		int count, velocity;
 	};
 }

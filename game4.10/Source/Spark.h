@@ -9,7 +9,7 @@ namespace game_framework {
 	public:
 		Spark ();
 		void LoadBitmap();
-		void OnShow(Map*);
+		void OnShow(Map*,Kirby*);
 		void OnMove(Map*,Kirby*);
 		void Initialize(int ,int);
 		void Attack(Map*, Kirby*);

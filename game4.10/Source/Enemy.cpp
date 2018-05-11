@@ -71,6 +71,10 @@ namespace game_framework {
 	{
 	}
 
+	void Enemy::LoadBitmap()
+	{
+	}
+
 	void Enemy::Attack(Kirby* kirby)
 	{
 	}
