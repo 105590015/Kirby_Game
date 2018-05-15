@@ -57,7 +57,8 @@ namespace game_framework {
 		CMovingBitmap Spark_exhaleR, Spark_exhaleL;
 		CAnimation Spark_originR, Spark_originL, Spark_downR, Spark_downL, Spark_goR, Spark_goL, Spark_jumpR, Spark_jumpL, Spark_landingR, Spark_landingL, Spark_downAttackR, Spark_downAttackL, Spark_flyR, Spark_prepareFlyR, Spark_flyL, Spark_prepareFlyL, Spark_runR, Spark_runL, Spark_attackR, Spark_attackL;
 		// 火焰卡比
-		CAnimation fire_attack1, fire_attack2, fire_attack3;
+		CMovingBitmap fire_exhaleR, fire_exhaleL;
+		CAnimation fire_originR, fire_originL, fire_downR, fire_downL, fire_goR, fire_goL, fire_jumpR, fire_jumpL, fire_landingR, fire_landingL, fire_downAttackR, fire_downAttackL, fire_flyR, fire_prepareFlyR, fire_flyL, fire_prepareFlyL, fire_runR, fire_runL, fire_attack1, fire_attack2, fire_attack3;
 
 		Gas gas;
 		Star star;
@@ -93,6 +94,7 @@ namespace game_framework {
 		int InvincibleTime;         // 無敵時間
 		void Attack(Map *m);        // 普通卡比攻擊
 		void Spark_Attack(Map *m);  // 雷電卡比攻擊
+		void Fire_Attack(Map *m);   // 火焰卡比攻擊
 		void Transform();           // 變身
 		int hp;                     // 血量
 		int type;                   // 型態

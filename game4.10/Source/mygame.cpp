@@ -208,12 +208,12 @@ void CGameStateRun::OnBeginState()
 	door1[1].Initialize(4450, 350, 0, 1, &door[6]);
 
 
-	normalMonster1.Initialize(417, 467, 287, 571, false);
-	normalMonster2.Initialize(947, 467, 795, 1125, false);
-	normalMonster3.Initialize(2459, 517, 2367, 2571, false);
-	normalMonster4.Initialize(2903, 517, 2725, 3073, false);
-	normalMonster5.Initialize(3495, 59, 3377, 3635, false);
-	normalMonster6.Initialize(3745, 477, 3659, 4151, false);
+	normalMonster1.Initialize(417, 467);
+	normalMonster2.Initialize(947, 467);
+	normalMonster3.Initialize(2459, 517);
+	normalMonster4.Initialize(2903, 517);
+	normalMonster5.Initialize(3495, 59);
+	normalMonster6.Initialize(3745, 477);
 	spark1.Initialize(675, 393);
 	spark2.Initialize(1673, 163);
 	spark3.Initialize(3247, 269);
@@ -250,16 +250,6 @@ void CGameStateRun::OnMove()							// ²¾°Ê¹CÀ¸¤¸¯À
 		}
 		if (mapNum == 1) {
 
-			/*monster[0] = &normalMonster1;
-			monster[1] = &normalMonster2;
-			monster[2] = &normalMonster3;
-			monster[3] = &normalMonster4;
-			monster[4] = &normalMonster5;
-			monster[5] = &normalMonster6;
-			monster[6] = &spark1;
-			monster[7] = &spark2;
-			monster[8] = &spark3;
-			monster[9] = &spark4;*/
 			for (int m = 0; m < 10; m++)
 				monster[m]->OnMove(index, &kirby);
 
@@ -450,16 +440,6 @@ void CGameStateRun::OnShow()
 	if (mapNum == 1) {
 		for (int i = 0; i < 2;i++)
 			door1[i].OnShow(index);
-		/*	monster[0] = &normalMonster1;
-			monster[1] = &normalMonster2;
-			monster[2] = &normalMonster3;
-			monster[3] = &normalMonster4;
-			monster[4] = &normalMonster5;
-			monster[5] = &normalMonster6;
-			monster[6] = &spark1;
-			monster[7] = &spark2;
-			monster[8] = &spark3;
-			monster[9] = &spark4;*/
 		for (int m = 0; m < 10; m++)
 			monster[m]->OnShow(index, &kirby);
 	}
