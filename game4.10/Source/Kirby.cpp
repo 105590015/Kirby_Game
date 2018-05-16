@@ -350,12 +350,12 @@ namespace game_framework {
 		Spark_attackL.AddBitmap(".\\RES\\SparkKirby\\Spark_Attack_L_5.bmp", RGB(255, 255, 255));
 		Spark_attackL.AddBitmap(".\\RES\\SparkKirby\\Spark_Attack_L_6.bmp", RGB(255, 255, 255));
 		// ¤õµK¥d¤ñ
-		fire_originR.AddBitmap(".\\RES\\FireKirby\\Fire Kirby_Stand_R_0.bmp", RGB(255, 255, 255));
-		fire_originR.AddBitmap(".\\RES\\FireKirby\\Fire Kirby_Stand_R_1.bmp", RGB(255, 255, 255));
-		fire_originR.AddBitmap(".\\RES\\FireKirby\\Fire Kirby_Stand_R_2.bmp", RGB(255, 255, 255));
-		fire_originL.AddBitmap(".\\RES\\FireKirby\\Fire Kirby_Stand_L_0.bmp", RGB(255, 255, 255));
-		fire_originL.AddBitmap(".\\RES\\FireKirby\\Fire Kirby_Stand_L_1.bmp", RGB(255, 255, 255));
-		fire_originL.AddBitmap(".\\RES\\FireKirby\\Fire Kirby_Stand_L_2.bmp", RGB(255, 255, 255));
+		fire_originR.AddBitmap(".\\RES\\FireKirby\\FireKirby_Stand_R_0.bmp", RGB(255, 255, 255));
+		fire_originR.AddBitmap(".\\RES\\FireKirby\\FireKirby_Stand_R_1.bmp", RGB(255, 255, 255));
+		fire_originR.AddBitmap(".\\RES\\FireKirby\\FireKirby_Stand_R_2.bmp", RGB(255, 255, 255));
+		fire_originL.AddBitmap(".\\RES\\FireKirby\\FireKirby_Stand_L_0.bmp", RGB(255, 255, 255));
+		fire_originL.AddBitmap(".\\RES\\FireKirby\\FireKirby_Stand_L_1.bmp", RGB(255, 255, 255));
+		fire_originL.AddBitmap(".\\RES\\FireKirby\\FireKirby_Stand_L_2.bmp", RGB(255, 255, 255));
 		fire_goR.AddBitmap(".\\RES\\FireKirby\\FireKirby_Walk_R_0.bmp", RGB(255, 255, 255));
 		fire_goR.AddBitmap(".\\RES\\FireKirby\\FireKirby_Walk_R_1.bmp", RGB(255, 255, 255));
 		fire_goR.AddBitmap(".\\RES\\FireKirby\\FireKirby_Walk_R_2.bmp", RGB(255, 255, 255));
