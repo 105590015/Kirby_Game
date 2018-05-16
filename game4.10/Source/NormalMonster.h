@@ -8,7 +8,7 @@ namespace game_framework {
 	{
 	public:
 		NormalMonster();
-		void Initialize(int ox, int oy, int sx, int ex, bool direction);		// 設定為初始值
+		void Initialize(int ox, int oy);	    // 設定為初始值
 		int GetX2();
 		int GetY2();
 		void LoadBitmap();
@@ -19,7 +19,6 @@ namespace game_framework {
 		CMovingBitmap isSuckedR, isSuckedL;
 		CAnimation goLeft, goRight, die;
 	private:
-		int startX, endX;
 		int count, velocity;
 	};
 }

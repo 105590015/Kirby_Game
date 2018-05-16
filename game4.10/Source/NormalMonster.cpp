@@ -11,13 +11,11 @@ namespace game_framework {
 	{
 	}
 
-	void NormalMonster::Initialize(int ox, int oy, int sx, int ex, bool direction)
+	void NormalMonster::Initialize(int ox, int oy)
 	{
+		RightOrLeft = true;
 		x = ox;
 		y = oy;
-		startX = sx;
-		endX = ex;
-		RightOrLeft = direction;
 		hp = 10;
 		count = 0;
 		velocity = 2;
@@ -107,14 +105,14 @@ namespace game_framework {
 				Attack(m, kirby);
 			if (is_alive && !is_sucked && !RightOrLeft)
 			{
-				if (x <= startX || !m->isEmpty(GetX1() - 1, GetY1() + goLeft.Height() / 2)) //ǐ跋办程オ璶奔繷
+				if (!m->isEmpty(GetX1() - 1, GetY1() + goLeft.Height() / 2)) //ǐ跋办程オ璶奔繷
 					RightOrLeft = true;
 				else
 					x -= 1;
 			}
 			else if (is_alive && !is_sucked && RightOrLeft)
 			{
-				if (x >= endX || !m->isEmpty(GetX2() + 1, GetY2() - goLeft.Height() / 2))  //ǐ跋办程璶奔繷
+				if (!m->isEmpty(GetX2() + 1, GetY2() - goLeft.Height() / 2))  //ǐ跋办程璶奔繷
 					RightOrLeft = false;
 				else
 					x += 1;
