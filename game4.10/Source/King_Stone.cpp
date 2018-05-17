@@ -72,4 +72,8 @@ namespace game_framework {
 	{
 		return y + stone.Height();
 	}
+
+	bool Stone::IsAlive() {
+		return is_alive;
+	}
 }

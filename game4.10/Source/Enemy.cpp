@@ -35,22 +35,39 @@ namespace game_framework {
 	{
 		// 被踢
 		if ((kirby->GetType() == 0 && HitRectangle(kirby->GetX1(), kirby->GetY1(), kirby->GetX2(), kirby->GetY2()) && kirby->IsKick()) ||
-			((kirby->GetType() == 1 || kirby->GetType() == 2) && HitRectangle(kirby->GetX1(), kirby->GetY1() + 40, kirby->GetX2(), kirby->GetY1() + 60) && kirby->IsKick()))
+			((kirby->GetType() == 1 || kirby->GetType() == 2) && HitRectangle(kirby->GetX1(), kirby->GetY1() + 40, kirby->GetX2(), kirby->GetY1() + 60) && kirby->IsKick())) {
 			hp -= 10;
+			Ishurted = true;
+		}
 		// 被空氣砲擊中
-		if (kirby->GetGas()->IsAlive() && HitRectangle(kirby->GetGas()->GetX1() - 15, kirby->GetGas()->GetY1() - 15, kirby->GetGas()->GetX2() - 15, kirby->GetGas()->GetY2() - 15))
+		else if (kirby->GetGas()->IsAlive() && HitRectangle(kirby->GetGas()->GetX1() - 15, kirby->GetGas()->GetY1() - 15, kirby->GetGas()->GetX2() - 15, kirby->GetGas()->GetY2() - 15)) {
 			hp -= 10;
+			Ishurted = true;
+		}
 		// 被星星擊中
-		if (kirby->GetStar()->IsAlive() && HitRectangle(kirby->GetStar()->GetX1() - 15, kirby->GetStar()->GetY1() - 15, kirby->GetStar()->GetX2() - 15, kirby->GetStar()->GetY2() - 15))
+		else if (kirby->GetStar()->IsAlive() && HitRectangle(kirby->GetStar()->GetX1() - 15, kirby->GetStar()->GetY1() - 15, kirby->GetStar()->GetX2() - 15, kirby->GetStar()->GetY2() - 15)) {
 			hp -= 20;
+			Ishurted = true;
+		}
+			
 		// 被電
-		if (kirby->GetType() == 1 && kirby->IsAttack() && !kirby->IsDown() && HitRectangle(kirby->GetX1() - 40, kirby->GetY1() - 10, kirby->GetX1() + 90, kirby->GetY1() + 110))// -10補償圖片 +145.+158是雷電圖檔的大小
-			hp -= 10;
+		else if (kirby->GetType() == 1 && kirby->IsAttack() && !kirby->IsDown() && HitRectangle(kirby->GetX1() - 40, kirby->GetY1() - 10, kirby->GetX1() + 90, kirby->GetY1() + 110)){  // -10補償圖片 +145.+158是雷電圖檔的大小
+				hp -= 10;
+				Ishurted = true;
+			}
+			
 		// 被燒
-		if (kirby->GetType() == 2 && kirby->IsAttack() && !kirby->IsDown() && (
+		else if (kirby->GetType() == 2 && kirby->IsAttack() && !kirby->IsDown() && (
 		   (kirby->IsRight() && HitRectangle(kirby->GetX1() + 63, kirby->GetY1() + 12, kirby->GetX1() + 203, kirby->GetY1() + 90)) ||    // 卡比面相右噴火
-		   (!kirby->IsRight() && HitRectangle(kirby->GetX1() - 112, kirby->GetY1() + 12, kirby->GetX1() - 12, kirby->GetY1() + 90))))    // 卡比面相左噴火
-			hp -= 10;
+		   (!kirby->IsRight() && HitRectangle(kirby->GetX1() - 112, kirby->GetY1() + 12, kirby->GetX1() - 12, kirby->GetY1() + 90)))) {   // 卡比面相左噴火
+			 hp -= 10;
+			 Ishurted = true;
+		}
+
+		else {
+			Ishurted = false;
+		}
+			
 		if (kirby->IsSuck() && (x - kirby->GetX1() > 2 || x - kirby->GetX1() < -2 || y - kirby->GetY1() > 2 || y - kirby->GetY1() < -2))
 			is_alive = true;
 		else if (hp <= 0)

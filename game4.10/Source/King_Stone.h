@@ -16,6 +16,7 @@ namespace game_framework {
 		void SetAlive(bool flag);
 		int GetX2();
 		int GetY2();
+		bool IsAlive();
 
 	private:
 		CAnimation stone;

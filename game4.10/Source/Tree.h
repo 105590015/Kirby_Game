@@ -15,7 +15,10 @@ namespace game_framework {
 		void OnMove(Map*, Kirby*);
 		void Initialize(int, int);
 		void Attack(Map*, Kirby*);
-
+		void StoneAttack(Map*, Kirby*);
+		bool IsAlive();
+		int GetX2();
+		int GetY2();
 
 	private:
 

@@ -216,7 +216,7 @@ void CGameStateRun::OnBeginState()
 
 	door2.Initialize(320, 240, 0, 2, &door[4]);
 
-	door3.Initialize(320, 240, 0, 3, &door[3]);
+	door3.Initialize(150, 350, 0, 3, &door[3]);
 
 
 	normalMonster1.Initialize(417, 467);
@@ -284,10 +284,26 @@ void CGameStateRun::OnMove()							// ²¾°Ê¹CÀ¸¤¸¯À
 
 		if (mapNum == 2) {
 			door2.OnMove();
+			if (door2.IsEnter(&kirby)) {
+				Istransiting = true;
+				Transition.Reset();
+				gate = &door2;
+
+			}
 		}
 
 		if (mapNum == 3) {
 			tree.OnMove(index,&kirby);
+
+			if (!tree.IsAlive()) {
+				door3.OnMove();
+				if (door3.IsEnter(&kirby)) {
+					Istransiting = true;
+					Transition.Reset();
+					gate = &door3;
+
+				}
+			}
 		}
 
 
@@ -380,6 +396,12 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 		if (mapNum == 1)
 			for (int i = 0; i < 2;i++)
 				door1[i].SetEnter(true);
+
+		if (mapNum == 2)
+			door2.SetEnter(true);
+
+		if (mapNum == 3)
+			door3.SetEnter(true);
 	}
 	if (nChar == KEY_DOWN)
 		kirby.SetMovingDown(true);
@@ -416,6 +438,12 @@ void CGameStateRun::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 		if (mapNum == 1)
 			for (int i = 0; i < 2;i++)
 				door1[i].SetEnter(false);
+
+		if (mapNum == 2)
+			door2.SetEnter(false);
+
+		if (mapNum)
+			door3.SetEnter(false);
 	}
 	if (nChar == KEY_DOWN)
 		kirby.SetMovingDown(false);
@@ -484,6 +512,10 @@ void CGameStateRun::OnShow()
 
 	if (mapNum == 3) {
 		tree.OnShow(index,&kirby);
+
+		if (!tree.IsAlive()) {
+			door3.OnShow(index);
+		}
 	}
 
 	if(kirby.IsAlive()) kirby.OnShow(index);
