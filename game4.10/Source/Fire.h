@@ -22,12 +22,11 @@ namespace game_framework {
 		bool IsAttacking;
 
 		int counter;
-		int StepSize;
 		int tempX, tempY;
 		int midX, midY;		
 		CAnimation *index;
-		CAnimation Sucked_L, Sucked_R, ATK, AttackRange, Walk_L, Walk_R, die;
-
+		CAnimation originR, originL, Sucked_L, Sucked_R, Attack_R, Attack_L, Walk_L, Walk_R, attack, die;
+		bool HitFire(int tx1, int ty1, int tx2, int ty2);
 	};
 
 }
