@@ -53,6 +53,7 @@ namespace game_framework {
 			index = &die;
 		}
 
+		index->OnMove();
 	}
 
 	void Tree::OnShow(Map* m,Kirby* k) {
