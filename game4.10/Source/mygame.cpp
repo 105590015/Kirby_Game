@@ -283,7 +283,7 @@ void CGameStateRun::OnMove()							// ²¾°Ê¹CÀ¸¤¸¯À
 		}
 
 		if (mapNum == 2) {
-		//	door2.OnMove();
+			door2.OnMove();
 		}
 
 		if (mapNum == 3) {

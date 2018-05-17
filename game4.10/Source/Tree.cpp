@@ -42,7 +42,7 @@ namespace game_framework {
 		IsAttacking = false;
 		RightOrLeft = true;
 
-		index = &die;
+		index = &normal;
 	}
 
 	void Tree::OnMove(Map* m,Kirby* k) {

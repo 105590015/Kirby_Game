@@ -1,8 +1,8 @@
 #pragma once
-#pragma once
-#include"Enemy.h"
-#include"Kirby.h"
-#include"Map.h"
+#include "Enemy.h"
+#include "Kirby.h"
+#include "Map.h"
+#include "King_Stone.h"
 
 namespace game_framework {
 	class Tree : public Enemy
@@ -23,8 +23,8 @@ namespace game_framework {
 
 		int counter;
 		CAnimation *index;
-		CAnimation normal,mad,hurted, die;
-
+		CAnimation normal, mad, hurted, die;
+		Stone stone[12];
 	};
 
 }
