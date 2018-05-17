@@ -50,7 +50,7 @@
 #include "LostAbility.h"
 #include "Spark.h"
 #include "Fire.h"
-
+#include "Tree.h"
 
 namespace game_framework {
 	/////////////////////////////////////////////////////////////////////////////
@@ -103,15 +103,18 @@ namespace game_framework {
 		void OnShow();									// 顯示這個狀態的遊戲畫面
 	private:
 		Kirby kirby;                                    // 卡比
-		Map map[3];                                     // 地圖
+		Map map[4];                                     // 地圖
 		Map *index;
 		Enemy *monster[10];                             // 怪物
+		Enemy *Boss;
 		NormalMonster normalMonster1, normalMonster2, normalMonster3, normalMonster4, normalMonster5, normalMonster6;
 		Spark spark1, spark2, spark3, spark4;
 		Fire  fire;
+		Tree tree;
 		Door door[10];
 		Door door1[2];
 		Door door2;
+		Door door3;
 
 		Door *gate;
 		int mapNum;							//設定現在為第幾號地圖

@@ -191,13 +191,14 @@ void CGameStateRun::OnBeginState()
 	map[0].Initialize();
 	map[1].Initialize();
 	map[2].Initialize();
+	map[3].Initialize();
 	
 	kirby.Initialize(640,400);
 
 	door[0].Initialize(123,  37, 1, 0, &door1[0]);
 	door[1].Initialize(621,  37, 1, 0, &door1[0]);
 	door[2].Initialize(1118,  37, 1, 0, &door1[0]);
-	door[3].Initialize(83, 328, 1, 0, &door1[0]);
+	door[3].Initialize(83, 328, 3, 0, &door3);
 	door[4].Initialize(248, 369, 2, 0, &door2);
 	door[5].Initialize(993, 367, 1, 0, &door1[0]);
 	door[6].Initialize(1159, 326, 1, 0, &door1[1]);
@@ -209,7 +210,9 @@ void CGameStateRun::OnBeginState()
 	door1[1].Initialize(4450, 350, 0, 1, &door[6]);
 
 
-	door2.Initialize(320, 240, 0, 2, &door[5]);
+	door2.Initialize(320, 240, 0, 2, &door[4]);
+
+	door3.Initialize(320, 240, 0, 3, &door[3]);
 
 
 	normalMonster1.Initialize(417, 467);
@@ -225,6 +228,8 @@ void CGameStateRun::OnBeginState()
 
 	fire.Initialize(417, 467);
 	fire.Initialize(417, 450);
+
+	tree.Initialize(400, 100);
 
 	CAudio::Instance()->Play(AUDIO_BACKGROUND, true);
 }
@@ -273,9 +278,14 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 			}
 		}
 
-		if (mapNum == 3) {
-			door2.OnMove();
+		if (mapNum == 2) {
+		//	door2.OnMove();
 		}
+
+		if (mapNum == 3) {
+			tree.OnMove(index,&kirby);
+		}
+
 
 	}
 
@@ -311,6 +321,7 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 		map[0].LoadBitmap(".//Map//foreground.bmp", RGB(255, 255, 255), ".//Map//background.bmp", ".//Map//map.txt");
 		map[1].LoadBitmap(".//Map//map1.bmp", RGB(255, 255, 255), ".//Map//background_1.bmp", ".//Map//map1.txt");
 		map[2].LoadBitmap(".//Map//Boss_map.bmp", RGB(255, 255, 255), ".//Map//background_2.bmp", ".//Map//map2.txt");
+		map[3].LoadBitmap(".//RES//King//King_foreground.bmp", RGB(255, 255, 255), ".//RES//King//King_background.bmp", ".//Map//map3.txt");
 		kirby.LoadBitmap();
 		monster[0] = &fire;
 		monster[1] = &normalMonster2;
@@ -329,10 +340,13 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 		door1[0].LoadBitmap();
 		door1[1].LoadBitmap();
 		door2.LoadBitmap();
+		door3.LoadBitmap();
+
+		tree.LoadBitmap();
 
 		
-		index = &map[0];
-		mapNum = 0;
+		index = &map[3];
+		mapNum = 3;
 		gate = &door[5];
 
 	CAudio::Instance()->Load(AUDIO_BACKGROUND, "sounds\\Kirby_background.mp3");  //背景音樂
@@ -462,6 +476,10 @@ void CGameStateRun::OnShow()
 
 	if (mapNum == 2) {
 		door2.OnShow(index);
+	}
+
+	if (mapNum == 3) {
+		tree.OnShow(index,&kirby);
 	}
 
 	if(kirby.IsAlive()) kirby.OnShow(index);
