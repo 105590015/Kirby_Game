@@ -345,8 +345,8 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 		tree.LoadBitmap();
 
 		
-		index = &map[3];
-		mapNum = 3;
+		index = &map[0];
+		mapNum = 0;
 		gate = &door[5];
 
 	CAudio::Instance()->Load(AUDIO_BACKGROUND, "sounds\\Kirby_background.mp3");  //背景音樂
