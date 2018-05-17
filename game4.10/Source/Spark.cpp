@@ -111,13 +111,15 @@ namespace game_framework {
 			Hurted(k);
 			Sucked(k);
 
-			if (x - k->GetX1() > 0) {
-				RightOrLeft = false;
-				StepSize = -1;
-			}
-			else if(x- k->GetX1()<0) {
-				RightOrLeft = true;
-				StepSize = 1;
+			if (ComputeDistance(k->GetX1(), k->GetY1()) < 200.0) {
+				if (x - k->GetX1() > 0) {
+					RightOrLeft = false;
+					StepSize = -1;
+				}
+				else if (x - k->GetX1() < 0) {
+					RightOrLeft = true;
+					StepSize = 1;
+				}
 			}
 
 			if (RightOrLeft)
@@ -132,17 +134,17 @@ namespace game_framework {
 				if (!RightOrLeft)
 					index = &Sucked_L;
 
-				if (x < k->GetX1() )
+				if (x < (k->GetX1() + k->GetX2()) / 2)
 					x += 3;
-				else if(x > k->GetX2())
+				else
 					x -= 3;
-				
-				if (y > k->GetY2())
+
+				if (y > k->GetY1())
 					y -= 3;
-				else if(y<k->GetY1())
+				else
 					y += 3;
 
-				if (x >= k->GetX1() && x<=k->GetX2() && y >= k->GetY1() && y <= k->GetY2()) {
+				if (HitRectangle(k->GetX1() + 10, k->GetY1() + 10, k->GetX2() - 10, k->GetY2() - 10)) {
 					is_alive = false;
 					k->SetBig(true);
 					k->SetEat(1);

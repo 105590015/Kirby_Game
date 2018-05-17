@@ -101,9 +101,27 @@ namespace game_framework {
 		{
 			Hurted(kirby);
 			Sucked(kirby);
+			
 			if(!is_sucked)
 				Attack(m, kirby);
-			if (is_alive && !is_sucked && !RightOrLeft)
+			if (is_sucked)
+			{
+				if (x > (kirby->GetX1() + kirby->GetX2()) / 2)
+					x -= 3;
+				else
+					x += 3;
+				if (y > kirby->GetY1())
+					y -= 3;
+				else
+					y += 3;
+				if (HitRectangle(kirby->GetX1() + 10, kirby->GetY1() + 10, kirby->GetX2() - 10, kirby->GetY2() - 10))
+				{
+					kirby->SetBig(true);
+					kirby->SetEat(0);
+					is_alive = false;
+				}
+			}
+			else if (is_alive && !is_sucked && !RightOrLeft)
 			{
 				if (!m->isEmpty(GetX1() - 1, GetY1() + goLeft.Height() / 2)) //走到限制區域最左要掉頭
 					RightOrLeft = true;
@@ -116,24 +134,7 @@ namespace game_framework {
 					RightOrLeft = false;
 				else
 					x += 1;
-			}
-			else if (is_sucked)
-			{
-				if (x > kirby->GetX1())
-					x -= 3;
-				else if (x < kirby->GetX1())
-					x += 3;
-				if (y > kirby->GetY1())
-					y -= 3;
-				else if (y < kirby->GetY1())
-					y += 3;
-				if ((x - kirby->GetX1() >= -2) && (x - kirby->GetX1() <= 2) && (y - kirby->GetY1() >= -2) && (y - kirby->GetY1() <= 2))
-				{
-					kirby->SetBig(true);
-					kirby->SetEat(0);
-					is_alive = false;
-				}
-			}
+			} 
 			if (is_alive && !is_sucked && m->isEmpty(GetX1(), GetY2() + velocity) && m->isEmpty(GetX2(), GetY2() + velocity))  //地吸引力
 			{
 				count++;
