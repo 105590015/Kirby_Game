@@ -511,7 +511,7 @@ namespace game_framework {
 				{
 					if (x <= 0) //邊界
 						x = 0;
-					else if (isRunning && !isFly && !m->isEmpty(GetX1() + width / 2, GetY2() - 10 + 1))
+					else if (isRunning && !isFly && !m->isEmpty(GetX1() + width / 2, GetY2() + 1))
 						x -= STEP_SIZE * 2;
 					else
 						x -= STEP_SIZE;
@@ -526,7 +526,7 @@ namespace game_framework {
 				{
 					if (x >= m->GetWidth() - width)  //邊界
 						x = m->GetWidth() - width;
-					else if (isRunning && !isFly && !m->isEmpty(GetX2() - width / 2, GetY2() - 10 + 1))
+					else if (isRunning && !isFly && !m->isEmpty(GetX2() - width / 2, GetY2() + 1))
 						x += STEP_SIZE * 2;
 					else
 						x += STEP_SIZE;
