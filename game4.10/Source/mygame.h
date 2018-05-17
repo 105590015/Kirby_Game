@@ -49,6 +49,7 @@
 #include "Star.h"
 #include "LostAbility.h"
 #include "Spark.h"
+#include "Fire.h"
 
 
 namespace game_framework {
@@ -107,6 +108,7 @@ namespace game_framework {
 		Enemy *monster[10];                             // й╟кл
 		NormalMonster normalMonster1, normalMonster2, normalMonster3, normalMonster4, normalMonster5, normalMonster6;
 		Spark spark1, spark2, spark3, spark4;
+		Fire  fire;
 		Door door[10];
 		Door door1[2];
 		Door *gate;

@@ -63,7 +63,7 @@ namespace game_framework {
 		ATK.AddBitmap(".\\RES\\Spirky\\Spirky_Attack_24.bmp", RGB(255, 255, 255));
 		ATK.AddBitmap(".\\RES\\Spirky\\Spirky_Attack_25.bmp", RGB(255, 255, 255));
 		ATK.AddBitmap(".\\RES\\Spirky\\Spirky_Attack_26.bmp", RGB(255, 255, 255));
-		AttackRange.AddBitmap(".\\RES\\Spirky\\Spirky_AttackRange.bmp", RGB(255, 255, 255));
+		AttackRange.AddBitmap(".\\RES\\Spirky\\Spirky_AttackRange.bmp", RGB(255, 255, 25));
 		Sucked_L.AddBitmap(".\\RES\\Spirky\\Spirky_Sucked_L_0.bmp", RGB(255, 255, 255));
 		Sucked_L.AddBitmap(".\\RES\\Spirky\\Spirky_Sucked_L_1.bmp", RGB(255, 255, 255));
 		Sucked_R.AddBitmap(".\\RES\\Spirky\\Spirky_Sucked_R_0.bmp", RGB(255, 255, 255));
@@ -233,6 +233,11 @@ namespace game_framework {
 			ATK.OnMove();
 			index->OnMove();
 			
+		}
+
+		else
+		{
+
 		}
 
 		

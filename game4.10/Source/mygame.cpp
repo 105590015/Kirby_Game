@@ -219,6 +219,8 @@ void CGameStateRun::OnBeginState()
 	spark3.Initialize(3247, 269);
 	spark4.Initialize(4045, 477);
 
+	fire.Initialize(417, 467);
+
 	CAudio::Instance()->Play(AUDIO_BACKGROUND, true);
 }
 
@@ -299,7 +301,7 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 		map[0].LoadBitmap(".//Map//foreground.bmp", RGB(255, 255, 255), ".//Map//background.bmp", ".//Map//map.txt");
 		map[1].LoadBitmap(".//Map//map1.bmp", RGB(255, 255, 255), ".//Map//background_1.bmp", ".//Map//map1.txt");
 		kirby.LoadBitmap();
-		monster[0] = &normalMonster1;
+		monster[0] = &fire;
 		monster[1] = &normalMonster2;
 		monster[2] = &normalMonster3;
 		monster[3] = &normalMonster4;
@@ -315,6 +317,8 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 			door[i].LoadBitmap();
 		door1[0].LoadBitmap();
 		door1[1].LoadBitmap();
+
+		
 		index = &map[0];
 		mapNum = 0;
 		gate = &door[5];
