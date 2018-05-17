@@ -114,11 +114,19 @@ namespace game_framework {
 
 
 			else {
-				if (abs(k->GetX1() - x) < SIZE_X / 2 && m->isEmpty(x+StepSize,y)) {
+				if (abs(k->GetX1() - x) < SIZE_X  && m->isEmpty(x+index->Width()+1,y)&& RightOrLeft) {
 					x += StepSize;
 				}
-				else {
+				else if(abs(k->GetX1() - x) < SIZE_X && m->isEmpty(x -1, y) && !RightOrLeft) {
+					x += StepSize;
+				}
+				else
+				{
+					x += 0;
+				}
 
+				if (m->isEmpty(x, y + 1+index->Height()) && m->isEmpty(x,y+1+index->Height())) {
+					y += 1;
 				}
 			}
 

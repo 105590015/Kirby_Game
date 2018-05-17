@@ -190,6 +190,7 @@ void CGameStateRun::OnBeginState()
 {
 	map[0].Initialize();
 	map[1].Initialize();
+	map[2].Initialize();
 	
 	kirby.Initialize(640,400);
 
@@ -197,7 +198,7 @@ void CGameStateRun::OnBeginState()
 	door[1].Initialize(621,  37, 1, 0, &door1[0]);
 	door[2].Initialize(1118,  37, 1, 0, &door1[0]);
 	door[3].Initialize(83, 328, 1, 0, &door1[0]);
-	door[4].Initialize(248, 369, 1, 0, &door1[0]);
+	door[4].Initialize(248, 369, 2, 0, &door2);
 	door[5].Initialize(993, 367, 1, 0, &door1[0]);
 	door[6].Initialize(1159, 326, 1, 0, &door1[1]);
 	door[7].Initialize(993, 367, 1, 0, &door1[0]);
@@ -206,6 +207,9 @@ void CGameStateRun::OnBeginState()
 
 	door1[0].Initialize(30, 425, 0,1, &door[5]);
 	door1[1].Initialize(4450, 350, 0, 1, &door[6]);
+
+
+	door2.Initialize(320, 240, 0, 2, &door[5]);
 
 
 	normalMonster1.Initialize(417, 467);
@@ -220,6 +224,7 @@ void CGameStateRun::OnBeginState()
 	spark4.Initialize(4045, 477);
 
 	fire.Initialize(417, 467);
+	fire.Initialize(417, 450);
 
 	CAudio::Instance()->Play(AUDIO_BACKGROUND, true);
 }
@@ -229,7 +234,7 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 	index->OnMove(kirby.GetX1(), kirby.GetY1());
 	if (Istransiting) {
 		Transition.OnMove();
-		Transition.SetDelayCount(8);
+		Transition.SetDelayCount(4);
 	}
 	
 	else {
@@ -267,6 +272,11 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 				}
 			}
 		}
+
+		if (mapNum == 3) {
+			door2.OnMove();
+		}
+
 	}
 
 	if (Transition.IsFinalBitmap()) {
@@ -300,6 +310,7 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 		
 		map[0].LoadBitmap(".//Map//foreground.bmp", RGB(255, 255, 255), ".//Map//background.bmp", ".//Map//map.txt");
 		map[1].LoadBitmap(".//Map//map1.bmp", RGB(255, 255, 255), ".//Map//background_1.bmp", ".//Map//map1.txt");
+		map[2].LoadBitmap(".//Map//Boss_map.bmp", RGB(255, 255, 255), ".//Map//background_2.bmp", ".//Map//map2.txt");
 		kirby.LoadBitmap();
 		monster[0] = &fire;
 		monster[1] = &normalMonster2;
@@ -317,6 +328,7 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 			door[i].LoadBitmap();
 		door1[0].LoadBitmap();
 		door1[1].LoadBitmap();
+		door2.LoadBitmap();
 
 		
 		index = &map[0];
@@ -446,6 +458,10 @@ void CGameStateRun::OnShow()
 			door1[i].OnShow(index);
 		for (int m = 0; m < 10; m++)
 			monster[m]->OnShow(index, &kirby);
+	}
+
+	if (mapNum == 2) {
+		door2.OnShow(index);
 	}
 
 	if(kirby.IsAlive()) kirby.OnShow(index);
