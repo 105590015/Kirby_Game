@@ -139,9 +139,15 @@ namespace game_framework {
 					{
 						counter++;
 						if (counter < 90)
+						{
 							index = &Attack_L;
+							IsAttacking = true;
+						}
 						else if (counter >= 90 && counter <= 180)
+						{
 							index = &originL;
+							IsAttacking = false;
+						}
 						else if (counter > 180)
 							counter = 0;
 					}
@@ -159,9 +165,15 @@ namespace game_framework {
 					{
 						counter++;
 						if (counter < 90)
+						{
 							index = &Attack_R;
+							IsAttacking = true;
+						}
 						else if (counter >= 90 && counter <= 180)
+						{
 							index = &originR;
+							IsAttacking = false;
+						}
 						else if (counter > 180)
 							counter = 0;
 					}	
@@ -179,7 +191,7 @@ namespace game_framework {
 	void Fire::Attack(Map* m,Kirby* k) {
 		if (HitRectangle(k->GetX1(), k->GetY1(), k->GetX2(), k->GetY2()) && !k->IsKick())
 			k->Hurted(m);
-		if(HitFire(k->GetX1(), k->GetY1(), k->GetX2(), k->GetY2()) && (index==&Attack_R || index==&Attack_L))
+		if(HitFire(k->GetX1(), k->GetY1(), k->GetX2(), k->GetY2()) && IsAttacking)
 			k->Hurted(m);
 	}
 
