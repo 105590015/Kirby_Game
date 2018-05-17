@@ -233,7 +233,7 @@ void CGameStateRun::OnBeginState()
 	fire.Initialize(417, 467);
 	fire.Initialize(417, 450);
 
-	tree.Initialize(400, 100);
+	tree.Initialize(450, 100);
 
 	CAudio::Instance()->Play(AUDIO_BACKGROUND, true);
 }

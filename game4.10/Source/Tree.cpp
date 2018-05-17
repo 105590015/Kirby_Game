@@ -12,7 +12,10 @@ namespace game_framework {
 	}
 
 	void Tree::LoadBitmap() {
-		normal.AddBitmap(".\\RES\\King\\King_normal_0.bmp", RGB(25, 255, 255));
+		normal.AddBitmap(".\\RES\\King\\King_normal_0.bmp", RGB(255, 255, 255));
+		normal.AddBitmap(".\\RES\\King\\King_normal_0.bmp", RGB(255, 255, 255));
+		normal.AddBitmap(".\\RES\\King\\King_normal_0.bmp", RGB(255, 255, 255));
+		normal.AddBitmap(".\\RES\\King\\King_normal_0.bmp", RGB(255, 255, 255));
 		normal.AddBitmap(".\\RES\\King\\King_normal_1.bmp", RGB(255, 255, 255));
 		normal.AddBitmap(".\\RES\\King\\King_normal_2.bmp", RGB(255, 255, 255));
 		hurted.AddBitmap(".\\RES\\King\\King_hurted_0.bmp", RGB(255, 255, 255));
@@ -58,6 +61,7 @@ namespace game_framework {
 
 	void Tree::OnShow(Map* m,Kirby* k) {
 		index->SetTopLeft(m->ScreenX(x), m->ScreenY(y));
+		index->SetDelayCount(16);
 		index->OnShow();
 	}
 
