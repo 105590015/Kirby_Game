@@ -31,7 +31,7 @@ namespace game_framework {
 		is_alive = true;
 		is_sucked = false;
 
-		IsAttacking = false;
+		IsAttacking = false;	
 
 		RightOrLeft = true;
 		index = &Walk_L;
