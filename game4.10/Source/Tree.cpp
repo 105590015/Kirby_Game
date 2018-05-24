@@ -43,7 +43,7 @@ namespace game_framework {
 		x = px;
 		y = py;
 
-		hp = 25;
+		hp = 30;
 		counter = 0;
 		is_alive = true;
 		is_sucked = false;
@@ -73,13 +73,11 @@ namespace game_framework {
 			Attack(m, k);
 
 			for (int i = 0; i < 12; i++) {
-				if (stone[i].IsAlive() && stone[i].GetY1() <= SIZE_Y)
 					stone[i].OnMove(m,k);
 			}
-			if (Ishurted && !hurted.IsFinalBitmap()) {
-				index = &hurted;
 
-			}
+			if (Ishurted && !hurted.IsFinalBitmap())
+				index = &hurted;
 			else {
 				counter++;
 				if (counter >= 50 && counter <= 150) {
@@ -112,28 +110,20 @@ namespace game_framework {
 		index->OnShow();
 
 		for (int i = 0; i < 12; i++)
-		{
 			if(stone[i].IsAlive())
-			stone[i].OnShow(m, k);
-		}
+				stone[i].OnShow(m, k);
 	}
 
 	void Tree::Attack(Map* m, Kirby* k) {
 		if (HitRectangle(k->GetX1(), k->GetY1(), k->GetX2(), k->GetY2()) && !k->IsKick())
 			k->Hurted(m);
-
 	}
 
 	void Tree::StoneAttack(Map* m, Kirby* k) {
 		int r = rand() % 360;
 		for (int i = 0; i < 12 ; i++)
-		{
 			if (r == i)
 				stone[i].SetAlive(true);
-
-			stone[i].OnMove(m, k);
-		}
-
 	}
 
 	bool Tree::IsAlive() {

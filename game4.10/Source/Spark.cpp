@@ -97,6 +97,8 @@ namespace game_framework {
 	void Spark::Attack(Map *m, Kirby* k) {
 		if (HitRectangle(k->GetX1(), k->GetY1(), k->GetX2(), k->GetY2()) && !k->IsKick())
 			k->Hurted(m);
+		if(IsAttacking && HitSpark(k->GetX1(), k->GetY1(), k->GetX2(), k->GetY2()) && !k->IsKick())
+			k->Hurted(m);
 	}
 
 	void Spark::Jump(Kirby* k) {
@@ -265,5 +267,15 @@ namespace game_framework {
 				die.OnMove();
 			}
 		}
+	}
+
+	bool Spark::HitSpark(int tx1, int ty1, int tx2, int ty2)
+	{
+		int x1 = GetX1() - 10;	// 左上角x座標
+		int y1 = GetY1() - 10;	// 左上角y座標
+		int x2 = GetX2() + 10;	// 右下角x座標
+		int y2 = GetY2() + 10;	// 右下角y座標
+		// 檢測矩形與參數矩形是否有交集
+		return (tx2 >= x1 && tx1 <= x2 && ty2 >= y1 && ty1 <= y2);
 	}
 }

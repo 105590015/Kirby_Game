@@ -725,6 +725,7 @@ namespace game_framework {
 		if (isFly && isSpace)
 		{
 			gas.SetXY(x, y);
+			gas.SetAlive(true);
 			gasDistance = 176;
 			bulletDirection = rightOrLeft;
 		}
@@ -741,6 +742,7 @@ namespace game_framework {
 		if (isBig && isAttack && !isSuck)
 		{
 			star.SetXY(x, y);
+			star.SetAlive(true);
 			starDistance = 376;
 			bulletDirection = rightOrLeft;
 		}
@@ -778,7 +780,8 @@ namespace game_framework {
 		//------ªÅ®ð¼u------
 		if (isFly && isSpace)
 		{
-			gas.SetXY(x, y+40);
+			gas.SetXY(x, y + 40);
+			gas.SetAlive(true);
 			gasDistance = 176;
 			bulletDirection = rightOrLeft;
 		}
@@ -817,6 +820,7 @@ namespace game_framework {
 		if (isFly && isSpace)
 		{
 			gas.SetXY(x, y + 40);
+			gas.SetAlive(true);
 			gasDistance = 176;
 			bulletDirection = rightOrLeft;
 		}
@@ -1003,7 +1007,7 @@ namespace game_framework {
 		}
 		else
 		{
-			if (isAttack && !isFly && !isMovingDown)  //§l©Ç
+			if (isAttack && !isFly && !isMovingDown && (starDistance < 276 || !star.IsAlive()))  //§l©Ç
 			{
 				isSuck = true;
 				if (rightOrLeft)

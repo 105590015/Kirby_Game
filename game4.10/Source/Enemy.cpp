@@ -40,14 +40,16 @@ namespace game_framework {
 			Ishurted = true;
 		}
 		// 被空氣砲擊中
-		else if (kirby->GetGas()->IsAlive() && HitRectangle(kirby->GetGas()->GetX1() - 15, kirby->GetGas()->GetY1() - 15, kirby->GetGas()->GetX2() - 15, kirby->GetGas()->GetY2() - 15)) {
+		else if (kirby->GetGas()->IsAlive() && HitRectangle(kirby->GetGas()->GetX1() + 10, kirby->GetGas()->GetY1() + 10, kirby->GetGas()->GetX2() - 10, kirby->GetGas()->GetY2() - 10)) {
 			hp -= 10;
 			Ishurted = true;
+			kirby->GetGas()->SetAlive(false);
 		}
 		// 被星星擊中
-		else if (kirby->GetStar()->IsAlive() && HitRectangle(kirby->GetStar()->GetX1() - 15, kirby->GetStar()->GetY1() - 15, kirby->GetStar()->GetX2() - 15, kirby->GetStar()->GetY2() - 15)) {
+		else if (kirby->GetStar()->IsAlive() && HitRectangle(kirby->GetStar()->GetX1() + 10, kirby->GetStar()->GetY1() + 10, kirby->GetStar()->GetX2() - 10, kirby->GetStar()->GetY2() - 10)) {
 			hp -= 20;
 			Ishurted = true;
+			kirby->GetStar()->SetAlive(false);
 		}
 			
 		// 被電

@@ -92,10 +92,6 @@ IDB_HELP                BITMAP                  "..\\res\\help.bmp"
 
 IDB_LOADING             BITMAP                  "..\\res\\loading.bmp"
 
-IDB_background          BITMAP                  "..\\RES\\background.bmp"
-
-IDB_foreground_1        BITMAP                  "..\\RES\\map1.bmp"
-
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -121,8 +117,6 @@ LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
 //
 
 IDR_MAINFRAME           BITMAP                  "..\\res\\Toolbar.bmp"
-
-IDB_foreground          BITMAP                  "..\\RES\\foreground.bmp"
 
 
 /////////////////////////////////////////////////////////////////////////////
