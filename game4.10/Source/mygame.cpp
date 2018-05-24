@@ -334,12 +334,12 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 		map[2].LoadBitmap(".//Map//Boss_map.bmp", RGB(255, 255, 255), ".//Map//background_2.bmp", ".//Map//map2.txt");
 		map[3].LoadBitmap(".//RES//King//King_foreground.bmp", RGB(255, 255, 255), ".//RES//King//King_background.bmp", ".//Map//map3.txt");
 		kirby.LoadBitmap();
-		monster[0] = &fire;
+		monster[0] = &fire1;
 		monster[1] = &normalMonster2;
 		monster[2] = &normalMonster3;
 		monster[3] = &normalMonster4;
 		monster[4] = &normalMonster5;
-		monster[5] = &normalMonster6;
+		monster[5] = &fire2;
 		monster[6] = &spark1;
 		monster[7] = &spark2;
 		monster[8] = &spark3;
@@ -477,12 +477,12 @@ void CGameStateRun::ResetMonster()
 	normalMonster3.Initialize(2459, 517);
 	normalMonster4.Initialize(2903, 517);
 	normalMonster5.Initialize(3495, 59);
-	normalMonster6.Initialize(3745, 477);
 	spark1.Initialize(675, 393);
 	spark2.Initialize(1673, 163);
 	spark3.Initialize(3247, 269);
 	spark4.Initialize(4045, 477);
-	fire.Initialize(417, 467);
+	fire1.Initialize(417, 467);
+	fire2.Initialize(3745, 477);
 }
 
 void CGameStateRun::OnShow()
