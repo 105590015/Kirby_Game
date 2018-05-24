@@ -15786,7 +15786,7 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Kirby"
-        "ProductCode" = "8:{25949C89-503B-47E8-8C0B-6763FD9EA980}"
+        "ProductCode" = "8:{16E5CA02-331F-44D6-B527-DB5397C97E2B}"
         "PackageCode" = "8:{1D312381-EB64-4F8B-A9CF-F8D32945E16C}"
         "UpgradeCode" = "8:{C52B22B7-6EC1-43DA-93B3-57188494DEDA}"
         "AspNetVersion" = "8:4.0.30319.0"
