@@ -48,13 +48,13 @@ namespace game_framework {
 		Gas* GetGas();
 		Star* GetStar();
 	protected:	
+		CMovingBitmap blood6, blood5, blood4, blood3, blood2, blood1, blood0;
 		// 普通卡比
 		CMovingBitmap originR, originL, exhaleR, exhaleL, jumpR, jumpL, downR, downL, landingR, landingL, downAttackR, downAttackL, GG;
 		CAnimation goL, goR, flyR, prepareFlyR, flyL, prepareFlyL, hurtedL, hurtedR, runL, runR, suckR, suckL;
 		// 含東西卡比
 		CMovingBitmap bigOriginR, bigOriginL, bigJumpR, bigJumpL, bigLandingR, bigLandingL, threwR, threwL;
 		CAnimation bigGoL, bigGoR, swallowR, swallowL;
-		CMovingBitmap blood6, blood5, blood4, blood3, blood2, blood1, blood0;
 		// 雷電卡比
 		CMovingBitmap Spark_exhaleR, Spark_exhaleL;
 		CAnimation Spark_originR, Spark_originL, Spark_downR, Spark_downL, Spark_goR, Spark_goL, Spark_jumpR, Spark_jumpL, Spark_landingR, Spark_landingL, Spark_downAttackR, Spark_downAttackL, Spark_flyR, Spark_prepareFlyR, Spark_flyL, Spark_prepareFlyL, Spark_runR, Spark_runL, Spark_attackR, Spark_attackL;
