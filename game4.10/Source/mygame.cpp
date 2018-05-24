@@ -154,11 +154,11 @@ void CGameStateOver::OnMove()
 
 void CGameStateOver::OnBeginState()
 {
+	counter = 300;
 }
 
 void CGameStateOver::OnInit()
 {
-	counter = 300;
 }
 
 void CGameStateOver::OnShow()
@@ -218,22 +218,13 @@ void CGameStateRun::OnBeginState()
 
 	door3.Initialize(150, 350, 0, 3, &door[3]);
 
-
-	normalMonster1.Initialize(417, 467);
-	normalMonster2.Initialize(947, 467);
-	normalMonster3.Initialize(2459, 517);
-	normalMonster4.Initialize(2903, 517);
-	normalMonster5.Initialize(3495, 59);
-	normalMonster6.Initialize(3745, 477);
-	spark1.Initialize(675, 393);
-	spark2.Initialize(1673, 163);
-	spark3.Initialize(3247, 269);
-	spark4.Initialize(4045, 477);
-
-	fire.Initialize(417, 467);
-	fire.Initialize(417, 450);
+	ResetMonster();
 
 	tree.Initialize(450, 100);
+
+	index = &map[0];
+	mapNum = 0;
+	gate = &door[5];
 
 	CAudio::Instance()->Play(AUDIO_BACKGROUND, true);
 }
@@ -364,11 +355,6 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 
 		tree.LoadBitmap();
 
-		
-		index = &map[0];
-		mapNum = 0;
-		gate = &door[5];
-
 	CAudio::Instance()->Load(AUDIO_BACKGROUND, "sounds\\Kirby_background.mp3");  //背景音樂
 }
 
@@ -484,6 +470,21 @@ void CGameStateRun::OnRButtonUp(UINT nFlags, CPoint point)	// 處理滑鼠的動作
 	index->IsRclick(false);
 }
 
+void CGameStateRun::ResetMonster()
+{
+	normalMonster1.Initialize(417, 467);
+	normalMonster2.Initialize(947, 467);
+	normalMonster3.Initialize(2459, 517);
+	normalMonster4.Initialize(2903, 517);
+	normalMonster5.Initialize(3495, 59);
+	normalMonster6.Initialize(3745, 477);
+	spark1.Initialize(675, 393);
+	spark2.Initialize(1673, 163);
+	spark3.Initialize(3247, 269);
+	spark4.Initialize(4045, 477);
+	fire.Initialize(417, 467);
+}
+
 void CGameStateRun::OnShow()
 {
 	//  注意：Show裡面千萬不要移動任何物件的座標，移動座標的工作應由Move做才對，
@@ -505,6 +506,8 @@ void CGameStateRun::OnShow()
 		for (int m = 0; m < 10; m++)
 			monster[m]->OnShow(index, &kirby);
 	}
+	else
+		ResetMonster();
 
 	if (mapNum == 2) {
 		door2.OnShow(index);

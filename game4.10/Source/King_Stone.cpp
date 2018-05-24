@@ -27,6 +27,7 @@ namespace game_framework {
 		x = sx;
 		y = sy;
 		is_alive = false;
+		is_sucked = false;
 	}
 
 	void Stone::OnShow(Map* m, Kirby* k)
@@ -45,8 +46,29 @@ namespace game_framework {
 			is_alive = false;
 		if (is_alive)
 		{
-			y++;
-			Attack(m, k);
+			Sucked(k);
+			if (!is_sucked)
+			{
+				Attack(m, k);
+				y++;
+			}
+			else if (is_sucked)
+			{
+				if (x > (k->GetX1() + k->GetX2()) / 2)
+					x -= 3;
+				else
+					x += 3;
+				if (y > k->GetY1())
+					y -= 3;
+				else
+					y += 3;
+				if (HitRectangle(k->GetX1() + 10, k->GetY1() + 10, k->GetX2() - 10, k->GetY2() - 10))
+				{
+					k->SetBig(true);
+					k->SetEat(0);
+					is_alive = false;
+				}
+			}
 		}
 		else
 			y = 0;
@@ -56,6 +78,14 @@ namespace game_framework {
 	{
 		if (HitRectangle(k->GetX1(), k->GetY1(), k->GetX2(), k->GetY2()))
 			k->Hurted(m);
+	}
+
+	void Stone::Sucked(Kirby* kirby)
+	{
+		if (ComputeDistance(kirby->GetX1(), kirby->GetY1()) < 150.0 && kirby->IsSuck() && ((kirby->IsRight() && x - kirby->GetX1() >= 0) || (!kirby->IsRight() && x - kirby->GetX2() <= 0)))
+			is_sucked = true;
+		else
+			is_sucked = false;
 	}
 
 	void Stone::SetAlive(bool flag)

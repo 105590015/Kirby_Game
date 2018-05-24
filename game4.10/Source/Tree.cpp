@@ -43,7 +43,7 @@ namespace game_framework {
 		x = px;
 		y = py;
 
-		hp = 25;
+		hp = 30;
 		counter = 0;
 		is_alive = true;
 		is_sucked = false;
