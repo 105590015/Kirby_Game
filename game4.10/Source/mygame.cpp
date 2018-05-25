@@ -390,13 +390,36 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 			door3.SetEnter(true);
 	}
 	if (nChar == KEY_DOWN)
+	{
 		kirby.SetMovingDown(true);
+		if (kirby.IsBig())
+			CAudio::Instance()->Play(swallow);
+	}
 	if (nChar == KEY_SPACE)
+	{
 		kirby.SetSpace(true);
+		if(kirby.IsFly())
+			CAudio::Instance()->Play(gasSound);
+	}
 	if (nChar == KEY_Attack)
+	{
 		kirby.SetAttack(true);
+		if(kirby.IsDown())
+			CAudio::Instance()->Play(kick);
+		else if(kirby.GetType()==0 && !kirby.IsBig())
+			CAudio::Instance()->Play(suck);
+		else if(kirby.GetType() == 0 && kirby.IsBig())
+			CAudio::Instance()->Play(starSound);
+		else if(kirby.GetType()==1)
+			CAudio::Instance()->Play(spark);
+		else if(kirby.GetType()==2)
+			CAudio::Instance()->Play(fire);
+	}
 	if (nChar == KEY_Run)
+	{
 		kirby.SetRun(true);
+		CAudio::Instance()->Play(run);
+	}
 	if (nChar == KEY_Jump && !kirby.IsFly() && !index->isEmpty((kirby.GetX2() + kirby.GetX2()) / 2, kirby.GetY2() + 1)) //按下X,卡比不是在飛行且落地才可跳躍
 		kirby.SetJump(true);
 	if (nChar == KEY_ESC)
@@ -437,6 +460,9 @@ void CGameStateRun::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 	{
 		kirby.SetAttack(false);
 		kirby.SetSuck(false);
+		CAudio::Instance()->Stop(suck);
+		CAudio::Instance()->Stop(spark);
+		CAudio::Instance()->Stop(fire);
 	}
 	if (nChar == KEY_Run)
 		kirby.SetRun(false);

@@ -212,7 +212,6 @@ namespace game_framework {
 								index = &AttackRange;
 								IsAttacking = true;
 								ATK.SetDelayCount(1);
-								
 							}						
 						}
 

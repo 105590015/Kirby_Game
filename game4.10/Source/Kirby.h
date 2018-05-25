@@ -28,6 +28,7 @@ namespace game_framework {
 		bool IsAttack();                  // 是否按Z鍵
 		bool IsRight();                   // 面對方向
 		bool IsDown();                    // 是否縮小
+		bool IsBig();                     // 是否是大隻的
 		void LoadBitmap();				  // 載入圖形
 		void OnMove(Map *m);		      // 移動
 		void OnShow(Map *m);			  // 將圖形貼到畫面
@@ -76,7 +77,8 @@ namespace game_framework {
 			starSound,              // 10
 			swallow,                // 11
 			spark,                  // 12
-			fire                    // 13
+			fire,                   // 13
+			stone                   // 14
 		};
 
 		Gas gas;
@@ -98,6 +100,7 @@ namespace game_framework {
 		bool isRunning;				// 是否在跑
 		bool isBig;                 // 是否含滷蛋
 		bool isSwallow;             // 是否在吞怪
+		bool isLanding;             // 是否降落中
 		bool rightOrLeft;           // 判斷左右
 	private:
 		void ShowKirby(Map *m);     // 顯示普通卡比
