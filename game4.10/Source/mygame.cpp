@@ -206,9 +206,9 @@ void CGameStateRun::OnBeginState()
 	door[4].Initialize(248, 369, 2, 0, &door2);
 	door[5].Initialize(993, 367, 1, 0, &door1[0]);
 	door[6].Initialize(1159, 326, 1, 0, &door1[1]);
-	door[7].Initialize(993, 367, 1, 0, &door1[0]);
-	door[8].Initialize(993, 367, 1, 0, &door1[0]);
-	door[9].Initialize(993, 367, 1, 0, &door1[0]);
+	door[7].Initialize(207, 575, 1, 0, &door1[0]);
+	door[8].Initialize(620, 614, 1, 0, &door1[0]);
+	door[9].Initialize(1036, 574, 1, 0, &door1[0]);
 
 	door1[0].Initialize(30, 425, 0,1, &door[5]);
 	door1[1].Initialize(4450, 350, 0, 1, &door[6]);

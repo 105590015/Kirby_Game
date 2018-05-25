@@ -41,20 +41,20 @@ namespace game_framework {
 	}
 
 	
-	int Door::GetNextX() {
+	int Door::GetNextX() {  //回傳下一個門的X座標
 		return NextDoor->GetX();
 	}
 
-	int Door::GetNextY() {
+	int Door::GetNextY() { //回傳下一個門的Y座標
 		return NextDoor->GetY();
 	}
 
-	Door Door::GetNextDoor() {
+	Door Door::GetNextDoor() {  //回傳指標
 		return *NextDoor;
 	}
 
 
-	void Door::Initialize(int px,int py,int num,int m ,Door* h) {
+	void Door::Initialize(int px,int py,int num,int m ,Door* h) {//設定門的位置所在地圖下一個門的地圖
 		x = px;
 		y = py;
 		map = m;
@@ -89,29 +89,29 @@ namespace game_framework {
 	}
 
 	void Door::OnShow(Map *m) {
-		if (map == 0) {
+		if (map == 0) {  //當為地圖0時為一般的門
 			door.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
 			door.OnShow();
 		}
 
-		else {
+		else {  //其餘為有星星的門
 			Gate.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
 			Gate.OnShow();
 		}
 	}
 
-	void Door::SetEnter(bool flag) {
+	void Door::SetEnter(bool flag) { //設定是否按上
 		Enter = flag;
 	}
 	
 	bool Door::IsEnter(Kirby *k) {
-		if (map == 0) {
+		if (map == 0) {  //當為地圖0時為一般的門
 			if ((k->GetX1() + k->GetX2()) / 2 >= x && (k->GetX1() + k->GetX2()) / 2 <= x + door.Width() && (k->GetY1() + k->GetY2()) / 2 >= y && (k->GetY1() + k->GetY2()) / 2 <= y + door.Height() && Enter)
 				return true;
 			else
 				return false;
 		}
-		else {
+		else {  //其餘為有星星的門
 			if ((k->GetX1() + k->GetX2()) / 2 >= x && (k->GetX1() + k->GetX2()) / 2 <= x + Gate.Width() && (k->GetY1() + k->GetY2()) / 2 >= y && (k->GetY1() + k->GetY2()) / 2 <= y + Gate.Height() && Enter)
 				return true;
 			else
