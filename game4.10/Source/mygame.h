@@ -58,7 +58,20 @@ namespace game_framework {
 	/////////////////////////////////////////////////////////////////////////////
 
 	enum AUDIO_ID {				// 定義各種音效的編號
-		AUDIO_BACKGROUND        // 0
+		AUDIO_BACKGROUND,       // 0
+		jump,                   // 1
+		landing,                // 2
+		kick,                   // 3
+		die,                    // 4
+		fly,                    // 5
+		hurted,                 // 6
+		run,                    // 7
+		suck,                   // 8
+		gasSound,               // 9
+		starSound,              // 10
+		swallow,                // 11
+		spark,                  // 12
+		fire                    // 13
 	};
 
 	/////////////////////////////////////////////////////////////////////////////

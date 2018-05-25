@@ -355,7 +355,7 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 
 		tree.LoadBitmap();
 
-	CAudio::Instance()->Load(AUDIO_BACKGROUND, "sounds\\Kirby_background.mp3");  //背景音樂
+	CAudio::Instance()->Load(AUDIO_BACKGROUND, "Sounds\\Kirby_background.mp3");  //背景音樂
 }
 
 void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
