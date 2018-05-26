@@ -196,6 +196,7 @@ void CGameStateRun::OnBeginState()
 	map[1].Initialize();
 	map[2].Initialize();
 	map[3].Initialize();
+	map[4].Initialize();
 	
 	kirby.Initialize(640,400);
 
@@ -222,8 +223,9 @@ void CGameStateRun::OnBeginState()
 
 	tree.Initialize(450, 100);
 
-	index = &map[0];
-	mapNum = 0;
+	mapNum = 4;
+	index = &map[mapNum];
+	
 	gate = &door[5];
 
 	CAudio::Instance()->Play(AUDIO_BACKGROUND, true);
@@ -332,7 +334,8 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 		map[0].LoadBitmap(".//Map//foreground.bmp", RGB(255, 255, 255), ".//Map//background.bmp", ".//Map//map.txt");
 		map[1].LoadBitmap(".//Map//map1.bmp", RGB(255, 255, 255), ".//Map//background_1.bmp", ".//Map//map1.txt");
 		map[2].LoadBitmap(".//Map//Boss_map.bmp", RGB(255, 255, 255), ".//Map//background_2.bmp", ".//Map//map2.txt");
-		map[3].LoadBitmap(".//RES//King//King_foreground.bmp", RGB(255, 255, 255), ".//RES//King//King_background.bmp", ".//Map//map3.txt");
+		map[3].LoadBitmap(".//Map//King_foreground.bmp", RGB(255, 255, 255), ".//Map//King_background.bmp", ".//Map//map3.txt");
+		map[4].LoadBitmap(".//Map//foreground_4.bmp", RGB(255, 255, 255), ".//Map//background_2.bmp", ".//Map//map4.txt");
 		kirby.LoadBitmap();
 		monster[0] = &fire1;
 		monster[1] = &normalMonster2;
@@ -519,6 +522,10 @@ void CGameStateRun::OnShow()
 		if (!tree.IsAlive()) {
 			door3.OnShow(index);
 		}
+	}
+
+	if (mapNum == 4) {
+
 	}
 
 	if(kirby.IsAlive()) kirby.OnShow(index);

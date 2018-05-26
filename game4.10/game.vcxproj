@@ -229,7 +229,6 @@
     </Bscmake>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <None Include="Res\ball.bmp" />
     <None Include="RES\bmp0.bmp" />
     <None Include="RES\bmp1.bmp" />
     <None Include="RES\bmp10.bmp" />

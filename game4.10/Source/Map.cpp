@@ -90,8 +90,9 @@ namespace game_framework {
 		Mapfile = file;
 		mapSize_X = (foreground.Width() * 10 + 5) / 100;
 		mapSize_Y = (foreground.Height() * 10 + 5) / 100;
-		ball.LoadBitmap(".//RES//ball.bmp", RGB(0, 0, 0));
 		ball_1.LoadBitmap(".//RES//ball_1.bmp", RGB(0, 0, 0));
+		ball_2.LoadBitmap(".//RES//ball_2.bmp", RGB(0, 0, 0));
+		ball_3.LoadBitmap(".//RES//ball_3.bmp", RGB(0, 0, 0));
 		
 	}
 	
@@ -134,35 +135,45 @@ namespace game_framework {
 		//}
 		//set.close();
 
-		//for (int i = 0; i < mapSize_Y; i++) {
-		//	for (int j = 0; j < mapSize_X; j++) {
-		//		int x = j * 10 - sx; // 算出第(i, j)這一格的 x 螢幕座標
-		//		int y = i * 10 - sy; // 算出第(i, j)這一格的 y 螢幕座標
-		//		if (mx >= x && mx <= x + 20 && my >= y && my <= y + 20) { //判斷滑鼠位置
-		//			//if (Lclick) {				//左鍵為設立障礙物
-		//			//	map[i][j] = 1;
-		//			//}
+		for (int i = 0; i < mapSize_Y; i++) {
+			for (int j = 0; j < mapSize_X; j++) {
+				int x = j * 10 - sx; // 算出第(i, j)這一格的 x 螢幕座標
+				int y = i * 10 - sy; // 算出第(i, j)這一格的 y 螢幕座標
+				if (mx >= x && mx <= x + 10 && my >= y && my <= y + 10) { //判斷滑鼠位置
+					if (Lclick) {				//左鍵為設立障礙物
+						map[i][j] = 1;
+					}
 
-		//			if (Lclick) {				//左鍵為設立障礙物
-		//				map[i][j] = 2;
-		//			}
+					//if (Lclick) {				//左鍵為設立可穿透的障礙物
+					//	map[i][j] = 2;
+					//} 
 
-		//			if (Rclick) {			//右鍵為取消障礙物
-		//				map[i][j] = 0;
-		//			}
-		//		}
-		//		switch (map[i][j]) {
-		//			case 1:
-		//				ball.SetTopLeft(x, y); // 指定第(i, j)這一格的座標
-		//				ball.ShowBitmap();
-		//				break;
-		//			case 2:
-		//				ball_1.SetTopLeft(x, y);
-		//				ball_1.ShowBitmap();
-		//				break;
-		//		}
-		//	}
-		//}
+					//if (Lclick) {				//左鍵為設立斜坡
+					//	map[i][j] = 3;
+					//}
+
+					if (Rclick) {			//右鍵為取消障礙物
+						map[i][j] = 0;
+					}
+				}
+				switch (map[i][j]) {
+					case 1:
+						ball_1.SetTopLeft(x, y); // 指定第(i, j)這一格的座標
+						ball_1.ShowBitmap();
+						break;
+					case 2:
+						ball_2.SetTopLeft(x, y);
+						ball_2.ShowBitmap();
+						break;
+
+					case 3:
+						ball_3.SetTopLeft(x, y);
+						ball_3.ShowBitmap();
+						break;
+
+				}
+			}
+		}
 	}
 
 	void Map::SetXY(int nx, int ny)
@@ -184,6 +195,13 @@ namespace game_framework {
 		int gx = x / 10; // 轉換為X軸格座標(整數除法)
 		int gy = y / 10; // 轉換為Y軸格座標(整數除法)
 		//map[x][y]中的y表示X軸的格數，x表示Y軸
-		return map[gy][gx] == 0 || map[gy][gx]==2; // 假設 0 代表空的
+		return map[gy][gx] == 0 || map[gy][gx]==2; // 假設 0 代表空的2代表可穿越
+	}
+
+	bool Map::isSlope(int x, int y) {
+		int gx = x / 10; // 轉換為X軸格座標(整數除法)
+		int gy = y / 10; // 轉換為Y軸格座標(整數除法)
+						 //map[x][y]中的y表示X軸的格數，x表示Y軸
+		return map[gy][gx] == 3 ;// 假設 3 代表斜坡
 	}
 }

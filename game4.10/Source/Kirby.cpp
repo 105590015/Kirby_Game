@@ -502,6 +502,8 @@ namespace game_framework {
 		}
 		else
 		{
+
+
 			if (isMovingLeft && !isSuck && !isSwallow && !isAttack)
 			{
 				rightOrLeft = false;        //設定面向左邊
@@ -515,7 +517,16 @@ namespace game_framework {
 						x -= STEP_SIZE * 2;
 					else
 						x -= STEP_SIZE;
+
+					if (m->isSlope(GetX1() - STEP_SIZE, GetY2())) {
+						if (isRunning)
+							y -= STEP_SIZE * 2;
+						else
+							y -= STEP_SIZE;
+					}
 				}
+
+				
 			}
 			else if (isMovingRight && !isSuck && !isSwallow && !isAttack)
 			{
@@ -530,7 +541,17 @@ namespace game_framework {
 						x += STEP_SIZE * 2;
 					else
 						x += STEP_SIZE;
+
+					if (m->isSlope(GetX2() + STEP_SIZE, GetY2())) {
+						if (isRunning)
+							y -= STEP_SIZE * 2;
+						else
+							y -= STEP_SIZE;
+					}
 				}
+
+				
+
 			}
 			if (isMovingUp && !isBig)
 			{

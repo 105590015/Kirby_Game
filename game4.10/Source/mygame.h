@@ -117,7 +117,7 @@ namespace game_framework {
 		void OnShow();									// 顯示這個狀態的遊戲畫面
 	private:
 		Kirby kirby;                                    // 卡比
-		Map map[4];                                     // 地圖
+		Map map[5];                                     // 地圖
 		Map *index;
 		Enemy *monster[10];                             // 怪物
 		Enemy *Boss;

@@ -16,9 +16,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Res\ball.bmp">
-      <Filter>Resource Files</Filter>
-    </None>
     <None Include="RES\bmp0.bmp">
       <Filter>Resource Files</Filter>
     </None>
