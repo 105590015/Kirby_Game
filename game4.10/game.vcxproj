@@ -229,7 +229,6 @@
     </Bscmake>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <None Include="Res\ball.bmp" />
     <None Include="RES\bmp0.bmp" />
     <None Include="RES\bmp1.bmp" />
     <None Include="RES\bmp10.bmp" />
@@ -264,6 +263,7 @@
     <ClCompile Include="Source\CEraser.cpp" />
     <ClCompile Include="Source\Door.cpp" />
     <ClCompile Include="Source\Enemy.cpp" />
+    <ClCompile Include="Source\Fire.cpp" />
     <ClCompile Include="Source\game.cpp">
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -280,7 +280,9 @@
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='UnitTest|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <ClCompile Include="Source\Gas.cpp" />
+    <ClCompile Include="Source\King_Stone.cpp" />
     <ClCompile Include="Source\Kirby.cpp" />
+    <ClCompile Include="Source\LostAbility.cpp" />
     <ClCompile Include="Source\MainFrm.cpp">
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -289,7 +291,7 @@
     <ClCompile Include="Source\Map.cpp" />
     <ClCompile Include="Source\NormalMonster.cpp" />
     <ClCompile Include="Source\Spark.cpp" />
-    <ClCompile Include="Source\Start.cpp" />
+    <ClCompile Include="Source\Star.cpp" />
     <ClCompile Include="Source\StdAfx.cpp">
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -310,6 +312,7 @@
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='UnitTest|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
+    <ClCompile Include="Source\Tree.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\audio.h" />
@@ -319,20 +322,24 @@
     <ClInclude Include="Source\CEraser.h" />
     <ClInclude Include="Source\Door.h" />
     <ClInclude Include="Source\Enemy.h" />
+    <ClInclude Include="Source\Fire.h" />
     <ClInclude Include="Source\game.h" />
     <ClInclude Include="Source\gameDoc.h" />
     <ClInclude Include="Source\gameView.h" />
     <ClInclude Include="Source\Gas.h" />
+    <ClInclude Include="Source\King_Stone.h" />
     <ClInclude Include="Source\Kirby.h" />
+    <ClInclude Include="Source\LostAbility.h" />
     <ClInclude Include="Source\MainFrm.h" />
     <ClInclude Include="Source\Map.h" />
     <ClInclude Include="Source\NormalMonster.h" />
     <ClInclude Include="Source\Resource.h" />
     <ClInclude Include="Source\Spark.h" />
-    <ClInclude Include="Source\Start.h" />
+    <ClInclude Include="Source\Star.h" />
     <ClInclude Include="Source\StdAfx.h" />
     <ClInclude Include="Source\gamelib.h" />
     <ClInclude Include="Source\mygame.h" />
+    <ClInclude Include="Source\Tree.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Source\game.rc">

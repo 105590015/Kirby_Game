@@ -46,8 +46,11 @@
 #include "NormalMonster.h"
 #include "Door.h"
 #include "Gas.h"
-#include "Start.h"
+#include "Star.h"
+#include "LostAbility.h"
 #include "Spark.h"
+#include "Fire.h"
+#include "Tree.h"
 
 namespace game_framework {
 	/////////////////////////////////////////////////////////////////////////////
@@ -55,7 +58,21 @@ namespace game_framework {
 	/////////////////////////////////////////////////////////////////////////////
 
 	enum AUDIO_ID {				// 定義各種音效的編號
-		AUDIO_BACKGROUND        // 0
+		AUDIO_BACKGROUND,       // 0
+		jump,                   // 1
+		landing,                // 2
+		kick,                   // 3
+		die,                    // 4
+		fly,                    // 5
+		hurted,                 // 6
+		run,                    // 7
+		suck,                   // 8
+		gasSound,               // 9
+		starSound,              // 10
+		swallow,                // 11
+		spark,                  // 12
+		fire,                   // 13
+		stone                   // 14
 	};
 
 	/////////////////////////////////////////////////////////////////////////////
@@ -95,18 +112,26 @@ namespace game_framework {
 		void OnLButtonUp(UINT nFlags, CPoint point);	// 處理滑鼠的動作
 		void OnRButtonDown(UINT nFlags, CPoint point);  // 處理滑鼠的動作
 		void OnRButtonUp(UINT nFlags, CPoint point);	// 處理滑鼠的動作
+		void ResetMonster();
 	protected:
 		void OnMove();									// 移動遊戲元素
 		void OnShow();									// 顯示這個狀態的遊戲畫面
 	private:
 		Kirby kirby;                                    // 卡比
-		Map map[2];                                        // 地圖
+		Map map[5];                                     // 地圖
 		Map *index;
-		NormalMonster normalMonster[6];                 // 怪物
-		Door door;
-		Door door1;
+		Enemy *monster[10];                             // 怪物
+		Enemy *Boss;
+		NormalMonster normalMonster1, normalMonster2, normalMonster3, normalMonster4, normalMonster5;
+		Spark spark1, spark2, spark3, spark4;
+		Fire  fire1, fire2;
+		Tree tree;
+		Door door[10];
+		Door door1[2];
+		Door door2;
+		Door door3;
+
 		Door *gate;
-		Spark spark;
 		int mapNum;							//設定現在為第幾號地圖
 		int tempNum;
 		CAnimation Transition;

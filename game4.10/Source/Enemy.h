@@ -15,12 +15,14 @@ namespace game_framework {
 		virtual int GetY2();                          // 右下角 y 座標
 		virtual void OnShow(Map *m, Kirby *kirby);    // 顯示
 		virtual void OnMove(Map *m, Kirby* kirby);    // 移動
+		virtual void LoadBitmap();                    // 讀圖
 		virtual void Attack(Kirby* kirby);            // 攻擊
 	protected:
 		int x, y, hp;				// 左上角座標.血量
 		bool is_alive;				// 是否活著
 		bool is_sucked;             // 是否被吸
 		bool RightOrLeft;           // 判斷左右
+		bool Ishurted;
 		bool HitRectangle(int tx1, int ty1, int tx2, int ty2);   // 是否碰到參數範圍的矩形
 		double ComputeDistance(int tx1, int ty1);                   // 計算距離
 	};

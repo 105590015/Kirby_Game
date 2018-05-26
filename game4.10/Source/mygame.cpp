@@ -148,10 +148,13 @@ CGameStateOver::CGameStateOver(CGame *g)
 
 void CGameStateOver::OnMove()
 {
+	if(counter==0)
+		GotoGameState(GAME_STATE_INIT);
 }
 
 void CGameStateOver::OnBeginState()
 {
+	counter = 300;
 }
 
 void CGameStateOver::OnInit()
@@ -160,6 +163,7 @@ void CGameStateOver::OnInit()
 
 void CGameStateOver::OnShow()
 {
+	counter--;
 	CDC *pDC = CDDraw::GetBackCDC();			// 取得 Back Plain 的 CDC 
 	CFont f,*fp;
 	f.CreatePointFont(160,"Times New Roman");	// 產生 font f; 160表示16 point的字
@@ -167,7 +171,7 @@ void CGameStateOver::OnShow()
 	pDC->SetBkColor(RGB(0,0,0));
 	pDC->SetTextColor(RGB(255,255,0));
 	char str[80];								// Demo 數字對字串的轉換
-	sprintf(str, "Game Over !");
+	sprintf(str, "Game Over ! (%d)",counter/30);
 	pDC->TextOut(240,210,str);
 	pDC->SelectObject(fp);						// 放掉 font f (千萬不要漏了放掉)
 	CDDraw::ReleaseBackCDC();					// 放掉 Back Plain 的 CDC
@@ -179,7 +183,7 @@ void CGameStateOver::OnShow()
 
 CGameStateRun::CGameStateRun(CGame *g)
 : CGameState(g)
-{
+{	
 }
 
 CGameStateRun::~CGameStateRun()
@@ -190,63 +194,112 @@ void CGameStateRun::OnBeginState()
 {
 	map[0].Initialize();
 	map[1].Initialize();
-	spark.Initialize(640, 680);
+	map[2].Initialize();
+	map[3].Initialize();
+	map[4].Initialize();
+	
 	kirby.Initialize(640,400);
-	door.Initialize(993,367, 1, &door1);
-	door1.Initialize(200, 200, 0, &door);
-	normalMonster[0].Initialize(50, 80, 50, 200, false);
-	normalMonster[1].Initialize(550, 80, 550, 670, false);
-	normalMonster[2].Initialize(1010, 80, 1010, 1188, false);
-	normalMonster[3].Initialize(40, 660, 0, 60, false);
-	normalMonster[4].Initialize(614, 660, 370, 870, false);
-	normalMonster[5].Initialize(1190, 660, 1170, 1230, false);
-	CAudio::Instance()->Play(AUDIO_BACKGROUND, true);
 
+	door[0].Initialize(123,  37, 1, 0, &door1[0]);
+	door[1].Initialize(621,  37, 1, 0, &door1[0]);
+	door[2].Initialize(1118,  37, 1, 0, &door1[0]);
+	door[3].Initialize(83, 328, 3, 0, &door3);
+	door[4].Initialize(248, 369, 2, 0, &door2);
+	door[5].Initialize(993, 367, 1, 0, &door1[0]);
+	door[6].Initialize(1159, 326, 1, 0, &door1[1]);
+	door[7].Initialize(207, 575, 1, 0, &door1[0]);
+	door[8].Initialize(620, 614, 1, 0, &door1[0]);
+	door[9].Initialize(1036, 574, 1, 0, &door1[0]);
+
+	door1[0].Initialize(30, 425, 0,1, &door[5]);
+	door1[1].Initialize(4450, 350, 0, 1, &door[6]);
+
+
+	door2.Initialize(320, 240, 0, 2, &door[4]);
+
+	door3.Initialize(150, 350, 0, 3, &door[3]);
+
+	ResetMonster();
+
+	tree.Initialize(450, 100);
+
+	mapNum = 4;
+	index = &map[mapNum];
+	
+	gate = &door[5];
+
+	CAudio::Instance()->Play(AUDIO_BACKGROUND, true);
 }
 
 void CGameStateRun::OnMove()							// 移動遊戲元素
 {
+	index->OnMove(kirby.GetX1(), kirby.GetY1());
 	if (Istransiting) {
 		Transition.OnMove();
-		Transition.SetDelayCount(8);
+		Transition.SetDelayCount(4);
 	}
 	
 	else {
-		index->OnMove(kirby.GetX1(), kirby.GetY1());
+		
 		if (kirby.IsAlive())
 			kirby.OnMove(index);
 		if (mapNum == 0)
 		{
-			door.OnMove();
-			spark.OnMove(index, &kirby);
-			normalMonster[0].OnMove(index, &kirby);
-			normalMonster[1].OnMove(index, &kirby);
-			normalMonster[2].OnMove(index, &kirby);
-			normalMonster[3].OnMove(index, &kirby);
-			normalMonster[4].OnMove(index, &kirby);
-			normalMonster[5].OnMove(index, &kirby);
-
-			if (door.IsEnter(&kirby)) {
-				Istransiting = true;
-				Transition.Reset();
-				gate = &door;
-				//mapNum = door.GetMapNum();
-				//index = &map[1];
-				//kirby.SetXY(door.GetNextX()-50,door.GetNextY());
+			for (int i = 0; i < 10; i++) {
+				door[i].OnMove();
+				if (door[i].IsEnter(&kirby)) {
+					Istransiting = true;
+					Transition.Reset();
+					gate = &door[i];
+					//mapNum = door.GetMapNum();
+					//index = &map[1];
+					//kirby.SetXY(door.GetNextX()-50,door.GetNextY());
+				}
 			}
 		}
 		if (mapNum == 1) {
-			door1.OnMove();
 
-			if (door1.IsEnter(&kirby)) {
-				Istransiting = true;
-				Transition.Reset();
-				gate = &door1;
-				//mapNum = door1.GetMapNum();
-				//index = &map[0];
-				//kirby.SetXY(door1.GetNextX()-50, door1.GetNextY());
+			for (int m = 0; m < 10; m++)
+				monster[m]->OnMove(index, &kirby);
+
+			for (int i = 0; i < 2; i++) {
+				door1[i].OnMove();
+				if (door1[i].IsEnter(&kirby)) {
+					Istransiting = true;
+					Transition.Reset();
+					gate = &door1[i];
+					//mapNum = door1.GetMapNum();
+					//index = &map[0];
+					//kirby.SetXY(door1.GetNextX()-50, door1.GetNextY());
+				}
 			}
 		}
+
+		if (mapNum == 2) {
+			door2.OnMove();
+			if (door2.IsEnter(&kirby)) {
+				Istransiting = true;
+				Transition.Reset();
+				gate = &door2;
+
+			}
+		}
+
+		if (mapNum == 3) {
+			tree.OnMove(index,&kirby);
+
+			if (!tree.IsAlive()) {
+				door3.OnMove();
+				if (door3.IsEnter(&kirby)) {
+					Istransiting = true;
+					Transition.Reset();
+					gate = &door3;
+
+				}
+			}
+		}
+
+
 	}
 
 	if (Transition.IsFinalBitmap()) {
@@ -256,14 +309,12 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 	if (Transition.GetCurrentBitmapNumber() == 7) {
 		mapNum = gate->GetMapNum();
 		index = &map[mapNum];
-		kirby.SetXY(gate->GetNextX() - 50, gate->GetNextY());
+		kirby.SetXY(gate->GetNextDoor().GetX() - 50, gate->GetNextDoor().GetY2()-kirby.GetHeight());
 	}
 }
 
 void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
-{
-	// 載入資料
-		
+{		
 		Transition.AddBitmap(".//Map//Transition_7.bmp", RGB(0, 0, 0));
 		Transition.AddBitmap(".//Map//Transition_6.bmp", RGB(0, 0, 0));
 		Transition.AddBitmap(".//Map//Transition_5.bmp", RGB(0, 0, 0));
@@ -282,21 +333,32 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 		
 		map[0].LoadBitmap(".//Map//foreground.bmp", RGB(255, 255, 255), ".//Map//background.bmp", ".//Map//map.txt");
 		map[1].LoadBitmap(".//Map//map1.bmp", RGB(255, 255, 255), ".//Map//background_1.bmp", ".//Map//map1.txt");
+		map[2].LoadBitmap(".//Map//Boss_map.bmp", RGB(255, 255, 255), ".//Map//background_2.bmp", ".//Map//map2.txt");
+		map[3].LoadBitmap(".//Map//King_foreground.bmp", RGB(255, 255, 255), ".//Map//King_background.bmp", ".//Map//map3.txt");
+		map[4].LoadBitmap(".//Map//foreground_4.bmp", RGB(255, 255, 255), ".//Map//background_2.bmp", ".//Map//map4.txt");
 		kirby.LoadBitmap();
-		normalMonster[0].LoadBitmap();
-		normalMonster[1].LoadBitmap();
-		normalMonster[2].LoadBitmap();
-		normalMonster[3].LoadBitmap();
-		normalMonster[4].LoadBitmap();
-		normalMonster[5].LoadBitmap();
-		door.LoadBitmap();
-		door1.LoadBitmap();
-		spark.LoadBitmap();
-		index = &map[0];
-		mapNum = 0;
-		gate = &door;
+		monster[0] = &fire1;
+		monster[1] = &normalMonster2;
+		monster[2] = &normalMonster3;
+		monster[3] = &normalMonster4;
+		monster[4] = &normalMonster5;
+		monster[5] = &fire2;
+		monster[6] = &spark1;
+		monster[7] = &spark2;
+		monster[8] = &spark3;
+		monster[9] = &spark4;
+		for (int m = 0; m < 10; m++)
+			monster[m]->LoadBitmap();
+		for (int i = 0; i < 10;i++)
+			door[i].LoadBitmap();
+		door1[0].LoadBitmap();
+		door1[1].LoadBitmap();
+		door2.LoadBitmap();
+		door3.LoadBitmap();
 
-	CAudio::Instance()->Load(AUDIO_BACKGROUND, "sounds\\Kirby_background.mp3");  //背景音樂
+		tree.LoadBitmap();
+
+	CAudio::Instance()->Load(AUDIO_BACKGROUND, "Sounds\\Kirby_background.mp3");  //背景音樂
 }
 
 void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
@@ -316,17 +378,51 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 		kirby.SetMovingRight(true);
 	if (nChar == KEY_UP) {
 		kirby.SetMovingUp(true);
-		door.SetEnter(true);
-		door1.SetEnter(true);
+		if(mapNum==0)
+			for (int i = 0; i < 10;i++)
+				door[i].SetEnter(true);
+
+		if (mapNum == 1)
+			for (int i = 0; i < 2;i++)
+				door1[i].SetEnter(true);
+
+		if (mapNum == 2)
+			door2.SetEnter(true);
+
+		if (mapNum == 3)
+			door3.SetEnter(true);
 	}
 	if (nChar == KEY_DOWN)
+	{
 		kirby.SetMovingDown(true);
+		if (kirby.IsBig())
+			CAudio::Instance()->Play(swallow);
+	}
 	if (nChar == KEY_SPACE)
+	{
 		kirby.SetSpace(true);
+		if(kirby.IsFly())
+			CAudio::Instance()->Play(gasSound);
+	}
 	if (nChar == KEY_Attack)
+	{
 		kirby.SetAttack(true);
+		if(kirby.IsDown())
+			CAudio::Instance()->Play(kick);
+		else if(kirby.GetType()==0 && !kirby.IsBig())
+			CAudio::Instance()->Play(suck);
+		else if(kirby.GetType() == 0 && kirby.IsBig())
+			CAudio::Instance()->Play(starSound);
+		else if(kirby.GetType()==1)
+			CAudio::Instance()->Play(spark);
+		else if(kirby.GetType()==2)
+			CAudio::Instance()->Play(fire);
+	}
 	if (nChar == KEY_Run)
+	{
 		kirby.SetRun(true);
+		CAudio::Instance()->Play(run);
+	}
 	if (nChar == KEY_Jump && !kirby.IsFly() && !index->isEmpty((kirby.GetX2() + kirby.GetX2()) / 2, kirby.GetY2() + 1)) //按下X,卡比不是在飛行且落地才可跳躍
 		kirby.SetJump(true);
 	if (nChar == KEY_ESC)
@@ -348,8 +444,18 @@ void CGameStateRun::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 		kirby.SetMovingRight(false);
 	if (nChar == KEY_UP) {
 		kirby.SetMovingUp(false);
-		door.SetEnter(false);
-		door1.SetEnter(false);
+		if(mapNum==0)
+			for (int i = 0; i < 10;i++)
+				door[i].SetEnter(false);
+		if (mapNum == 1)
+			for (int i = 0; i < 2;i++)
+				door1[i].SetEnter(false);
+
+		if (mapNum == 2)
+			door2.SetEnter(false);
+
+		if (mapNum)
+			door3.SetEnter(false);
 	}
 	if (nChar == KEY_DOWN)
 		kirby.SetMovingDown(false);
@@ -357,6 +463,9 @@ void CGameStateRun::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 	{
 		kirby.SetAttack(false);
 		kirby.SetSuck(false);
+		CAudio::Instance()->Stop(suck);
+		CAudio::Instance()->Stop(spark);
+		CAudio::Instance()->Stop(fire);
 	}
 	if (nChar == KEY_Run)
 		kirby.SetRun(false);
@@ -390,6 +499,21 @@ void CGameStateRun::OnRButtonUp(UINT nFlags, CPoint point)	// 處理滑鼠的動作
 	index->IsRclick(false);
 }
 
+void CGameStateRun::ResetMonster()
+{
+	normalMonster1.Initialize(417, 467);
+	normalMonster2.Initialize(947, 467);
+	normalMonster3.Initialize(2459, 517);
+	normalMonster4.Initialize(2903, 517);
+	normalMonster5.Initialize(3495, 59);
+	spark1.Initialize(675, 393);
+	spark2.Initialize(1673, 163);
+	spark3.Initialize(3247, 269);
+	spark4.Initialize(4045, 477);
+	fire1.Initialize(417, 467);
+	fire2.Initialize(3745, 477);
+}
+
 void CGameStateRun::OnShow()
 {
 	//  注意：Show裡面千萬不要移動任何物件的座標，移動座標的工作應由Move做才對，
@@ -400,20 +524,36 @@ void CGameStateRun::OnShow()
 	//map.OnShow();
 	index->OnShow();
 	if (mapNum == 0) {
-		door.OnShow(index);
-		spark.OnShow(index);
-		normalMonster[0].OnShow(index, &kirby);
-		normalMonster[1].OnShow(index, &kirby);
-		normalMonster[2].OnShow(index, &kirby);
-		normalMonster[3].OnShow(index, &kirby);
-		normalMonster[4].OnShow(index, &kirby);
-		normalMonster[5].OnShow(index, &kirby);
+		for (int i = 0; i < 10;i++)
+			door[i].OnShow(index);
+		
 	}
 
 	if (mapNum == 1) {
-		door1.OnShow(index);
+		for (int i = 0; i < 2;i++)
+			door1[i].OnShow(index);
+		for (int m = 0; m < 10; m++)
+			monster[m]->OnShow(index, &kirby);
 	}
-	
+	else
+		ResetMonster();
+
+	if (mapNum == 2) {
+		door2.OnShow(index);
+	}
+
+	if (mapNum == 3) {
+		tree.OnShow(index,&kirby);
+
+		if (!tree.IsAlive()) {
+			door3.OnShow(index);
+		}
+	}
+
+	if (mapNum == 4) {
+
+	}
+
 	if(kirby.IsAlive()) kirby.OnShow(index);
 	else if(kirby.GetY1()<=1) GotoGameState(GAME_STATE_OVER);
 	else kirby.Die(index);

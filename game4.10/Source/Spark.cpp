@@ -63,7 +63,7 @@ namespace game_framework {
 		ATK.AddBitmap(".\\RES\\Spirky\\Spirky_Attack_24.bmp", RGB(255, 255, 255));
 		ATK.AddBitmap(".\\RES\\Spirky\\Spirky_Attack_25.bmp", RGB(255, 255, 255));
 		ATK.AddBitmap(".\\RES\\Spirky\\Spirky_Attack_26.bmp", RGB(255, 255, 255));
-		AttackRange.AddBitmap(".\\RES\\Spirky\\Spirky_AttackRange.bmp", RGB(255, 255, 255));
+		AttackRange.AddBitmap(".\\RES\\Spirky\\Spirky_AttackRange.bmp", RGB(255, 255, 25));
 		Sucked_L.AddBitmap(".\\RES\\Spirky\\Spirky_Sucked_L_0.bmp", RGB(255, 255, 255));
 		Sucked_L.AddBitmap(".\\RES\\Spirky\\Spirky_Sucked_L_1.bmp", RGB(255, 255, 255));
 		Sucked_R.AddBitmap(".\\RES\\Spirky\\Spirky_Sucked_R_0.bmp", RGB(255, 255, 255));
@@ -72,6 +72,9 @@ namespace game_framework {
 		Stand_L.AddBitmap(".\\RES\\Spirky\\Spirky_L_1.bmp", RGB(255, 255, 255));
 		Stand_R.AddBitmap(".\\RES\\Spirky\\Spirky_R_0.bmp", RGB(255, 255, 255));
 		Stand_R.AddBitmap(".\\RES\\Spirky\\Spirky_R_1.bmp", RGB(255, 255, 255));
+		die.AddBitmap(".\\RES\\die1.bmp", RGB(255, 255, 255));
+		die.AddBitmap(".\\RES\\die2.bmp", RGB(255, 255, 255));
+		die.AddBitmap(".\\RES\\die3.bmp", RGB(255, 255, 255));
 	}
 
 	void Spark::Initialize(int px,int py) {
@@ -91,9 +94,11 @@ namespace game_framework {
 
 	}
 
-	void Spark::Attack(Kirby* k) {
+	void Spark::Attack(Map *m, Kirby* k) {
 		if (HitRectangle(k->GetX1(), k->GetY1(), k->GetX2(), k->GetY2()) && !k->IsKick())
-			k->Hurted();
+			k->Hurted(m);
+		if(IsAttacking && HitSpark(k->GetX1(), k->GetY1(), k->GetX2(), k->GetY2()) && !k->IsKick())
+			k->Hurted(m);
 	}
 
 	void Spark::Jump(Kirby* k) {
@@ -108,13 +113,15 @@ namespace game_framework {
 			Hurted(k);
 			Sucked(k);
 
-			if (x - k->GetX1() > 0) {
-				RightOrLeft = false;
-				StepSize = -1;
-			}
-			else if(x- k->GetX1()<0) {
-				RightOrLeft = true;
-				StepSize = 1;
+			if (ComputeDistance(k->GetX1(), k->GetY1()) < 200.0) {
+				if (x - k->GetX1() > 0) {
+					RightOrLeft = false;
+					StepSize = -1;
+				}
+				else if (x - k->GetX1() < 0) {
+					RightOrLeft = true;
+					StepSize = 1;
+				}
 			}
 
 			if (RightOrLeft)
@@ -129,17 +136,17 @@ namespace game_framework {
 				if (!RightOrLeft)
 					index = &Sucked_L;
 
-				if (x < k->GetX1() )
+				if (x < (k->GetX1() + k->GetX2()) / 2)
 					x += 3;
-				else if(x > k->GetX2())
+				else
 					x -= 3;
-				
-				if (y > k->GetY2())
+
+				if (y > k->GetY1())
 					y -= 3;
-				else if(y<k->GetY1())
+				else
 					y += 3;
 
-				if (x >= k->GetX1() && x<=k->GetX2() && y >= k->GetY1() && y <= k->GetY2()) {
+				if (HitRectangle(k->GetX1() + 10, k->GetY1() + 10, k->GetX2() - 10, k->GetY2() - 10)) {
 					is_alive = false;
 					k->SetBig(true);
 					k->SetEat(1);
@@ -147,7 +154,7 @@ namespace game_framework {
 			}
 
 			else {
-				Attack(k);
+				Attack(m, k);
 				
 				if (counter==100) {
 					velocity = 10;
@@ -205,7 +212,6 @@ namespace game_framework {
 								index = &AttackRange;
 								IsAttacking = true;
 								ATK.SetDelayCount(1);
-								
 							}						
 						}
 
@@ -232,10 +238,16 @@ namespace game_framework {
 			
 		}
 
+		else
+		{
+
+		}
+
 		
 
 	}
-	void Spark::OnShow(Map* m) {
+	void Spark::OnShow(Map* m, Kirby* k) {
+		die.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
 		if (is_alive) {
 
 			index->SetTopLeft(m->ScreenX(x), m->ScreenY(y));
@@ -246,6 +258,23 @@ namespace game_framework {
 				ATK.OnShow();
 			}
 		}
+		else
+		{
+			if (!die.IsFinalBitmap() && !is_sucked)
+			{
+				die.OnShow();
+				die.OnMove();
+			}
+		}
+	}
 
+	bool Spark::HitSpark(int tx1, int ty1, int tx2, int ty2)
+	{
+		int x1 = GetX1() - 10;	// 左上角x座標
+		int y1 = GetY1() - 10;	// 左上角y座標
+		int x2 = GetX2() + 10;	// 右下角x座標
+		int y2 = GetY2() + 10;	// 右下角y座標
+		// 檢測矩形與參數矩形是否有交集
+		return (tx2 >= x1 && tx1 <= x2 && ty2 >= y1 && ty1 <= y2);
 	}
 }

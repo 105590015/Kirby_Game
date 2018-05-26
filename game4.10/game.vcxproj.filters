@@ -16,9 +16,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Res\ball.bmp">
-      <Filter>Resource Files</Filter>
-    </None>
     <None Include="RES\bmp0.bmp">
       <Filter>Resource Files</Filter>
     </None>
@@ -150,10 +147,22 @@
     <ClCompile Include="Source\Gas.cpp">
       <Filter>MyGame</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Start.cpp">
+    <ClCompile Include="Source\Spark.cpp">
       <Filter>MyGame</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Spark.cpp">
+    <ClCompile Include="Source\Star.cpp">
+      <Filter>MyGame</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\LostAbility.cpp">
+      <Filter>MyGame</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Fire.cpp">
+      <Filter>MyGame</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Tree.cpp">
+      <Filter>MyGame</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\King_Stone.cpp">
       <Filter>MyGame</Filter>
     </ClCompile>
   </ItemGroup>
@@ -215,10 +224,22 @@
     <ClInclude Include="Source\Gas.h">
       <Filter>MyGame</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Start.h">
+    <ClInclude Include="Source\Spark.h">
       <Filter>MyGame</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Spark.h">
+    <ClInclude Include="Source\LostAbility.h">
+      <Filter>MyGame</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Star.h">
+      <Filter>MyGame</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Fire.h">
+      <Filter>MyGame</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Tree.h">
+      <Filter>MyGame</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\King_Stone.h">
       <Filter>MyGame</Filter>
     </ClInclude>
   </ItemGroup>

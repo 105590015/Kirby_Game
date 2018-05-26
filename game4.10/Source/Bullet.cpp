@@ -36,4 +36,14 @@ namespace game_framework {
 		x = sx;
 		y = sy;
 	}
+
+	void Bullet::SetAlive(bool flag)
+	{
+		isAlive = flag;
+	}
+
+	bool Bullet::IsAlive()
+	{
+		return isAlive;
+	}
 }

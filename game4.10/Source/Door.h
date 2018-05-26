@@ -19,21 +19,23 @@ namespace game_framework {
 		int  GetNextY();
 		int  GetX2();
 		int  GetY2();
-		void Initialize(int x,int y,int Num,Door* );					// 設定為初始值
+		void Initialize(int x,int y,int Num,int,Door* );					// 設定為初始值
 		void LoadBitmap();			// 載入圖形
 		void OnMove();               // 地圖移動
 		void OnShow(Map *);						// 將圖形貼到畫面
 		void SetEnter(bool flag);	// 設定是否正進入傳送門
 		bool IsEnter(Kirby*);
+		Door GetNextDoor();
 
 
 	protected:
 		CAnimation door;			// 地圖
-
+		CAnimation Gate;
 	private:
 		bool Enter=false;    //滑鼠左鍵與右鍵是否按下 預設為否
 		int x, y;							// 左上角座標
 		int mapNum;				//記錄此門傳送到幾號地圖
+		int map;				//現在所在地圖
 		Door* NextDoor;
 	};
 

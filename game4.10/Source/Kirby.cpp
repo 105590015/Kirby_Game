@@ -23,18 +23,12 @@ namespace game_framework {
 
 	int Kirby::GetX2()
 	{
-		if (type == 0)
-			return x + originR.Width();
-		else
-			return x + Spark_originR.Width();
+		return x + width;
 	}
 
 	int Kirby::GetY2()
 	{
-		if (type == 0)
-			return y + originR.Height();
-		else
-			return y + Spark_originR.Height();
+		return y + height;
 	}
 
 	int Kirby::GetType()
@@ -42,7 +36,17 @@ namespace game_framework {
 		return type;
 	}
 
-	void Kirby::Initialize(int px, int py)  //設定在腳色在螢幕的初始位置
+	int Kirby::GetHeight()
+	{
+		return height;
+	}
+
+	int Kirby::GetWidth()
+	{
+		return width;
+	}
+
+	void Kirby::Initialize(int px, int py)
 	{
 		const int X_POS = px;
 		const int Y_POS = py;
@@ -52,14 +56,14 @@ namespace game_framework {
 		jumpDistance = 120;
 		kickDistance = 100;
 		exhaleDelay = 10;
-		gasDistance = startDistance = 0;
+		gasDistance = starDistance = 0;
 		InvincibleTime = 0;
 		type = 0;
 		eat = -1;
-		isMovingLeft = isMovingRight = isMovingUp = isMovingDown = isSpace = isJump = isAttack = isKick = isFly = isHurted = isSuck = isBig = isSwallow = isRunning = isInvincible = false;
+		velocity = 2;
+		count = 0;
+		isMovingLeft = isMovingRight = isMovingUp = isMovingDown = isSpace = isJump = isAttack = isKick = isFly = isHurted = isSuck = isBig = isSwallow = isRunning = isInvincible = isLanding = false;
 		isAlive = rightOrLeft = true;
-		gas.LoadBitmap();
-		start.LoadBitmap();
 		blood0.SetTopLeft(SIZE_X / 2 - blood0.Width() / 2, SIZE_Y - blood0.Height());
 		blood1.SetTopLeft(SIZE_X / 2 - blood1.Width() / 2, SIZE_Y - blood1.Height());
 		blood2.SetTopLeft(SIZE_X / 2 - blood2.Width() / 2, SIZE_Y - blood2.Height());
@@ -92,6 +96,21 @@ namespace game_framework {
 	bool Kirby::IsAttack()
 	{
 		return isAttack;
+	}
+
+	bool Kirby::IsRight()
+	{
+		return rightOrLeft;
+	}
+
+	bool Kirby::IsDown()
+	{
+		return isMovingDown;
+	}
+
+	bool Kirby::IsBig()
+	{
+		return isBig;
 	}
 
 	void Kirby::LoadBitmap()
@@ -339,6 +358,126 @@ namespace game_framework {
 		Spark_attackL.AddBitmap(".\\RES\\SparkKirby\\Spark_Attack_L_4.bmp", RGB(255, 255, 255));
 		Spark_attackL.AddBitmap(".\\RES\\SparkKirby\\Spark_Attack_L_5.bmp", RGB(255, 255, 255));
 		Spark_attackL.AddBitmap(".\\RES\\SparkKirby\\Spark_Attack_L_6.bmp", RGB(255, 255, 255));
+		// 火焰卡比
+		fire_exhaleR.LoadBitmap(".\\RES\\FireKirby\\FireKirby_FlyPrepare_R_4.bmp", RGB(255, 255, 255));
+		fire_exhaleL.LoadBitmap(".\\RES\\FireKirby\\FireKirby_FlyPrepare_L_4.bmp", RGB(255, 255, 255));
+		fire_originR.AddBitmap(".\\RES\\FireKirby\\FireKirby_Stand_R_1.bmp", RGB(255, 255, 255));
+		fire_originR.AddBitmap(".\\RES\\FireKirby\\FireKirby_Stand_R_2.bmp", RGB(255, 255, 255));
+		fire_originR.AddBitmap(".\\RES\\FireKirby\\FireKirby_Stand_R_3.bmp", RGB(255, 255, 255));
+		fire_originL.AddBitmap(".\\RES\\FireKirby\\FireKirby_Stand_L_1.bmp", RGB(255, 255, 255));
+		fire_originL.AddBitmap(".\\RES\\FireKirby\\FireKirby_Stand_L_2.bmp", RGB(255, 255, 255));
+		fire_originL.AddBitmap(".\\RES\\FireKirby\\FireKirby_Stand_L_3.bmp", RGB(255, 255, 255));
+		fire_downR.AddBitmap(".\\RES\\FireKirby\\FireKirby_Down_R_0.bmp", RGB(255, 255, 255));
+		fire_downR.AddBitmap(".\\RES\\FireKirby\\FireKirby_Down_R_1.bmp", RGB(255, 255, 255));
+		fire_downR.AddBitmap(".\\RES\\FireKirby\\FireKirby_Down_R_2.bmp", RGB(255, 255, 255));
+		fire_downL.AddBitmap(".\\RES\\FireKirby\\FireKirby_Down_L_0.bmp", RGB(255, 255, 255));
+		fire_downL.AddBitmap(".\\RES\\FireKirby\\FireKirby_Down_L_1.bmp", RGB(255, 255, 255));
+		fire_downL.AddBitmap(".\\RES\\FireKirby\\FireKirby_Down_L_2.bmp", RGB(255, 255, 255));
+		fire_goR.AddBitmap(".\\RES\\FireKirby\\FireKirby_Walk_R_0.bmp", RGB(255, 255, 255));
+		fire_goR.AddBitmap(".\\RES\\FireKirby\\FireKirby_Walk_R_1.bmp", RGB(255, 255, 255));
+		fire_goR.AddBitmap(".\\RES\\FireKirby\\FireKirby_Walk_R_2.bmp", RGB(255, 255, 255));
+		fire_goR.AddBitmap(".\\RES\\FireKirby\\FireKirby_Walk_R_3.bmp", RGB(255, 255, 255));
+		fire_goR.AddBitmap(".\\RES\\FireKirby\\FireKirby_Walk_R_4.bmp", RGB(255, 255, 255));
+		fire_goR.AddBitmap(".\\RES\\FireKirby\\FireKirby_Walk_R_5.bmp", RGB(255, 255, 255));
+		fire_goR.AddBitmap(".\\RES\\FireKirby\\FireKirby_Walk_R_6.bmp", RGB(255, 255, 255));
+		fire_goR.AddBitmap(".\\RES\\FireKirby\\FireKirby_Walk_R_7.bmp", RGB(255, 255, 255));
+		fire_goR.AddBitmap(".\\RES\\FireKirby\\FireKirby_Walk_R_8.bmp", RGB(255, 255, 255));
+		fire_goR.AddBitmap(".\\RES\\FireKirby\\FireKirby_Walk_R_9.bmp", RGB(255, 255, 255));
+		fire_goL.AddBitmap(".\\RES\\FireKirby\\FireKirby_Walk_L_0.bmp", RGB(255, 255, 255));
+		fire_goL.AddBitmap(".\\RES\\FireKirby\\FireKirby_Walk_L_1.bmp", RGB(255, 255, 255));
+		fire_goL.AddBitmap(".\\RES\\FireKirby\\FireKirby_Walk_L_2.bmp", RGB(255, 255, 255));
+		fire_goL.AddBitmap(".\\RES\\FireKirby\\FireKirby_Walk_L_3.bmp", RGB(255, 255, 255));
+		fire_goL.AddBitmap(".\\RES\\FireKirby\\FireKirby_Walk_L_4.bmp", RGB(255, 255, 255));
+		fire_goL.AddBitmap(".\\RES\\FireKirby\\FireKirby_Walk_L_5.bmp", RGB(255, 255, 255));
+		fire_goL.AddBitmap(".\\RES\\FireKirby\\FireKirby_Walk_L_6.bmp", RGB(255, 255, 255));
+		fire_goL.AddBitmap(".\\RES\\FireKirby\\FireKirby_Walk_L_7.bmp", RGB(255, 255, 255));
+		fire_goL.AddBitmap(".\\RES\\FireKirby\\FireKirby_Walk_L_8.bmp", RGB(255, 255, 255));
+		fire_goL.AddBitmap(".\\RES\\FireKirby\\FireKirby_Walk_L_9.bmp", RGB(255, 255, 255));
+		fire_jumpR.AddBitmap(".\\RES\\FireKirby\\FireKirby_Jump_R_0.bmp", RGB(255, 255, 255));
+		fire_jumpR.AddBitmap(".\\RES\\FireKirby\\FireKirby_Jump_R_1.bmp", RGB(255, 255, 255));
+		fire_jumpL.AddBitmap(".\\RES\\FireKirby\\FireKirby_Jump_L_0.bmp", RGB(255, 255, 255));
+		fire_jumpL.AddBitmap(".\\RES\\FireKirby\\FireKirby_Jump_L_1.bmp", RGB(255, 255, 255));
+		fire_landingR.AddBitmap(".\\RES\\FireKirby\\FireKirby_Landing_R_0.bmp", RGB(255, 255, 255));
+		fire_landingR.AddBitmap(".\\RES\\FireKirby\\FireKirby_Landing_R_1.bmp", RGB(255, 255, 255));
+		fire_landingL.AddBitmap(".\\RES\\FireKirby\\FireKirby_Landing_L_0.bmp", RGB(255, 255, 255));
+		fire_landingL.AddBitmap(".\\RES\\FireKirby\\FireKirby_Landing_L_1.bmp", RGB(255, 255, 255));
+		fire_downAttackR.AddBitmap(".\\RES\\FireKirby\\FireKirby_Kick_R_0.bmp", RGB(255, 255, 255));
+		fire_downAttackR.AddBitmap(".\\RES\\FireKirby\\FireKirby_Kick_R_1.bmp", RGB(255, 255, 255));
+		fire_downAttackR.AddBitmap(".\\RES\\FireKirby\\FireKirby_Kick_R_2.bmp", RGB(255, 255, 255));
+		fire_downAttackR.AddBitmap(".\\RES\\FireKirby\\FireKirby_Kick_R_3.bmp", RGB(255, 255, 255));
+		fire_downAttackL.AddBitmap(".\\RES\\FireKirby\\FireKirby_Kick_L_0.bmp", RGB(255, 255, 255));
+		fire_downAttackL.AddBitmap(".\\RES\\FireKirby\\FireKirby_Kick_L_1.bmp", RGB(255, 255, 255));
+		fire_downAttackL.AddBitmap(".\\RES\\FireKirby\\FireKirby_Kick_L_2.bmp", RGB(255, 255, 255));
+		fire_downAttackL.AddBitmap(".\\RES\\FireKirby\\FireKirby_Kick_L_3.bmp", RGB(255, 255, 255));
+		fire_flyR.AddBitmap(".\\RES\\FireKirby\\FireKirby_Fly_R_0.bmp", RGB(255, 255, 255));
+		fire_flyR.AddBitmap(".\\RES\\FireKirby\\FireKirby_Fly_R_1.bmp", RGB(255, 255, 255));
+		fire_flyR.AddBitmap(".\\RES\\FireKirby\\FireKirby_Fly_R_2.bmp", RGB(255, 255, 255));
+		fire_flyR.AddBitmap(".\\RES\\FireKirby\\FireKirby_Fly_R_3.bmp", RGB(255, 255, 255));
+		fire_flyR.AddBitmap(".\\RES\\FireKirby\\FireKirby_Fly_R_4.bmp", RGB(255, 255, 255));
+		fire_flyR.AddBitmap(".\\RES\\FireKirby\\FireKirby_Fly_R_5.bmp", RGB(255, 255, 255));
+		fire_flyR.AddBitmap(".\\RES\\FireKirby\\FireKirby_Fly_R_6.bmp", RGB(255, 255, 255));
+		fire_prepareFlyR.AddBitmap(".\\RES\\FireKirby\\FireKirby_FlyPrepare_R_0.bmp", RGB(255, 255, 255));
+		fire_prepareFlyR.AddBitmap(".\\RES\\FireKirby\\FireKirby_FlyPrepare_R_1.bmp", RGB(255, 255, 255));
+		fire_prepareFlyR.AddBitmap(".\\RES\\FireKirby\\FireKirby_FlyPrepare_R_2.bmp", RGB(255, 255, 255));
+		fire_prepareFlyR.AddBitmap(".\\RES\\FireKirby\\FireKirby_FlyPrepare_R_3.bmp", RGB(255, 255, 255));
+		fire_prepareFlyR.AddBitmap(".\\RES\\FireKirby\\FireKirby_FlyPrepare_R_4.bmp", RGB(255, 255, 255));
+		fire_flyL.AddBitmap(".\\RES\\FireKirby\\FireKirby_Fly_L_0.bmp", RGB(255, 255, 255));
+		fire_flyL.AddBitmap(".\\RES\\FireKirby\\FireKirby_Fly_L_1.bmp", RGB(255, 255, 255));
+		fire_flyL.AddBitmap(".\\RES\\FireKirby\\FireKirby_Fly_L_2.bmp", RGB(255, 255, 255));
+		fire_flyL.AddBitmap(".\\RES\\FireKirby\\FireKirby_Fly_L_3.bmp", RGB(255, 255, 255));
+		fire_flyL.AddBitmap(".\\RES\\FireKirby\\FireKirby_Fly_L_4.bmp", RGB(255, 255, 255));
+		fire_flyL.AddBitmap(".\\RES\\FireKirby\\FireKirby_Fly_L_5.bmp", RGB(255, 255, 255));
+		fire_flyL.AddBitmap(".\\RES\\FireKirby\\FireKirby_Fly_L_6.bmp", RGB(255, 255, 255));
+		fire_prepareFlyL.AddBitmap(".\\RES\\FireKirby\\FireKirby_FlyPrepare_L_0.bmp", RGB(255, 255, 255));
+		fire_prepareFlyL.AddBitmap(".\\RES\\FireKirby\\FireKirby_FlyPrepare_L_1.bmp", RGB(255, 255, 255));
+		fire_prepareFlyL.AddBitmap(".\\RES\\FireKirby\\FireKirby_FlyPrepare_L_2.bmp", RGB(255, 255, 255));
+		fire_prepareFlyL.AddBitmap(".\\RES\\FireKirby\\FireKirby_FlyPrepare_L_3.bmp", RGB(255, 255, 255));
+		fire_prepareFlyL.AddBitmap(".\\RES\\FireKirby\\FireKirby_FlyPrepare_L_4.bmp", RGB(255, 255, 255));
+		fire_runR.AddBitmap(".\\RES\\FireKirby\\FireKirby_Run_R_0.bmp", RGB(255, 255, 255));
+		fire_runR.AddBitmap(".\\RES\\FireKirby\\FireKirby_Run_R_1.bmp", RGB(255, 255, 255));
+		fire_runR.AddBitmap(".\\RES\\FireKirby\\FireKirby_Run_R_2.bmp", RGB(255, 255, 255));
+		fire_runR.AddBitmap(".\\RES\\FireKirby\\FireKirby_Run_R_3.bmp", RGB(255, 255, 255));
+		fire_runR.AddBitmap(".\\RES\\FireKirby\\FireKirby_Run_R_4.bmp", RGB(255, 255, 255));
+		fire_runR.AddBitmap(".\\RES\\FireKirby\\FireKirby_Run_R_5.bmp", RGB(255, 255, 255));
+		fire_runR.AddBitmap(".\\RES\\FireKirby\\FireKirby_Run_R_6.bmp", RGB(255, 255, 255));
+		fire_runR.AddBitmap(".\\RES\\FireKirby\\FireKirby_Run_R_7.bmp", RGB(255, 255, 255));
+		fire_runL.AddBitmap(".\\RES\\FireKirby\\FireKirby_Run_L_0.bmp", RGB(255, 255, 255));
+		fire_runL.AddBitmap(".\\RES\\FireKirby\\FireKirby_Run_L_1.bmp", RGB(255, 255, 255));
+		fire_runL.AddBitmap(".\\RES\\FireKirby\\FireKirby_Run_L_2.bmp", RGB(255, 255, 255));
+		fire_runL.AddBitmap(".\\RES\\FireKirby\\FireKirby_Run_L_3.bmp", RGB(255, 255, 255));
+		fire_runL.AddBitmap(".\\RES\\FireKirby\\FireKirby_Run_L_4.bmp", RGB(255, 255, 255));
+		fire_runL.AddBitmap(".\\RES\\FireKirby\\FireKirby_Run_L_5.bmp", RGB(255, 255, 255));
+		fire_runL.AddBitmap(".\\RES\\FireKirby\\FireKirby_Run_L_6.bmp", RGB(255, 255, 255));
+		fire_runL.AddBitmap(".\\RES\\FireKirby\\FireKirby_Run_L_7.bmp", RGB(255, 255, 255));
+		fire_attackR.AddBitmap(".\\RES\\FireKirby\\FireKirby_Attack_R_0.bmp", RGB(255, 255, 255));
+		fire_attackR.AddBitmap(".\\RES\\FireKirby\\FireKirby_Attack_R_1.bmp", RGB(255, 255, 255));
+		fire_attackR.AddBitmap(".\\RES\\FireKirby\\FireKirby_Attack_R_2.bmp", RGB(255, 255, 255));
+		fire_attackR.AddBitmap(".\\RES\\FireKirby\\FireKirby_Attack_R_3.bmp", RGB(255, 255, 255));
+		fire_attackL.AddBitmap(".\\RES\\FireKirby\\FireKirby_Attack_L_0.bmp", RGB(255, 255, 255));
+		fire_attackL.AddBitmap(".\\RES\\FireKirby\\FireKirby_Attack_L_1.bmp", RGB(255, 255, 255));
+		fire_attackL.AddBitmap(".\\RES\\FireKirby\\FireKirby_Attack_L_2.bmp", RGB(255, 255, 255));
+		fire_attackL.AddBitmap(".\\RES\\FireKirby\\FireKirby_Attack_L_3.bmp", RGB(255, 255, 255));
+		attack1.AddBitmap(".\\RES\\FireKirby\\attack1_0.bmp", RGB(0, 0, 115));
+		attack1.AddBitmap(".\\RES\\FireKirby\\attack1_1.bmp", RGB(0, 0, 115));
+		attack1.AddBitmap(".\\RES\\FireKirby\\attack1_2.bmp", RGB(0, 0, 115));
+		attack1.AddBitmap(".\\RES\\FireKirby\\attack1_3.bmp", RGB(0, 0, 115));
+		attack1.AddBitmap(".\\RES\\FireKirby\\attack1_4.bmp", RGB(0, 0, 115));
+		attack1.AddBitmap(".\\RES\\FireKirby\\attack1_5.bmp", RGB(0, 0, 115));
+		attack1.AddBitmap(".\\RES\\FireKirby\\attack1_6.bmp", RGB(0, 0, 115));
+		attack2.AddBitmap(".\\RES\\FireKirby\\attack2_0.bmp", RGB(0, 0, 115));
+		attack2.AddBitmap(".\\RES\\FireKirby\\attack2_1.bmp", RGB(0, 0, 115));
+		attack2.AddBitmap(".\\RES\\FireKirby\\attack2_2.bmp", RGB(0, 0, 115));
+		attack2.AddBitmap(".\\RES\\FireKirby\\attack2_3.bmp", RGB(0, 0, 115));
+		attack2.AddBitmap(".\\RES\\FireKirby\\attack2_4.bmp", RGB(0, 0, 115));
+		attack2.AddBitmap(".\\RES\\FireKirby\\attack2_5.bmp", RGB(0, 0, 115));
+		attack2.AddBitmap(".\\RES\\FireKirby\\attack2_6.bmp", RGB(0, 0, 115));
+		attack3.AddBitmap(".\\RES\\FireKirby\\attack3_0.bmp", RGB(0, 0, 115));
+		attack3.AddBitmap(".\\RES\\FireKirby\\attack3_1.bmp", RGB(0, 0, 115));
+		attack3.AddBitmap(".\\RES\\FireKirby\\attack3_2.bmp", RGB(0, 0, 115));
+		attack3.AddBitmap(".\\RES\\FireKirby\\attack3_3.bmp", RGB(0, 0, 115));
+		attack3.AddBitmap(".\\RES\\FireKirby\\attack3_4.bmp", RGB(0, 0, 115));
+		attack3.AddBitmap(".\\RES\\FireKirby\\attack3_5.bmp", RGB(0, 0, 115));
+		attack3.AddBitmap(".\\RES\\FireKirby\\attack3_6.bmp", RGB(0, 0, 115));
 
 		blood0.LoadBitmap(".\\RES\\Blood_0.bmp", RGB(255, 255, 255));
 		blood1.LoadBitmap(".\\RES\\Blood_1.bmp", RGB(255, 255, 255));
@@ -347,53 +486,73 @@ namespace game_framework {
 		blood4.LoadBitmap(".\\RES\\Blood_4.bmp", RGB(255, 255, 255));
 		blood5.LoadBitmap(".\\RES\\Blood_5.bmp", RGB(255, 255, 255));
 		blood6.LoadBitmap(".\\RES\\Blood_6.bmp", RGB(255, 255, 255));
+
+		gas.LoadBitmap();
+		star.LoadBitmap();
+		lost.LoadBitmap();
+
+		CAudio::Instance()->Load(jump, "Sounds\\jump.wav");
+		CAudio::Instance()->Load(landing, "Sounds\\landing.wav");
+		CAudio::Instance()->Load(kick, "Sounds\\kick.wav");
+		CAudio::Instance()->Load(die, "Sounds\\die.wav");
+		CAudio::Instance()->Load(fly, "Sounds\\fly.wav");
+		CAudio::Instance()->Load(hurted, "Sounds\\hurted.wav");
+		CAudio::Instance()->Load(run, "Sounds\\run.wav");
+		CAudio::Instance()->Load(suck, "Sounds\\suck.wav");
+		CAudio::Instance()->Load(gasSound, "Sounds\\gas.wav");
+		CAudio::Instance()->Load(starSound, "Sounds\\star.wav");
+		CAudio::Instance()->Load(swallow, "Sounds\\swallow.wav");
+		CAudio::Instance()->Load(spark, "Sounds\\spark.wav");
+		CAudio::Instance()->Load(fire, "Sounds\\fire.wav");
 	}
 
 	void Kirby::OnMove(Map *m)
-	{
-		// 設定身材
-		if (type == 0)
-		{
-			height = originR.Height();
-			width = originR.Width();
-		}
-		else if(type==1)
-		{
-			height = Spark_originR.Height();
-			width = Spark_originR.Width();
-		}
+	{	
 		//被攻擊且不是在空中也沒超出邊界時
 		if (isHurted)
 		{
 			isFly = false;
 			if (m->isEmpty(GetX2() - width / 2, GetY2() + 1))
 				y++;
-			if (rightOrLeft && m->isEmpty(GetX1() - STEP_SIZE, GetY1() + hurtedR.Height() / 2) && x - STEP_SIZE >= 0)
+			if (rightOrLeft && m->isEmpty(GetX1() - STEP_SIZE, GetY1() + height / 2) && x - STEP_SIZE >= 0)
 				x -= STEP_SIZE;
-			else if (!rightOrLeft && m->isEmpty(GetX2() + STEP_SIZE, GetY2() - hurtedL.Height() / 2) && x + STEP_SIZE <= m->GetWidth() - width)
+			else if (!rightOrLeft && m->isEmpty(GetX2() + STEP_SIZE, GetY2() - height / 2) && x + STEP_SIZE <= m->GetWidth() - width)
 				x += STEP_SIZE;
 		}
 		else
 		{
+
+
 			if (isMovingLeft && !isSuck && !isSwallow && !isAttack)
 			{
 				rightOrLeft = false;        //設定面向左邊
 				//先判斷左邊是否可走且沒有按Down，狀態要是向左飛行中或正常向左走
-				if (m->isEmpty(GetX1() - STEP_SIZE, GetY1() + height / 2) && !isMovingDown && (isFly || !isMovingUp))
+				//為了防止變身後卡比變高導致牆壁失效，將判斷撞牆的點設在Y2-10
+				if (m->isEmpty(GetX1() - STEP_SIZE, GetY2() - 10) && !isMovingDown && (isFly || !isMovingUp))
 				{
 					if (x <= 0) //邊界
 						x = 0;
-					else if (isRunning && !isFly && !m->isEmpty(GetX2() - width / 2, GetY2() + 1))
+					else if (isRunning && !isFly && !m->isEmpty(GetX1() + width / 2, GetY2() + 1))
 						x -= STEP_SIZE * 2;
 					else
 						x -= STEP_SIZE;
+
+					if (m->isSlope(GetX1() - STEP_SIZE, GetY2())) {
+						if (isRunning)
+							y -= STEP_SIZE * 2;
+						else
+							y -= STEP_SIZE;
+					}
 				}
+
+				
 			}
 			else if (isMovingRight && !isSuck && !isSwallow && !isAttack)
 			{
 				rightOrLeft = true;          //設定面向右邊
 				//先判斷右邊是否可走且沒有按Down，狀態要是向右飛行中或正常向右走
-				if (m->isEmpty(GetX2() + STEP_SIZE, GetY2() - height / 2) && !isMovingDown && (isFly || !isMovingUp))
+				//為了防止變身後卡比變高導致牆壁失效，將判斷撞牆的點設在Y2-10
+				if (m->isEmpty(GetX2() + STEP_SIZE, GetY2() - 10) && !isMovingDown && (isFly || !isMovingUp))
 				{
 					if (x >= m->GetWidth() - width)  //邊界
 						x = m->GetWidth() - width;
@@ -401,7 +560,17 @@ namespace game_framework {
 						x += STEP_SIZE * 2;
 					else
 						x += STEP_SIZE;
+
+					if (m->isSlope(GetX2() + STEP_SIZE, GetY2())) {
+						if (isRunning)
+							y -= STEP_SIZE * 2;
+						else
+							y -= STEP_SIZE;
+					}
 				}
+
+				
+
 			}
 			if (isMovingUp && !isBig)
 			{
@@ -415,32 +584,67 @@ namespace game_framework {
 			}
 			if (isJump && !isSuck)
 			{
+				if (jumpDistance == 120)
+					CAudio::Instance()->Play(jump);
 				jumpDistance -= 5;
-				if (m->isEmpty_2(GetX1() + width / 2, GetY1() - 5))  //會不會撞到頭
+				if (m->isEmpty_2(GetX1() + width / 2, GetY1() - 5) && y - 5 > 0)  //會不會撞到頭
 					y -= 5;
-				if (jumpDistance == 0)
+				if (jumpDistance == 0 || y - 5 <= 0)
 				{
 					jumpDistance = 120;
 					isJump = false;
 				}
 			}
 		}
+
 		if (!(isMovingUp || isJump) && m->isEmpty(GetX2() - width / 2, GetY2() + 1))  //地吸引力
 		{
+			count++;
+			isLanding = true;
 			if (isFly)
-				y += 1;
+				y += 1;	
 			else
 			{
-				if (y >= m->GetHeight() - height)
-					y = m->GetHeight() - height;
-				else
-					y += STEP_SIZE;
+				y += velocity;	// y軸下降(移動velocity個點，velocity的單位為 點/次)
+				if (velocity < 5 && count == 30)
+				{
+					velocity++; // 受重力影響，下次的下降速度增加
+					count = 0;
+				}
 			}
+		}
+		else if (!isFly && m->isEmpty(x, y + height + 1) && m->isEmpty(x + width, y + height + 1))  // 當y座標還沒碰到地板
+			y += 1;
+		else
+		{
+			if (isLanding == true && !isFly)
+			{
+				CAudio::Instance()->Play(landing);
+				isLanding = false;
+			}
+			velocity = 2; // 重設重力加速度
+			count = 0;
 		}
 	}
 
 	void Kirby::OnShow(Map *m)
 	{
+		if (type == 0)
+		{
+			height = originR.Height();
+			width = originR.Width();
+		}
+		else if (type == 1)
+		{
+			height = Spark_originR.Height();
+			width = Spark_originR.Width();
+		}
+		else if (type == 2)
+		{
+			height = fire_originR.Height();
+			width = fire_originR.Width();
+		}
+
 		if (hp == 6) blood6.ShowBitmap();
 		else if (hp == 5) blood5.ShowBitmap();
 		else if (hp == 4) blood4.ShowBitmap();
@@ -454,21 +658,40 @@ namespace game_framework {
 
 		if (type == 0) ShowKirby(m);
 		else if (type == 1) ShowSparkKirby(m);
+		else if (type == 2) ShowFireKirby(m);
+
+		if (lost.IsAlive())
+		{
+			lost.OnMove(m, x, y, isSuck);
+			lost.OnShow(m);
+		}
 	}
 
-	void Kirby::Hurted()
+	void Kirby::Hurted(Map *m)
 	{
+		if (type != 0)
+		{
+			lost.Initialize(type, x, y);
+			type = 0;
+		}
+
 		if (!isInvincible)
 		{
 			hp--;
 			isInvincible = true;
-			InvincibleTime = 45;
+			InvincibleTime = 60;
+			if(hp>0)
+				CAudio::Instance()->Play(hurted);
 		}
 
 		if (hp > 0)
 			isHurted = true;
 		else
+		{
+			CAudio::Instance()->Play(die);
+			CAudio::Instance()->Stop(AUDIO_BACKGROUND);
 			isAlive = false;
+		}
 	}
 
 	void Kirby::Die(Map *m)
@@ -540,12 +763,23 @@ namespace game_framework {
 		eat = t;
 	}
 
+	Gas* Kirby::GetGas()
+	{
+		return &gas;
+	}
+
+	Star* Kirby::GetStar()
+	{
+		return &star;
+	}
+
 	void Kirby::Attack(Map *m)
 	{
 		//------空氣彈------
 		if (isFly && isSpace)
-		{
+		{	
 			gas.SetXY(x, y);
+			gas.SetAlive(true);
 			gasDistance = 176;
 			bulletDirection = rightOrLeft;
 		}
@@ -555,20 +789,25 @@ namespace game_framework {
 			gas.OnMove(m, bulletDirection);
 			gas.OnShow(m);
 		}
+		else
+			gas.SetAlive(false);
 
 		//------星星------
 		if (isBig && isAttack && !isSuck)
 		{
-			start.SetXY(x, y);
-			startDistance = 376;
+			star.SetXY(x, y);
+			star.SetAlive(true);
+			starDistance = 376;
 			bulletDirection = rightOrLeft;
 		}
-		if (startDistance != 0)
+		if (starDistance != 0)
 		{
-			startDistance -= STEP_SIZE * 2;
-			start.OnMove(m, bulletDirection);
-			start.OnShow(m);
+			starDistance -= STEP_SIZE * 2;
+			star.OnMove(m, bulletDirection);
+			star.OnShow(m);
 		}
+		else
+			star.SetAlive(false);
 
 		//------踢擊------
 		if (!isFly && !isBig && (isMovingDown || isKick) && (isAttack || isKick) && !m->isEmpty(GetX2() - width / 2, GetY2() + 1)) //在地面上蹲下按攻擊
@@ -590,10 +829,13 @@ namespace game_framework {
 
 	void Kirby::Spark_Attack(Map *m)
 	{
+		//放電在怪物那邊偵測
+
 		//------空氣彈------
 		if (isFly && isSpace)
 		{
-			gas.SetXY(x, y+40);
+			gas.SetXY(x, y + 40);
+			gas.SetAlive(true);
 			gasDistance = 176;
 			bulletDirection = rightOrLeft;
 		}
@@ -603,6 +845,8 @@ namespace game_framework {
 			gas.OnMove(m, bulletDirection);
 			gas.OnShow(m);
 		}
+		else
+			gas.SetAlive(false);
 
 		//------踢擊------
 		if (!isFly && !isBig && (isMovingDown || isKick) && (isAttack || isKick) && !m->isEmpty(GetX2() - width / 2, GetY2() + 1)) //在地面上蹲下按攻擊
@@ -611,7 +855,7 @@ namespace game_framework {
 			kickDistance -= 5;
 			if (rightOrLeft && m->isEmpty(GetX2() + 5, GetY2() - 5) && x + 5 <= m->GetWidth() - Spark_downAttackR.Width() + 40)  //右邊會不會踢牆(y-5是補償卡比大小)(+40是消除動畫補償)
 				x += 5;
-			else if (!rightOrLeft && m->isEmpty(GetX1() - 5 - 40, GetY2() - 5) && x - 5 >= 0)  //左邊會不會踢牆(y-5是補償卡比大小)(-40是消除動畫補償)
+			else if (!rightOrLeft && m->isEmpty(GetX1() - 5, GetY2() - 5) && x - 5 >= 0)  //左邊會不會踢牆(y-5是補償卡比大小)
 				x -= 5;
 			//踢完.踢到邊界.腳沒踏到地都不能使用踢擊
 			if (kickDistance == 0 || x <= 0 || x >= m->GetWidth() || m->isEmpty(GetX2() - width / 2, GetY2() + 1))
@@ -620,11 +864,45 @@ namespace game_framework {
 				isKick = false;
 			}
 		}
+	}
 
-		//------放電------
-		if (isAttack)
+	void Kirby::Fire_Attack(Map *m)
+	{
+		//放火在怪物那邊偵測
+
+		//------空氣彈------
+		if (isFly && isSpace)
 		{
+			gas.SetXY(x, y + 40);
+			gas.SetAlive(true);
+			gasDistance = 176;
+			bulletDirection = rightOrLeft;
+		}
+		if (gasDistance != 0)
+		{
+			gasDistance -= STEP_SIZE * 2;
+			gas.OnMove(m, bulletDirection);
+			gas.OnShow(m);
+		}
+		else
+			gas.SetAlive(false);
 
+		//------踢擊------
+		if (!isFly && !isBig && (isMovingDown || isKick) && (isAttack || isKick) && !m->isEmpty(GetX2() - width / 2, GetY2() + 1)) //在地面上蹲下按攻擊
+		{
+			isKick = true;
+			isAttack = false;
+			kickDistance -= 5;
+			if (rightOrLeft && m->isEmpty(GetX2() + 5, GetY2() - 5) && x + 5 <= m->GetWidth() - fire_downAttackR.Width() + 30)  //右邊會不會踢牆(y-5是補償卡比大小)(+40是消除動畫補償)
+				x += 5;
+			else if (!rightOrLeft && m->isEmpty(GetX1() - 5, GetY2() - 5) && x - 5 >= 0)  //左邊會不會踢牆(y-5是補償卡比大小)
+				x -= 5;
+			//踢完.踢到邊界.腳沒踏到地都不能使用踢擊
+			if (kickDistance == 0 || x <= 0 || x >= m->GetWidth() || m->isEmpty(GetX2() - width / 2, GetY2() + 1))
+			{
+				kickDistance = 100;
+				isKick = false;
+			}
 		}
 	}
 
@@ -633,6 +911,11 @@ namespace game_framework {
 		if (eat == 1)
 		{
 			type = 1;
+			y -= 40;
+		}
+		else if (eat == 2)
+		{
+			type = 2;
 			y -= 40;
 		}
 	}
@@ -706,7 +989,7 @@ namespace game_framework {
 		}
 		else if (isBig)
 		{
-			if (isSuck)
+			if(isSuck)
 				isAttack = false;
 			if (isJump)   //跳躍
 			{
@@ -778,7 +1061,7 @@ namespace game_framework {
 		}
 		else
 		{
-			if (isAttack && !isFly && !isMovingDown)  //吸怪
+			if (isAttack && !isFly && !isMovingDown && (starDistance < 276 || !star.IsAlive()))  //吸怪
 			{
 				isSuck = true;
 				if (rightOrLeft)
@@ -790,6 +1073,12 @@ namespace game_framework {
 				{
 					suckL.OnMove();
 					suckL.OnShow();
+				}
+				if (lost.IsAlive() && (lost.GetX() - x >= -2) && (lost.GetX() - x <= 2) && (lost.GetY() - y >= -2) && (lost.GetY() - y <= 2))
+				{
+					lost.SetAlive(false);
+					SetBig(true);
+					SetEat(lost.type);
 				}
 			}
 			else if (isJump)   //跳躍
@@ -823,11 +1112,15 @@ namespace game_framework {
 					isFly = true;
 					if (rightOrLeft)
 					{
+						if (flyR.GetCurrentBitmapNumber() == 1)
+							CAudio::Instance()->Play(fly);
 						flyR.OnShow();
 						flyR.OnMove();
 					}
 					else
 					{
+						if (flyL.GetCurrentBitmapNumber() == 1)
+							CAudio::Instance()->Play(fly);
 						flyL.OnShow();
 						flyL.OnMove();
 					}
@@ -850,11 +1143,15 @@ namespace game_framework {
 			{
 				if (rightOrLeft)
 				{
+					if (flyR.GetCurrentBitmapNumber() == 1)
+						CAudio::Instance()->Play(fly);
 					flyR.OnShow();
 					flyR.OnMove();
 				}
 				else
 				{
+					if (flyL.GetCurrentBitmapNumber() == 1)
+						CAudio::Instance()->Play(fly);
 					flyL.OnShow();
 					flyL.OnMove();
 				}
@@ -926,7 +1223,7 @@ namespace game_framework {
 		Spark_jumpR.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
 		Spark_jumpL.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
 		Spark_downAttackR.SetTopLeft(m->ScreenX(x-40), m->ScreenY(y+30));
-		Spark_downAttackL.SetTopLeft(m->ScreenX(x-40), m->ScreenY(y+30));
+		Spark_downAttackL.SetTopLeft(m->ScreenX(x), m->ScreenY(y+30));
 		Spark_flyR.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
 		Spark_prepareFlyR.SetTopLeft(m->ScreenX(x), m->ScreenY(y+5));
 		Spark_flyL.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
@@ -947,6 +1244,7 @@ namespace game_framework {
 
 		if (isHurted)   // 被攻擊
 		{
+			y += 40;  //還原補償的高度
 			if (rightOrLeft)
 			{
 				hurtedR.OnMove();
@@ -1017,11 +1315,15 @@ namespace game_framework {
 					isFly = true;
 					if (rightOrLeft)
 					{
+						if (Spark_flyR.GetCurrentBitmapNumber() == 3)
+							CAudio::Instance()->Play(fly);
 						Spark_flyR.OnShow();
 						Spark_flyR.OnMove();
 					}
 					else
 					{
+						if (Spark_flyL.GetCurrentBitmapNumber() == 3)
+							CAudio::Instance()->Play(fly);
 						Spark_flyL.OnShow();
 						Spark_flyL.OnMove();
 					}
@@ -1044,16 +1346,20 @@ namespace game_framework {
 			{
 				if (rightOrLeft)
 				{
+					if (Spark_flyR.GetCurrentBitmapNumber() == 3)
+						CAudio::Instance()->Play(fly);
 					Spark_flyR.OnShow();
 					Spark_flyR.OnMove();
 				}
 				else
 				{
+					if (Spark_flyL.GetCurrentBitmapNumber() == 3)
+						CAudio::Instance()->Play(fly);
 					Spark_flyL.OnShow();
 					Spark_flyL.OnMove();
 				}
 			}
-			else if (!isFly && m->isEmpty(GetX1() + Spark_originR.Width() / 2, GetY1() + Spark_originR.Height() + 1))  //自由落體
+			else if (!isFly && m->isEmpty(GetX1() + width / 2, GetY1() + height + 1))  //自由落體
 			{
 				if (rightOrLeft)
 				{
@@ -1079,7 +1385,7 @@ namespace game_framework {
 					Spark_downAttackL.OnShow();
 				}
 			}
-			else if (isMovingDown && !m->isEmpty(GetX1() + Spark_originR.Width() / 2, GetY1() + Spark_originR.Height() + 1))   //縮小
+			else if (isMovingDown && !m->isEmpty(GetX1() + width / 2, GetY1() + height + 1))   //縮小
 			{
 				if (rightOrLeft)
 				{
@@ -1124,6 +1430,243 @@ namespace game_framework {
 			{
 				Spark_originL.OnMove();
 				Spark_originL.OnShow();
+			}
+		}
+	}
+
+	void Kirby::ShowFireKirby(Map *m)
+	{
+		fire_exhaleR.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
+		fire_exhaleL.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
+		fire_originR.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
+		fire_originL.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
+		fire_downR.SetTopLeft(m->ScreenX(x), m->ScreenY(y + 20));
+		fire_downL.SetTopLeft(m->ScreenX(x), m->ScreenY(y + 20));
+		fire_goR.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
+		fire_goL.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
+		fire_jumpR.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
+		fire_jumpL.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
+		fire_landingR.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
+		fire_landingL.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
+		fire_downAttackR.SetTopLeft(m->ScreenX(x - 30), m->ScreenY(y + 28));
+		fire_downAttackL.SetTopLeft(m->ScreenX(x), m->ScreenY(y + 28));
+		fire_flyR.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
+		fire_prepareFlyR.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
+		fire_flyL.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
+		fire_prepareFlyL.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
+		fire_runR.SetTopLeft(m->ScreenX(x - 35), m->ScreenY(y + 5));
+		fire_runL.SetTopLeft(m->ScreenX(x), m->ScreenY(y + 5));
+		fire_attackR.SetTopLeft(m->ScreenX(x - 15), m->ScreenY(y + 10));
+		fire_attackL.SetTopLeft(m->ScreenX(x + 10), m->ScreenY(y + 10));
+		Fire_Attack(m);
+		attack1.SetDelayCount(5);
+		attack2.SetDelayCount(5);
+		attack3.SetDelayCount(5);
+		
+		if (!isMovingUp && !isFly)   //沒吸氣也沒飛行就要reset吸氣動畫
+		{
+			fire_prepareFlyR.Reset();
+			fire_prepareFlyL.Reset();
+		}
+
+		if (isHurted)   // 被攻擊
+		{
+			y += 40;  //還原補償的高度
+			if (rightOrLeft)
+			{
+				hurtedR.OnMove();
+				hurtedR.OnShow();
+			}
+			else
+			{
+				hurtedL.OnMove();
+				hurtedL.OnShow();
+			}
+			if (hurtedL.IsFinalBitmap() || hurtedR.IsFinalBitmap())
+			{
+				isHurted = false;
+				hurtedL.Reset();
+				hurtedR.Reset();
+			}
+		}
+		else
+		{
+			if (isAttack && !isFly && !isMovingDown)  //放火
+			{
+				if (rightOrLeft)
+				{
+					fire_attackR.OnShow();
+					fire_attackR.OnMove();
+					attack1.SetTopLeft(m->ScreenX(x + 63), m->ScreenY(y + 30));
+					attack2.SetTopLeft(m->ScreenX(x + 83), m->ScreenY(y + 10));
+					attack3.SetTopLeft(m->ScreenX(x + 133), m->ScreenY(y + 10));
+				}
+				else
+				{
+					fire_attackL.OnShow();
+					fire_attackL.OnMove();
+					attack1.SetTopLeft(m->ScreenX(x - 52), m->ScreenY(y + 30));
+					attack2.SetTopLeft(m->ScreenX(x - 72), m->ScreenY(y + 10));
+					attack3.SetTopLeft(m->ScreenX(x - 122), m->ScreenY(y + 10));
+				}
+				attack1.OnMove();
+				attack1.OnShow();
+				attack2.OnMove();
+				attack2.OnShow();
+				attack3.OnMove();
+				attack3.OnShow();
+			}
+			else if (isJump)   //跳躍
+			{
+				if (rightOrLeft)
+				{
+					fire_jumpR.OnMove();
+					fire_jumpR.OnShow();
+				}
+				else
+				{
+					fire_jumpL.OnMove();
+					fire_jumpL.OnShow();
+				}
+			}
+			else if (isSpace && isFly)   //吐氣
+			{
+				exhaleDelay--;
+				if (rightOrLeft)
+					fire_exhaleR.ShowBitmap();
+				else
+					fire_exhaleL.ShowBitmap();
+				if (exhaleDelay == 0)
+				{
+					exhaleDelay = 10;
+					fire_prepareFlyR.Reset();
+					fire_prepareFlyL.Reset();
+					isFly = false;
+					isSpace = false;
+				}
+			}
+			else if (isMovingUp)
+			{
+				if (fire_prepareFlyR.IsFinalBitmap() || fire_prepareFlyL.IsFinalBitmap())   //飛行前吸氣
+				{
+					isFly = true;
+					if (rightOrLeft)
+					{
+						if (fire_flyR.GetCurrentBitmapNumber() == 3)
+							CAudio::Instance()->Play(fly);
+						fire_flyR.OnShow();
+						fire_flyR.OnMove();
+					}
+					else
+					{
+						if (fire_flyL.GetCurrentBitmapNumber() == 3)
+							CAudio::Instance()->Play(fly);
+						fire_flyL.OnShow();
+						fire_flyL.OnMove();
+					}
+				}
+				else
+				{
+					if (rightOrLeft)
+					{
+						fire_prepareFlyR.OnShow();
+						fire_prepareFlyR.OnMove();
+					}
+					else
+					{
+						fire_prepareFlyL.OnShow();
+						fire_prepareFlyL.OnMove();
+					}
+				}
+			}
+			else if (isFly)  //飛行
+			{
+				if (rightOrLeft)
+				{
+					if (fire_flyR.GetCurrentBitmapNumber() == 3)
+						CAudio::Instance()->Play(fly);
+					fire_flyR.OnShow();
+					fire_flyR.OnMove();
+				}
+				else
+				{
+					if (fire_flyL.GetCurrentBitmapNumber() == 3)
+						CAudio::Instance()->Play(fly);
+					fire_flyL.OnShow();
+					fire_flyL.OnMove();
+				}
+			}
+			else if (!isFly && m->isEmpty(GetX1() + width / 2, GetY1() + height + 1))  //自由落體
+			{
+				if (rightOrLeft)
+				{
+					fire_landingR.OnShow();
+					fire_landingR.OnMove();
+				}
+				else
+				{
+					fire_landingL.OnShow();
+					fire_landingL.OnMove();
+				}
+			}
+			else if (isKick && !isFly)   //踢擊
+			{
+				if (rightOrLeft)
+				{
+					fire_downAttackR.OnMove();
+					fire_downAttackR.OnShow();
+				}
+				else
+				{
+					fire_downAttackL.OnMove();
+					fire_downAttackL.OnShow();
+				}
+			}
+			else if (isMovingDown && !m->isEmpty(GetX1() + width / 2, GetY1() + height + 1))   //縮小
+			{
+				if (rightOrLeft)
+				{
+					fire_downR.OnShow();
+					fire_downR.OnMove();
+				}
+				else
+				{
+					fire_downL.OnShow();
+					fire_downL.OnMove();
+				}
+			}
+			else if (!isFly && isRunning && (isMovingLeft || isMovingRight))  //跑
+			{
+				if (!rightOrLeft)
+				{
+					fire_runL.OnShow();
+					fire_runL.OnMove();
+				}
+				else
+				{
+					fire_runR.OnShow();
+					fire_runR.OnMove();
+				}
+			}
+			else if (!isFly && isMovingLeft)   //一般向左走
+			{
+				fire_goL.OnShow();
+				fire_goL.OnMove();
+			}
+			else if (!isFly && isMovingRight)   //一般向右走
+			{
+				fire_goR.OnShow();
+				fire_goR.OnMove();
+			}
+			else if (rightOrLeft)   //面相右
+			{
+				fire_originR.OnMove();
+				fire_originR.OnShow();
+			}
+			else if (!rightOrLeft)  //面相左
+			{
+				fire_originL.OnMove();
+				fire_originL.OnShow();
 			}
 		}
 	}
