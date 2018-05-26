@@ -537,7 +537,7 @@ namespace game_framework {
 					else
 						x -= STEP_SIZE;
 
-					if (m->isSlope(GetX1() - STEP_SIZE, GetY2())) {
+					if (m->isSlope(GetX1() - 10, GetY2())) {
 						if (isRunning)
 							y -= STEP_SIZE * 2;
 						else
@@ -561,7 +561,7 @@ namespace game_framework {
 					else
 						x += STEP_SIZE;
 
-					if (m->isSlope(GetX2() + STEP_SIZE, GetY2())) {
+					if (m->isSlope(GetX2() + 10, GetY2())) {
 						if (isRunning)
 							y -= STEP_SIZE * 2;
 						else
@@ -597,7 +597,7 @@ namespace game_framework {
 			}
 		}
 
-		if (!(isMovingUp || isJump) && m->isEmpty(GetX2() - width / 2, GetY2() + 1))  //地吸引力
+		if (!(isMovingUp || isJump) && m->isEmpty(GetX2() , GetY2() + 1) && m->isEmpty(GetX1(), GetY2() + 1))  //地吸引力
 		{
 			count++;
 			isLanding = true;
