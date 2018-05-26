@@ -28,6 +28,7 @@ namespace game_framework {
 		bool IsAttack();                  // 是否按Z鍵
 		bool IsRight();                   // 面對方向
 		bool IsDown();                    // 是否縮小
+		bool IsBig();                     // 是否是大隻的
 		void LoadBitmap();				  // 載入圖形
 		void OnMove(Map *m);		      // 移動
 		void OnShow(Map *m);			  // 將圖形貼到畫面
@@ -62,6 +63,24 @@ namespace game_framework {
 		CMovingBitmap fire_exhaleR, fire_exhaleL;
 		CAnimation fire_originR, fire_originL, fire_downR, fire_downL, fire_goR, fire_goL, fire_jumpR, fire_jumpL, fire_landingR, fire_landingL, fire_downAttackR, fire_downAttackL, fire_flyR, fire_prepareFlyR, fire_flyL, fire_prepareFlyL, fire_runR, fire_runL, fire_attackR, fire_attackL, attack1, attack2, attack3;
 
+		enum COPY_AUDIO_ID {		// 定義各種音效的編號
+			AUDIO_BACKGROUND,       // 0
+			jump,                   // 1
+			landing,                // 2
+			kick,                   // 3
+			die,                    // 4
+			fly,                    // 5
+			hurted,                 // 6
+			run,                    // 7
+			suck,                   // 8
+			gasSound,               // 9
+			starSound,              // 10
+			swallow,                // 11
+			spark,                  // 12
+			fire,                   // 13
+			stone                   // 14
+		};
+
 		Gas gas;
 		Star star;
 		LostAbility lost;
@@ -81,6 +100,7 @@ namespace game_framework {
 		bool isRunning;				// 是否在跑
 		bool isBig;                 // 是否含滷蛋
 		bool isSwallow;             // 是否在吞怪
+		bool isLanding;             // 是否降落中
 		bool rightOrLeft;           // 判斷左右
 	private:
 		void ShowKirby(Map *m);     // 顯示普通卡比

@@ -62,7 +62,7 @@ namespace game_framework {
 		eat = -1;
 		velocity = 2;
 		count = 0;
-		isMovingLeft = isMovingRight = isMovingUp = isMovingDown = isSpace = isJump = isAttack = isKick = isFly = isHurted = isSuck = isBig = isSwallow = isRunning = isInvincible = false;
+		isMovingLeft = isMovingRight = isMovingUp = isMovingDown = isSpace = isJump = isAttack = isKick = isFly = isHurted = isSuck = isBig = isSwallow = isRunning = isInvincible = isLanding = false;
 		isAlive = rightOrLeft = true;
 		blood0.SetTopLeft(SIZE_X / 2 - blood0.Width() / 2, SIZE_Y - blood0.Height());
 		blood1.SetTopLeft(SIZE_X / 2 - blood1.Width() / 2, SIZE_Y - blood1.Height());
@@ -106,6 +106,11 @@ namespace game_framework {
 	bool Kirby::IsDown()
 	{
 		return isMovingDown;
+	}
+
+	bool Kirby::IsBig()
+	{
+		return isBig;
 	}
 
 	void Kirby::LoadBitmap()
@@ -485,6 +490,20 @@ namespace game_framework {
 		gas.LoadBitmap();
 		star.LoadBitmap();
 		lost.LoadBitmap();
+
+		CAudio::Instance()->Load(jump, "Sounds\\jump.wav");
+		CAudio::Instance()->Load(landing, "Sounds\\landing.wav");
+		CAudio::Instance()->Load(kick, "Sounds\\kick.wav");
+		CAudio::Instance()->Load(die, "Sounds\\die.wav");
+		CAudio::Instance()->Load(fly, "Sounds\\fly.wav");
+		CAudio::Instance()->Load(hurted, "Sounds\\hurted.wav");
+		CAudio::Instance()->Load(run, "Sounds\\run.wav");
+		CAudio::Instance()->Load(suck, "Sounds\\suck.wav");
+		CAudio::Instance()->Load(gasSound, "Sounds\\gas.wav");
+		CAudio::Instance()->Load(starSound, "Sounds\\star.wav");
+		CAudio::Instance()->Load(swallow, "Sounds\\swallow.wav");
+		CAudio::Instance()->Load(spark, "Sounds\\spark.wav");
+		CAudio::Instance()->Load(fire, "Sounds\\fire.wav");
 	}
 
 	void Kirby::OnMove(Map *m)
@@ -565,6 +584,8 @@ namespace game_framework {
 			}
 			if (isJump && !isSuck)
 			{
+				if (jumpDistance == 120)
+					CAudio::Instance()->Play(jump);
 				jumpDistance -= 5;
 				if (m->isEmpty_2(GetX1() + width / 2, GetY1() - 5) && y - 5 > 0)  //會不會撞到頭
 					y -= 5;
@@ -579,8 +600,9 @@ namespace game_framework {
 		if (!(isMovingUp || isJump) && m->isEmpty(GetX2() - width / 2, GetY2() + 1))  //地吸引力
 		{
 			count++;
+			isLanding = true;
 			if (isFly)
-				y += 1;
+				y += 1;	
 			else
 			{
 				y += velocity;	// y軸下降(移動velocity個點，velocity的單位為 點/次)
@@ -595,6 +617,11 @@ namespace game_framework {
 			y += 1;
 		else
 		{
+			if (isLanding == true && !isFly)
+			{
+				CAudio::Instance()->Play(landing);
+				isLanding = false;
+			}
 			velocity = 2; // 重設重力加速度
 			count = 0;
 		}
@@ -653,12 +680,18 @@ namespace game_framework {
 			hp--;
 			isInvincible = true;
 			InvincibleTime = 60;
+			if(hp>0)
+				CAudio::Instance()->Play(hurted);
 		}
 
 		if (hp > 0)
 			isHurted = true;
 		else
+		{
+			CAudio::Instance()->Play(die);
+			CAudio::Instance()->Stop(AUDIO_BACKGROUND);
 			isAlive = false;
+		}
 	}
 
 	void Kirby::Die(Map *m)
@@ -744,7 +777,7 @@ namespace game_framework {
 	{
 		//------空氣彈------
 		if (isFly && isSpace)
-		{
+		{	
 			gas.SetXY(x, y);
 			gas.SetAlive(true);
 			gasDistance = 176;
@@ -1079,11 +1112,15 @@ namespace game_framework {
 					isFly = true;
 					if (rightOrLeft)
 					{
+						if (flyR.GetCurrentBitmapNumber() == 1)
+							CAudio::Instance()->Play(fly);
 						flyR.OnShow();
 						flyR.OnMove();
 					}
 					else
 					{
+						if (flyL.GetCurrentBitmapNumber() == 1)
+							CAudio::Instance()->Play(fly);
 						flyL.OnShow();
 						flyL.OnMove();
 					}
@@ -1106,11 +1143,15 @@ namespace game_framework {
 			{
 				if (rightOrLeft)
 				{
+					if (flyR.GetCurrentBitmapNumber() == 1)
+						CAudio::Instance()->Play(fly);
 					flyR.OnShow();
 					flyR.OnMove();
 				}
 				else
 				{
+					if (flyL.GetCurrentBitmapNumber() == 1)
+						CAudio::Instance()->Play(fly);
 					flyL.OnShow();
 					flyL.OnMove();
 				}
@@ -1274,11 +1315,15 @@ namespace game_framework {
 					isFly = true;
 					if (rightOrLeft)
 					{
+						if (Spark_flyR.GetCurrentBitmapNumber() == 3)
+							CAudio::Instance()->Play(fly);
 						Spark_flyR.OnShow();
 						Spark_flyR.OnMove();
 					}
 					else
 					{
+						if (Spark_flyL.GetCurrentBitmapNumber() == 3)
+							CAudio::Instance()->Play(fly);
 						Spark_flyL.OnShow();
 						Spark_flyL.OnMove();
 					}
@@ -1301,11 +1346,15 @@ namespace game_framework {
 			{
 				if (rightOrLeft)
 				{
+					if (Spark_flyR.GetCurrentBitmapNumber() == 3)
+						CAudio::Instance()->Play(fly);
 					Spark_flyR.OnShow();
 					Spark_flyR.OnMove();
 				}
 				else
 				{
+					if (Spark_flyL.GetCurrentBitmapNumber() == 3)
+						CAudio::Instance()->Play(fly);
 					Spark_flyL.OnShow();
 					Spark_flyL.OnMove();
 				}
@@ -1503,11 +1552,15 @@ namespace game_framework {
 					isFly = true;
 					if (rightOrLeft)
 					{
+						if (fire_flyR.GetCurrentBitmapNumber() == 3)
+							CAudio::Instance()->Play(fly);
 						fire_flyR.OnShow();
 						fire_flyR.OnMove();
 					}
 					else
 					{
+						if (fire_flyL.GetCurrentBitmapNumber() == 3)
+							CAudio::Instance()->Play(fly);
 						fire_flyL.OnShow();
 						fire_flyL.OnMove();
 					}
@@ -1530,11 +1583,15 @@ namespace game_framework {
 			{
 				if (rightOrLeft)
 				{
+					if (fire_flyR.GetCurrentBitmapNumber() == 3)
+						CAudio::Instance()->Play(fly);
 					fire_flyR.OnShow();
 					fire_flyR.OnMove();
 				}
 				else
 				{
+					if (fire_flyL.GetCurrentBitmapNumber() == 3)
+						CAudio::Instance()->Play(fly);
 					fire_flyL.OnShow();
 					fire_flyL.OnMove();
 				}

@@ -71,7 +71,8 @@ namespace game_framework {
 		starSound,              // 10
 		swallow,                // 11
 		spark,                  // 12
-		fire                    // 13
+		fire,                   // 13
+		stone                   // 14
 	};
 
 	/////////////////////////////////////////////////////////////////////////////
