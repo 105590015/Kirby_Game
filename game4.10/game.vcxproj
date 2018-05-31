@@ -280,6 +280,8 @@
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='UnitTest|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <ClCompile Include="Source\Gas.cpp" />
+    <ClCompile Include="Source\King_Airplane.cpp" />
+    <ClCompile Include="Source\King_Bomb.cpp" />
     <ClCompile Include="Source\King_Stone.cpp" />
     <ClCompile Include="Source\Kirby.cpp" />
     <ClCompile Include="Source\LostAbility.cpp" />
@@ -327,6 +329,8 @@
     <ClInclude Include="Source\gameDoc.h" />
     <ClInclude Include="Source\gameView.h" />
     <ClInclude Include="Source\Gas.h" />
+    <ClInclude Include="Source\King_Airplane.h" />
+    <ClInclude Include="Source\King_Bomb.h" />
     <ClInclude Include="Source\King_Stone.h" />
     <ClInclude Include="Source\Kirby.h" />
     <ClInclude Include="Source\LostAbility.h" />

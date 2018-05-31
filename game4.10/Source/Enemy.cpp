@@ -88,6 +88,15 @@ namespace game_framework {
 			is_sucked = false;
 	}
 
+	void Enemy::SetAlive(bool flag)
+	{
+		is_alive = flag;
+	}
+
+	bool Enemy::IsAlive() {
+		return is_alive;
+	}
+
 	void Enemy::OnShow(Map *m, Kirby *kirby)
 	{
 	}

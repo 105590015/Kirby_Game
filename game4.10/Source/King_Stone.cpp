@@ -88,11 +88,6 @@ namespace game_framework {
 			is_sucked = false;
 	}
 
-	void Stone::SetAlive(bool flag)
-	{
-		is_alive = flag;
-	}
-
 	int Stone::GetX2()
 	{
 		return x + stone.Width();
@@ -101,9 +96,5 @@ namespace game_framework {
 	int Stone::GetY2()
 	{
 		return y + stone.Height();
-	}
-
-	bool Stone::IsAlive() {
-		return is_alive;
 	}
 }
