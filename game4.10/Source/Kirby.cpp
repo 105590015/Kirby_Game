@@ -1156,7 +1156,7 @@ namespace game_framework {
 					flyL.OnMove();
 				}
 			}
-			else if (!isFly && m->isEmpty(GetX2() - originR.Width() / 2, GetY2() + 1))  //自由落體
+			else if (!isFly && m->isEmpty(GetX1() , GetY2() + 1) && m->isEmpty(GetX2(), GetY2() + 1))  //自由落體
 			{
 				if (rightOrLeft)
 					landingR.ShowBitmap();

@@ -130,6 +130,7 @@ namespace game_framework {
 		Door door1[2];
 		Door door2;
 		Door door3;
+		Door door4[2];
 
 		Door *gate;
 		int mapNum;							//設定現在為第幾號地圖
