@@ -219,8 +219,8 @@ void CGameStateRun::OnBeginState()
 
 	door3.Initialize(150, 350, 0, 3, &door[3]);
 
-	door4[0].Initialize(30, 425, 0, 4, &door[8]);
-	door4[1].Initialize(4450, 350, 0, 4, &door[9]);
+	door4[0].Initialize(48, 435, 0, 4, &door[8]);
+	door4[1].Initialize(3140, 240 , 0, 4, &door[9]);
 
 	ResetMonster();
 
@@ -357,16 +357,16 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 		map[3].LoadBitmap(".//Map//King_foreground.bmp", RGB(255, 255, 255), ".//Map//King_background.bmp", ".//Map//map3.txt");
 		map[4].LoadBitmap(".//Map//foreground_4.bmp", RGB(255, 255, 255), ".//Map//background_4.bmp", ".//Map//map4.txt");
 		kirby.LoadBitmap();
-		monster[0] = &fire1;
-		monster[1] = &normalMonster2;
-		monster[2] = &normalMonster3;
-		monster[3] = &normalMonster4;
-		monster[4] = &normalMonster5;
-		monster[5] = &fire2;
-		monster[6] = &spark1;
-		monster[7] = &spark2;
-		monster[8] = &spark3;
-		monster[9] = &spark4;
+		monster[0] = &fire1[0];
+		monster[1] = &fire1[1];
+		monster[2] = &normalMonster1[0];
+		monster[3] = &normalMonster1[1];
+		monster[4] = &normalMonster1[2];
+		monster[5] = &normalMonster1[3];
+		monster[6] = &spark1[0];
+		monster[7] = &spark1[1];
+		monster[8] = &spark1[2];
+		monster[9] = &spark1[3];
 		for (int m = 0; m < 10; m++)
 			monster[m]->LoadBitmap();
 		for (int i = 0; i < 10;i++)
@@ -476,8 +476,9 @@ void CGameStateRun::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 			for (int i = 0; i < 10;i++)
 				door[i].SetEnter(false);
 		if (mapNum == 1)
-			for (int i = 0; i < 2;i++)
+			for (int i = 0; i < 2; i++) {
 				door1[i].SetEnter(false);
+			}
 
 		if (mapNum == 2)
 			door2.SetEnter(false);
@@ -532,17 +533,22 @@ void CGameStateRun::OnRButtonUp(UINT nFlags, CPoint point)	// 處理滑鼠的動作
 
 void CGameStateRun::ResetMonster()
 {
-	normalMonster1.Initialize(417, 467);
-	normalMonster2.Initialize(947, 467);
-	normalMonster3.Initialize(2459, 517);
-	normalMonster4.Initialize(2903, 517);
-	normalMonster5.Initialize(3495, 59);
-	spark1.Initialize(675, 393);
-	spark2.Initialize(1673, 163);
-	spark3.Initialize(3247, 269);
-	spark4.Initialize(4045, 477);
-	fire1.Initialize(417, 467);
-	fire2.Initialize(3745, 477);
+
+		normalMonster1[0].Initialize(947, 467);
+		normalMonster1[1].Initialize(2459, 517);
+		normalMonster1[2].Initialize(2903, 517);
+		normalMonster1[3].Initialize(3495, 59);
+		spark1[0].Initialize(675, 393);
+		spark1[1].Initialize(1673, 163);
+		spark1[2].Initialize(3247, 269);
+		spark1[3].Initialize(4045, 477);
+		fire1[0].Initialize(417, 467);
+		fire1[1].Initialize(3745, 477);
+
+		fire4[0].Initialize(410, 400);
+	
+
+
 }
 
 void CGameStateRun::OnShow()
