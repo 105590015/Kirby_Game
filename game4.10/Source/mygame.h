@@ -51,6 +51,7 @@
 #include "Spark.h"
 #include "Fire.h"
 #include "Tree.h"
+#include "King_Airplane.h"
 
 namespace game_framework {
 	/////////////////////////////////////////////////////////////////////////////
@@ -126,6 +127,7 @@ namespace game_framework {
 		Spark spark1, spark2, spark3, spark4;
 		Fire  fire1, fire2;
 		Tree tree;
+		King_Airplane airplane;
 		Door door[10];
 		Door door1[2];
 		Door door2;

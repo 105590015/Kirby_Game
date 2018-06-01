@@ -125,9 +125,4 @@ namespace game_framework {
 			if (r == i)
 				stone[i].SetAlive(true);
 	}
-
-	bool Tree::IsAlive() {
-		return is_alive;
-	}
-
 }

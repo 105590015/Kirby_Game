@@ -11,6 +11,8 @@ namespace game_framework {
 		int GetY1();                                  // 左上角 y 座標
 		void Hurted(Kirby* kirby);                    // 被攻擊
 		void Sucked(Kirby* kirby);                    // 被吸
+		void SetAlive(bool flag);                     // 設定死活
+		bool IsAlive();                               // 是否活著
 		virtual int GetX2();                          // 右下角 x 座標
 		virtual int GetY2();                          // 右下角 y 座標
 		virtual void OnShow(Map *m, Kirby *kirby);    // 顯示

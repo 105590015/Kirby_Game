@@ -225,6 +225,7 @@ void CGameStateRun::OnBeginState()
 	ResetMonster();
 
 	tree.Initialize(450, 100);
+	airplane.Initialize(450, 60);
 
 	mapNum = 0;
 	index = &map[mapNum];
@@ -279,12 +280,16 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 		}
 
 		if (mapNum == 2) {
-			door2.OnMove();
-			if (door2.IsEnter(&kirby)) {
-				Istransiting = true;
-				Transition.Reset();
-				gate = &door2;
+			airplane.OnMove(index,&kirby);
+			if (!airplane.IsAlive())
+			{
+				door2.OnMove();
+				if (door2.IsEnter(&kirby)) {
+					Istransiting = true;
+					Transition.Reset();
+					gate = &door2;
 
+				}
 			}
 		}
 
@@ -375,6 +380,7 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 
 
 		tree.LoadBitmap();
+		airplane.LoadBitmap();
 
 	CAudio::Instance()->Load(AUDIO_BACKGROUND, "Sounds\\Kirby_background.mp3");  //背景音樂
 }
@@ -564,7 +570,9 @@ void CGameStateRun::OnShow()
 		ResetMonster();
 
 	if (mapNum == 2) {
-		door2.OnShow(index);
+		airplane.OnShow(index,&kirby);
+		if(!airplane.IsAlive())
+			door2.OnShow(index);
 	}
 
 	if (mapNum == 3) {

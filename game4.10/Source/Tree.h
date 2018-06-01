@@ -16,7 +16,6 @@ namespace game_framework {
 		void Initialize(int, int);
 		void Attack(Map*, Kirby*);
 		void StoneAttack(Map*, Kirby*);
-		bool IsAlive();
 		int GetX2();
 		int GetY2();
 
