@@ -335,4 +335,14 @@ void CAudio::Stop(unsigned id)
 	}
 }
 
+bool CAudio::IsLoaded(unsigned id)
+{
+	map<int, Info>::iterator i = info.find(id);
+	if (i != info.end()) {
+		return true;
+	}
+
+	return false;
+}
+
 }

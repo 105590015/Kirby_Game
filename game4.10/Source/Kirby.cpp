@@ -62,7 +62,7 @@ namespace game_framework {
 		eat = -1;
 		velocity = 2;
 		count = 0;
-		isMovingLeft = isMovingRight = isMovingUp = isMovingDown = isSpace = isJump = isAttack = isKick = isFly = isHurted = isSuck = isBig = isSwallow = isRunning = isInvincible = isLanding = false;
+		isMovingLeft = isMovingRight = isMovingUp = isMovingDown = isExhale = isJump = isAttack = isKick = isFly = isHurted = isSuck = isBig = isSwallow = isRunning = isInvincible = isLanding = false;
 		isAlive = rightOrLeft = true;
 		blood0.SetTopLeft(SIZE_X / 2 - blood0.Width() / 2, SIZE_Y - blood0.Height());
 		blood1.SetTopLeft(SIZE_X / 2 - blood1.Width() / 2, SIZE_Y - blood1.Height());
@@ -111,6 +111,11 @@ namespace game_framework {
 	bool Kirby::IsBig()
 	{
 		return isBig;
+	}
+
+	bool Kirby::IsMove()
+	{
+		return isMovingLeft || isMovingRight;
 	}
 
 	void Kirby::LoadBitmap()
@@ -631,8 +636,16 @@ namespace game_framework {
 	{
 		if (type == 0)
 		{
-			height = originR.Height();
-			width = originR.Width();
+			if (isBig)
+			{
+				height = bigOriginR.Height();
+				width = bigOriginR.Width();
+			}
+			else
+			{
+				height = originR.Height();
+				width = originR.Width();
+			}
 		}
 		else if (type == 1)
 		{
@@ -724,11 +737,6 @@ namespace game_framework {
 			isMovingUp = flag;
 	}
 
-	void Kirby::SetSpace(bool flag)
-	{
-		isSpace = flag;
-	}
-
 	void Kirby::SetJump(bool flag)
 	{
 		isJump = flag;
@@ -776,7 +784,7 @@ namespace game_framework {
 	void Kirby::Attack(Map *m)
 	{
 		//------空氣彈------
-		if (isFly && isSpace)
+		if (isFly && isAttack)
 		{	
 			gas.SetXY(x, y);
 			gas.SetAlive(true);
@@ -813,6 +821,7 @@ namespace game_framework {
 		if (!isFly && !isBig && (isMovingDown || isKick) && (isAttack || isKick) && !m->isEmpty(GetX2() - width / 2, GetY2() + 1)) //在地面上蹲下按攻擊
 		{
 			isKick = true;
+			isAttack = false;
 			kickDistance -= 5;
 			if (rightOrLeft && m->isEmpty(GetX2() + 5, GetY2() - 5) && x + 5 <= m->GetWidth() - downAttackR.Width())  //右邊會不會踢牆(y-5是補償卡比大小)
 				x += 5;
@@ -832,7 +841,7 @@ namespace game_framework {
 		//放電在怪物那邊偵測
 
 		//------空氣彈------
-		if (isFly && isSpace)
+		if (isFly && isAttack)
 		{
 			gas.SetXY(x, y + 40);
 			gas.SetAlive(true);
@@ -852,6 +861,7 @@ namespace game_framework {
 		if (!isFly && !isBig && (isMovingDown || isKick) && (isAttack || isKick) && !m->isEmpty(GetX2() - width / 2, GetY2() + 1)) //在地面上蹲下按攻擊
 		{
 			isKick = true;
+			isAttack = false;
 			kickDistance -= 5;
 			if (rightOrLeft && m->isEmpty(GetX2() + 5, GetY2() - 5) && x + 5 <= m->GetWidth() - Spark_downAttackR.Width() + 40)  //右邊會不會踢牆(y-5是補償卡比大小)(+40是消除動畫補償)
 				x += 5;
@@ -871,7 +881,7 @@ namespace game_framework {
 		//放火在怪物那邊偵測
 
 		//------空氣彈------
-		if (isFly && isSpace)
+		if (isFly && isAttack)
 		{
 			gas.SetXY(x, y + 40);
 			gas.SetAlive(true);
@@ -1029,7 +1039,7 @@ namespace game_framework {
 					swallowL.Reset();
 				}
 			}
-			else if (m->isEmpty(GetX2() - bigOriginR.Width() / 2, GetY2() + 1))  //自由落體
+			else if (m->isEmpty(GetX1(), GetY2() + 1) && m->isEmpty(GetX2(), GetY2() + 1))  //自由落體
 			{
 				if (rightOrLeft)
 					bigLandingR.ShowBitmap();
@@ -1088,8 +1098,9 @@ namespace game_framework {
 				else
 					jumpL.ShowBitmap();
 			}
-			else if (isSpace && isFly)   //吐氣
+			else if ((isAttack || isExhale) && isFly)   //吐氣
 			{
+				isExhale = true;
 				exhaleDelay--;
 				if (rightOrLeft)
 					exhaleR.ShowBitmap();
@@ -1101,7 +1112,7 @@ namespace game_framework {
 					prepareFlyR.Reset();
 					prepareFlyL.Reset();
 					isFly = false;
-					isSpace = false;
+					isExhale = false;
 				}
 				SetEat(-1);
 			}
@@ -1156,7 +1167,7 @@ namespace game_framework {
 					flyL.OnMove();
 				}
 			}
-			else if (!isFly && m->isEmpty(GetX2() - originR.Width() / 2, GetY2() + 1))  //自由落體
+			else if (!isFly && m->isEmpty(GetX1(), GetY2() + 1) && m->isEmpty(GetX2(), GetY2() + 1))  //自由落體
 			{
 				if (rightOrLeft)
 					landingR.ShowBitmap();
@@ -1292,8 +1303,9 @@ namespace game_framework {
 					Spark_jumpL.OnShow();
 				}
 			}
-			else if (isSpace && isFly)   //吐氣
+			else if ((isAttack || isExhale) && isFly)   //吐氣
 			{
+				isExhale = true;
 				exhaleDelay--;
 				if (rightOrLeft)
 					Spark_exhaleR.ShowBitmap();
@@ -1305,7 +1317,7 @@ namespace game_framework {
 					Spark_prepareFlyR.Reset();
 					Spark_prepareFlyL.Reset();
 					isFly = false;
-					isSpace = false;
+					isExhale = false;
 				}
 			}
 			else if (isMovingUp)
@@ -1359,7 +1371,7 @@ namespace game_framework {
 					Spark_flyL.OnMove();
 				}
 			}
-			else if (!isFly && m->isEmpty(GetX1() + width / 2, GetY1() + height + 1))  //自由落體
+			else if (!isFly && m->isEmpty(GetX1(), GetY2() + 1) && m->isEmpty(GetX2(), GetY2() + 1))  //自由落體
 			{
 				if (rightOrLeft)
 				{
@@ -1529,8 +1541,9 @@ namespace game_framework {
 					fire_jumpL.OnShow();
 				}
 			}
-			else if (isSpace && isFly)   //吐氣
+			else if ((isAttack || isExhale) && isFly)   //吐氣
 			{
+				isExhale = true;
 				exhaleDelay--;
 				if (rightOrLeft)
 					fire_exhaleR.ShowBitmap();
@@ -1542,7 +1555,7 @@ namespace game_framework {
 					fire_prepareFlyR.Reset();
 					fire_prepareFlyL.Reset();
 					isFly = false;
-					isSpace = false;
+					isExhale = false;
 				}
 			}
 			else if (isMovingUp)
@@ -1596,7 +1609,7 @@ namespace game_framework {
 					fire_flyL.OnMove();
 				}
 			}
-			else if (!isFly && m->isEmpty(GetX1() + width / 2, GetY1() + height + 1))  //自由落體
+			else if (!isFly && m->isEmpty(GetX1(), GetY2() + 1) && m->isEmpty(GetX2(), GetY2() + 1))  //自由落體
 			{
 				if (rightOrLeft)
 				{

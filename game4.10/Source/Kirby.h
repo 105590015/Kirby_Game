@@ -29,6 +29,7 @@ namespace game_framework {
 		bool IsRight();                   // 面對方向
 		bool IsDown();                    // 是否縮小
 		bool IsBig();                     // 是否是大隻的
+		bool IsMove();                    // 是否在移動
 		void LoadBitmap();				  // 載入圖形
 		void OnMove(Map *m);		      // 移動
 		void OnShow(Map *m);			  // 將圖形貼到畫面
@@ -38,7 +39,6 @@ namespace game_framework {
 		void SetMovingLeft(bool flag);	  // 設定是否正在往左移動
 		void SetMovingRight(bool flag);   // 設定是否正在往右移動
 		void SetMovingUp(bool flag);	  // 設定是否正在往上移動
-		void SetSpace(bool flag);	      // 設定是否按下空白鍵
 		void SetJump(bool flag);	      // 設定是否按下X鍵
 		void SetAttack(bool flag);	      // 設定是否按下Z鍵
 		void SetSuck(bool flag);	      // 設定是否吸怪
@@ -78,7 +78,8 @@ namespace game_framework {
 			swallow,                // 11
 			spark,                  // 12
 			fire,                   // 13
-			stone                   // 14
+			stone,                  // 14
+			start                   // 15
 		};
 
 		Gas gas;
@@ -89,7 +90,7 @@ namespace game_framework {
 		bool isMovingLeft;			// 是否正在往左移動
 		bool isMovingRight;			// 是否正在往右移動
 		bool isMovingUp;			// 是否正在往上移動
-		bool isSpace;			    // 是否按下空白鍵
+		bool isExhale;			    // 是否吐氣
 		bool isJump;			    // 是否按下X鍵
 		bool isAttack;              // 是否按下Z鍵
 		bool isKick;                // 是否使用踢擊

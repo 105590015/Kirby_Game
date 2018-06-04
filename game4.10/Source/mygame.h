@@ -73,7 +73,8 @@ namespace game_framework {
 		swallow,                // 11
 		spark,                  // 12
 		fire,                   // 13
-		stone                   // 14
+		stone,                  // 14
+		start                   // 15
 	};
 
 	/////////////////////////////////////////////////////////////////////////////
@@ -92,7 +93,9 @@ namespace game_framework {
 		void OnShow();									// 顯示這個狀態的遊戲畫面
 
 	private:
+		int page;
 		CAnimation StartAnimation;
+		CMovingBitmap background, pressStart;
 	};
 
 	/////////////////////////////////////////////////////////////////////////////

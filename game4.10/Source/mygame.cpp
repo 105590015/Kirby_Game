@@ -71,30 +71,36 @@ CGameStateInit::CGameStateInit(CGame *g)
 
 void CGameStateInit::OnInit()
 {
-	StartAnimation.AddBitmap(".\\RES\\Start\\title_0.bmp");
-	StartAnimation.AddBitmap(".\\RES\\Start\\title_1.bmp");
-	StartAnimation.AddBitmap(".\\RES\\Start\\title_2.bmp");
-	StartAnimation.AddBitmap(".\\RES\\Start\\title_3.bmp");
-	StartAnimation.AddBitmap(".\\RES\\Start\\title_4.bmp");
-	StartAnimation.AddBitmap(".\\RES\\Start\\title_5.bmp");
-	StartAnimation.AddBitmap(".\\RES\\Start\\title_6.bmp");
-	StartAnimation.AddBitmap(".\\RES\\Start\\title_7.bmp");
-	StartAnimation.AddBitmap(".\\RES\\Start\\title_8.bmp");
-	StartAnimation.AddBitmap(".\\RES\\Start\\title_9.bmp");
-	StartAnimation.AddBitmap(".\\RES\\Start\\title_10.bmp");
-	StartAnimation.AddBitmap(".\\RES\\Start\\title_11.bmp");
-	StartAnimation.AddBitmap(".\\RES\\Start\\title_12.bmp");
-	StartAnimation.AddBitmap(".\\RES\\Start\\title_13.bmp");
-	StartAnimation.AddBitmap(".\\RES\\Start\\title_14.bmp");
-	StartAnimation.AddBitmap(".\\RES\\Start\\title_15.bmp");
-	StartAnimation.AddBitmap(".\\RES\\Start\\title_16.bmp");
-	StartAnimation.AddBitmap(".\\RES\\Start\\title_17.bmp");
-	StartAnimation.AddBitmap(".\\RES\\Start\\title_18.bmp");
-	StartAnimation.AddBitmap(".\\RES\\Start\\title_19.bmp");
+	StartAnimation.AddBitmap(".\\RES\\Start\\title_0.bmp", RGB(255, 255, 255));
+	StartAnimation.AddBitmap(".\\RES\\Start\\title_1.bmp", RGB(255, 255, 255));
+	StartAnimation.AddBitmap(".\\RES\\Start\\title_2.bmp", RGB(255, 255, 255));
+	StartAnimation.AddBitmap(".\\RES\\Start\\title_3.bmp", RGB(255, 255, 255));
+	StartAnimation.AddBitmap(".\\RES\\Start\\title_4.bmp", RGB(255, 255, 255));
+	StartAnimation.AddBitmap(".\\RES\\Start\\title_5.bmp", RGB(255, 255, 255));
+	StartAnimation.AddBitmap(".\\RES\\Start\\title_6.bmp", RGB(255, 255, 255));
+	StartAnimation.AddBitmap(".\\RES\\Start\\title_7.bmp", RGB(255, 255, 255));
+	StartAnimation.AddBitmap(".\\RES\\Start\\title_8.bmp", RGB(255, 255, 255));
+	StartAnimation.AddBitmap(".\\RES\\Start\\title_9.bmp", RGB(255, 255, 255));
+	StartAnimation.AddBitmap(".\\RES\\Start\\title_10.bmp", RGB(255, 255, 255));
+	StartAnimation.AddBitmap(".\\RES\\Start\\title_11.bmp", RGB(255, 255, 255));
+	StartAnimation.AddBitmap(".\\RES\\Start\\title_12.bmp", RGB(255, 255, 255));
+	StartAnimation.AddBitmap(".\\RES\\Start\\title_13.bmp", RGB(255, 255, 255));
+	StartAnimation.AddBitmap(".\\RES\\Start\\title_14.bmp", RGB(255, 255, 255));
+	StartAnimation.AddBitmap(".\\RES\\Start\\title_15.bmp", RGB(255, 255, 255));
+	StartAnimation.AddBitmap(".\\RES\\Start\\title_16.bmp", RGB(255, 255, 255));
+	StartAnimation.AddBitmap(".\\RES\\Start\\title_17.bmp", RGB(255, 255, 255));
+	StartAnimation.AddBitmap(".\\RES\\Start\\title_18.bmp", RGB(255, 255, 255));
+	StartAnimation.AddBitmap(".\\RES\\Start\\title_19.bmp", RGB(255, 255, 255));
+	background.LoadBitmap(".\\RES\\Start\\background.bmp");
+	pressStart.LoadBitmap(".\\RES\\Start\\Press_start.bmp", RGB(248, 248, 248));
 }
 
 void CGameStateInit::OnBeginState()
 {
+	page = 0;
+	if(!CAudio::Instance()->IsLoaded(start))
+		CAudio::Instance()->Load(start, "Sounds\\start.mp3");
+	CAudio::Instance()->Play(start, true);
 }
 
 void CGameStateInit::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
@@ -102,39 +108,61 @@ void CGameStateInit::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 	const char KEY_ESC = 27;
 	const char KEY_SPACE = ' ';
 	if (nChar == KEY_SPACE)
-		GotoGameState(GAME_STATE_RUN);						// 切換至GAME_STATE_RUN
+	{
+		if (page == 0)
+			page++;
+		else
+		{
+			CAudio::Instance()->Stop(start);
+			GotoGameState(GAME_STATE_RUN); // 切換至GAME_STATE_RUN
+		}
+	}
 	else if (nChar == KEY_ESC)								// Demo 關閉遊戲的方法
 		PostMessage(AfxGetMainWnd()->m_hWnd, WM_CLOSE,0,0);	// 關閉遊戲
 }
 
 void CGameStateInit::OnLButtonDown(UINT nFlags, CPoint point)
 {
-	GotoGameState(GAME_STATE_RUN);		// 切換至GAME_STATE_RUN
+	if (page == 0)
+		page++;
+	else
+	{
+		CAudio::Instance()->Stop(start);
+		GotoGameState(GAME_STATE_RUN); // 切換至GAME_STATE_RUN
+	}
 }
 
 void CGameStateInit::OnShow()
 {	
-	
-	StartAnimation.SetTopLeft(0, 0);
-	StartAnimation.OnMove();
-	StartAnimation.OnShow();
-
-
-	// /*Demo螢幕字型的使用，不過開發時請盡量避免直接使用字型，改用CMovingBitmap比較好*/
-	//CDC *pDC = CDDraw::GetBackCDC();			// 取得 Back Plain 的 CDC 
-	//CFont f,*fp;
-	//f.CreatePointFont(160,"Times New Roman");	// 產生 font f; 160表示16 point的字
-	//fp=pDC->SelectObject(&f);					// 選用 font f
-	//pDC->SetBkColor(RGB(0,0,0));
-	//pDC->SetTextColor(RGB(255,255,0));
-	//pDC->TextOut(120,220,"Please click mouse or press SPACE to begin.");
-	//pDC->TextOut(5,395,"Press Ctrl-F to switch in between window mode and full screen mode.");
-	//if (ENABLE_GAME_PAUSE)
-	//	pDC->TextOut(5,425,"Press Ctrl-Q to pause the Game.");
-	//pDC->TextOut(5,455,"Press Alt-F4 or ESC to Quit.");
-	//pDC->SelectObject(fp);						// 放掉 font f (千萬不要漏了放掉)
-	//CDDraw::ReleaseBackCDC();					// 放掉 Back Plain 的 CDC*/
-
+	if (page == 0)
+	{
+		background.SetTopLeft(0, 0);
+		StartAnimation.SetTopLeft(0, 0);
+		pressStart.SetTopLeft(60, 380);
+		background.ShowBitmap();
+		StartAnimation.OnMove();
+		StartAnimation.OnShow();
+		pressStart.ShowBitmap();
+	}
+	else
+	{
+		// /*Demo螢幕字型的使用，不過開發時請盡量避免直接使用字型，改用CMovingBitmap比較好*/
+		CDC *pDC = CDDraw::GetBackCDC();			// 取得 Back Plain 的 CDC 
+		CFont f,*fp;
+		f.CreatePointFont(160,"Times New Roman");	// 產生 font f; 160表示16 point的字
+		fp=pDC->SelectObject(&f);					// 選用 font f
+		pDC->SetBkColor(RGB(0, 0, 0));
+		pDC->SetTextColor(RGB(255 , 255, 0));
+		pDC->TextOut(60, 100, "操作 : ");
+		pDC->TextOut(90, 130, "↑ : 吸氣飛翔、進入傳送們   ↓ : 蹲下");
+		pDC->TextOut(90, 160, "← : 左移   → : 右移");
+		pDC->TextOut(90, 190, "Z : 攻擊(吸怪、吐氣、吐星星及變身的攻擊)");
+		pDC->TextOut(90, 220, "X : 跳躍");
+		pDC->TextOut(90, 250, "C : 跑步(按住加左右移)");
+		pDC->TextOut(220, 310, "(按下空白鍵開始)");
+		pDC->SelectObject(fp);						// 放掉 font f (千萬不要漏了放掉)
+		CDDraw::ReleaseBackCDC();					// 放掉 Back Plain 的 CDC*/
+	}
 }								
 
 /////////////////////////////////////////////////////////////////////////////
@@ -374,7 +402,6 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 	const char KEY_UP    = 0x26;   // keyboard上箭頭
 	const char KEY_RIGHT = 0x27;   // keyboard右箭頭
 	const char KEY_DOWN  = 0x28;   // keyboard下箭頭
-	const char KEY_SPACE = ' ';    // keyboard空白鍵
 	const char KEY_Jump = 0x58;    // keyboard X鍵
 	const char KEY_Attack = 0x5A;  // keyboard Z鍵
 	const char KEY_Run = 0x43;     // keyboard C鍵
@@ -404,16 +431,12 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 		if (kirby.IsBig())
 			CAudio::Instance()->Play(swallow);
 	}
-	if (nChar == KEY_SPACE)
-	{
-		kirby.SetSpace(true);
-		if(kirby.IsFly())
-			CAudio::Instance()->Play(gasSound);
-	}
 	if (nChar == KEY_Attack)
 	{
 		kirby.SetAttack(true);
-		if(kirby.IsDown())
+		if(kirby.IsFly())
+			CAudio::Instance()->Play(gasSound);
+		else if(kirby.IsDown())
 			CAudio::Instance()->Play(kick);
 		else if(kirby.GetType()==0 && !kirby.IsBig())
 			CAudio::Instance()->Play(suck);
@@ -427,7 +450,8 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 	if (nChar == KEY_Run)
 	{
 		kirby.SetRun(true);
-		CAudio::Instance()->Play(run);
+		if (!kirby.IsFly() && !index->isEmpty((kirby.GetX1() + kirby.GetX2()) / 2, kirby.GetY2() + 1) && kirby.IsMove())
+			CAudio::Instance()->Play(run);
 	}
 	if (nChar == KEY_Jump && !kirby.IsFly() && !index->isEmpty((kirby.GetX2() + kirby.GetX2()) / 2, kirby.GetY2() + 1)) //按下X,卡比不是在飛行且落地才可跳躍
 		kirby.SetJump(true);
@@ -441,7 +465,6 @@ void CGameStateRun::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 	const char KEY_UP    = 0x26;   // keyboard上箭頭
 	const char KEY_RIGHT = 0x27;   // keyboard右箭頭
 	const char KEY_DOWN  = 0x28;   // keyboard下箭頭
-	const char KEY_SPACE = ' ';    // keyboard空白鍵
 	const char KEY_Attack = 0x5A;  // keyboard Z鍵
 	const char KEY_Run = 0x43;     // keyboard C鍵
 	if (nChar == KEY_LEFT)
