@@ -56,8 +56,9 @@ namespace game_framework {
 			y += STEP_SIZE;
 		else if(counter == 0)
 		{
-			x -= 32;
-			y -= 25;
+			x = x + bomb.Width()/2 - fire.Width()/2;
+			y -= fire.Height()/4;
+			FireAttack(m, kirby);
 			counter++;
 		}
 	}
@@ -66,12 +67,12 @@ namespace game_framework {
 	{
 		if (HitRectangle(kirby->GetX1(), kirby->GetY1(), kirby->GetX2(), kirby->GetY2()))
 			kirby->Hurted(m);
+	}
 
-		if (!m->isEmpty(GetX1() + bomb.Width() / 2, GetY2() + 1))
-		{
-			if (kirby->GetX2() >= x && kirby->GetX1() <= x + fire.Width() && kirby->GetY2() >= y && kirby->GetY1() <= y + fire.Height())
-				kirby->Hurted(m);
-		}
+	void King_Bomb::FireAttack(Map* m, Kirby* kirby)
+	{
+		if (kirby->GetX2() >= (x + fire.Width() / 4) && kirby->GetX1() <= (x + fire.Width() / 4 * 3) && kirby->GetY2() >= (y + fire.Height() / 4) && kirby->GetY1() <= (y + fire.Height() / 4 * 3))
+			kirby->Hurted(m);
 	}
 
 	int King_Bomb::GetX2()

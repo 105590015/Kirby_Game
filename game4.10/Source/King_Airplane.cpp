@@ -117,17 +117,17 @@ namespace game_framework {
 			y += UporDown;
 			if (y <= 20)
 				UporDown = 1;
-			else if(y >= 320)
+			else if(y >= 250)
 				UporDown = -1;
 
-			if (counter == 60 && !bomb1.IsAlive())
-				bomb1.Init(x, y);
-			else if (counter == 120 && !bomb2.IsAlive())
-				bomb2.Init(x, y);
-			else if (counter == 180 && !bomb3.IsAlive())
-				bomb3.Init(x, y);
+			if (counter == 90 && !bomb1.IsAlive())
+				bomb1.Init(x, (GetY1() + GetY2()) / 2);
+			else if (counter == 180 && !bomb2.IsAlive())
+				bomb2.Init(x, (GetY1() + GetY2()) / 2);
+			else if (counter == 270 && !bomb3.IsAlive())
+				bomb3.Init(x, (GetY1() + GetY2()) / 2);
 
-			if (counter == 180)
+			if (counter == 270)
 				counter = 0;
 			
 			if (bomb1.IsAlive())
@@ -148,7 +148,7 @@ namespace game_framework {
 	{
 		x = sx;
 		y = sy;
-		hp = 50;
+		hp = 30;
 		counter = 0;
 		UporDown = 1;
 		is_alive = true;
@@ -158,7 +158,7 @@ namespace game_framework {
 
 	void King_Airplane::Attack(Map* m, Kirby* kirby)
 	{
-		if (HitRectangle(kirby->GetX1(), kirby->GetY1(), kirby->GetX2(), kirby->GetY2()))
+		if (HitRectangle(kirby->GetX1(), kirby->GetY1(), kirby->GetX2(), kirby->GetY2()) && kirby->IsAlive())
 			kirby->Hurted(m);
 	}
 

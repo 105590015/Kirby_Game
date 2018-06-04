@@ -13,6 +13,7 @@ namespace game_framework {
 		void OnShow(Map* m, Kirby* kirby);
 		void OnMove(Map* m, Kirby* kirby);
 		void Attack(Map* m, Kirby* kirby);
+		void FireAttack(Map* m, Kirby* kirby);
 		int GetX2();
 		int GetY2();
 	private:

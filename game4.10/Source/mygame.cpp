@@ -236,8 +236,8 @@ void CGameStateRun::OnBeginState()
 	door[5].Initialize(993, 367, 1, 0, &door1[0]);
 	door[6].Initialize(1159, 326, 1, 0, &door1[1]);
 	door[7].Initialize(207, 575, 1, 0, &door1[0]);
-	door[8].Initialize(620, 614, 1, 0, &door1[0]);
-	door[9].Initialize(1036, 574, 1, 0, &door1[0]);
+	door[8].Initialize(620, 614, 4, 0, &door4[0]);
+	door[9].Initialize(1036, 574, 4, 0, &door4[1]);
 
 	door1[0].Initialize(30, 425, 0,1, &door[5]);
 	door1[1].Initialize(4450, 350, 0, 1, &door[6]);
@@ -246,6 +246,9 @@ void CGameStateRun::OnBeginState()
 	door2.Initialize(320, 240, 0, 2, &door[4]);
 
 	door3.Initialize(150, 350, 0, 3, &door[3]);
+
+	door4[0].Initialize(48, 435, 0, 4, &door[8]);
+	door4[1].Initialize(3140, 240 , 0, 4, &door[9]);
 
 	ResetMonster();
 
@@ -332,6 +335,18 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 			}
 		}
 
+		if (mapNum == 4) {
+			door4[0].OnMove();
+			door4[1].OnMove();
+			for (int i = 0; i < 2; i++) {
+				if (door4[i].IsEnter(&kirby)) {
+					Istransiting = true;
+					Transition.Reset();
+					gate = &door4[i];
+				}
+			}
+		}
+
 
 	}
 
@@ -368,18 +383,18 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 		map[1].LoadBitmap(".//Map//map1.bmp", RGB(255, 255, 255), ".//Map//background_1.bmp", ".//Map//map1.txt");
 		map[2].LoadBitmap(".//Map//Boss_map.bmp", RGB(255, 255, 255), ".//Map//background_2.bmp", ".//Map//map2.txt");
 		map[3].LoadBitmap(".//Map//King_foreground.bmp", RGB(255, 255, 255), ".//Map//King_background.bmp", ".//Map//map3.txt");
-		map[4].LoadBitmap(".//Map//foreground_4.bmp", RGB(255, 255, 255), ".//Map//background_2.bmp", ".//Map//map4.txt");
+		map[4].LoadBitmap(".//Map//foreground_4.bmp", RGB(255, 255, 255), ".//Map//background_4.bmp", ".//Map//map4.txt");
 		kirby.LoadBitmap();
-		monster[0] = &fire1;
-		monster[1] = &normalMonster2;
-		monster[2] = &normalMonster3;
-		monster[3] = &normalMonster4;
-		monster[4] = &normalMonster5;
-		monster[5] = &fire2;
-		monster[6] = &spark1;
-		monster[7] = &spark2;
-		monster[8] = &spark3;
-		monster[9] = &spark4;
+		monster[0] = &fire1[0];
+		monster[1] = &fire1[1];
+		monster[2] = &normalMonster1[0];
+		monster[3] = &normalMonster1[1];
+		monster[4] = &normalMonster1[2];
+		monster[5] = &normalMonster1[3];
+		monster[6] = &spark1[0];
+		monster[7] = &spark1[1];
+		monster[8] = &spark1[2];
+		monster[9] = &spark1[3];
 		for (int m = 0; m < 10; m++)
 			monster[m]->LoadBitmap();
 		for (int i = 0; i < 10;i++)
@@ -388,6 +403,9 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 		door1[1].LoadBitmap();
 		door2.LoadBitmap();
 		door3.LoadBitmap();
+		for (int i = 0; i < 2; i++)
+			door4[i].LoadBitmap();
+
 
 		tree.LoadBitmap();
 		airplane.LoadBitmap();
@@ -424,6 +442,10 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 
 		if (mapNum == 3)
 			door3.SetEnter(true);
+
+		if (mapNum == 4)
+			for (int i = 0; i < 2; i++)
+				door4[i].SetEnter(true);
 	}
 	if (nChar == KEY_DOWN)
 	{
@@ -477,14 +499,18 @@ void CGameStateRun::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 			for (int i = 0; i < 10;i++)
 				door[i].SetEnter(false);
 		if (mapNum == 1)
-			for (int i = 0; i < 2;i++)
+			for (int i = 0; i < 2; i++) {
 				door1[i].SetEnter(false);
+			}
 
 		if (mapNum == 2)
 			door2.SetEnter(false);
 
-		if (mapNum)
+		if (mapNum==3)
 			door3.SetEnter(false);
+		if (mapNum == 4)
+			for (int i = 0; i < 2; i++)
+				door4[i].SetEnter(false);
 	}
 	if (nChar == KEY_DOWN)
 		kirby.SetMovingDown(false);
@@ -530,17 +556,22 @@ void CGameStateRun::OnRButtonUp(UINT nFlags, CPoint point)	// 處理滑鼠的動作
 
 void CGameStateRun::ResetMonster()
 {
-	normalMonster1.Initialize(417, 467);
-	normalMonster2.Initialize(947, 467);
-	normalMonster3.Initialize(2459, 517);
-	normalMonster4.Initialize(2903, 517);
-	normalMonster5.Initialize(3495, 59);
-	spark1.Initialize(675, 393);
-	spark2.Initialize(1673, 163);
-	spark3.Initialize(3247, 269);
-	spark4.Initialize(4045, 477);
-	fire1.Initialize(417, 467);
-	fire2.Initialize(3745, 477);
+
+		normalMonster1[0].Initialize(947, 467);
+		normalMonster1[1].Initialize(2459, 517);
+		normalMonster1[2].Initialize(2903, 517);
+		normalMonster1[3].Initialize(3495, 59);
+		spark1[0].Initialize(675, 393);
+		spark1[1].Initialize(1673, 163);
+		spark1[2].Initialize(3247, 269);
+		spark1[3].Initialize(4045, 477);
+		fire1[0].Initialize(417, 467);
+		fire1[1].Initialize(3745, 477);
+
+		fire4[0].Initialize(410, 400);
+	
+
+
 }
 
 void CGameStateRun::OnShow()
@@ -581,8 +612,9 @@ void CGameStateRun::OnShow()
 		}
 	}
 
-	if (mapNum == 4) {
-
+	if(mapNum == 4) {
+		for (int i = 0; i < 2; i++)
+			door4[i].OnShow(index);
 	}
 
 	if(kirby.IsAlive()) kirby.OnShow(index);
