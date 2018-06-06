@@ -153,13 +153,14 @@ void CGameStateInit::OnShow()
 		fp=pDC->SelectObject(&f);					// 選用 font f
 		pDC->SetBkColor(RGB(0, 0, 0));
 		pDC->SetTextColor(RGB(255 , 255, 0));
-		pDC->TextOut(60, 100, "操作 : ");
-		pDC->TextOut(90, 130, "↑ : 吸氣飛翔、進入傳送們   ↓ : 蹲下、吸怪後變身");
-		pDC->TextOut(90, 160, "← : 左移   → : 右移");
-		pDC->TextOut(90, 190, "Z : 攻擊(吸怪、吐氣、吐星星及變身的攻擊)");
-		pDC->TextOut(90, 220, "X : 跳躍");
-		pDC->TextOut(90, 250, "C : 跑步(按住加左右移)");
-		pDC->TextOut(220, 310, "(按下空白鍵開始)");
+		pDC->TextOut(35, 100, "操作 : ");
+		pDC->TextOut(65, 130, "↑ : 吸氣飛翔、進入傳送們   ↓ : 蹲下、變身");
+		pDC->TextOut(65, 160, "← : 左移   → : 右移");
+		pDC->TextOut(65, 190, "Z : 攻擊(吸怪、吐氣、吐星星及變身的攻擊)");
+		pDC->TextOut(65, 220, "X : 跳躍");
+		pDC->TextOut(65, 250, "C : 跑步(按住加左右移)");
+		pDC->TextOut(65, 310, "打敗兩隻魔王，拿回碎片拯救世界吧!卡比!");
+		pDC->TextOut(220, 340, "(按下空白鍵開始)");
 		pDC->SelectObject(fp);						// 放掉 font f (千萬不要漏了放掉)
 		CDDraw::ReleaseBackCDC();					// 放掉 Back Plain 的 CDC*/
 	}

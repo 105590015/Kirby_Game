@@ -54,7 +54,7 @@ namespace game_framework {
 			
 		// 被電
 		else if (kirby->GetType() == 1 && kirby->IsAttack() && !kirby->IsDown() && HitRectangle(kirby->GetX1() - 40, kirby->GetY1() - 10, kirby->GetX1() + 90, kirby->GetY1() + 110)){  // -10補償圖片 +145.+158是雷電圖檔的大小
-				hp -= 10;
+				hp -= 1;
 				Ishurted = true;
 			}
 			
@@ -62,7 +62,7 @@ namespace game_framework {
 		else if (kirby->GetType() == 2 && kirby->IsAttack() && !kirby->IsDown() && (
 		   (kirby->IsRight() && HitRectangle(kirby->GetX1() + 63, kirby->GetY1() + 12, kirby->GetX1() + 203, kirby->GetY1() + 90)) ||    // 卡比面相右噴火
 		   (!kirby->IsRight() && HitRectangle(kirby->GetX1() - 112, kirby->GetY1() + 12, kirby->GetX1() - 12, kirby->GetY1() + 90)))) {   // 卡比面相左噴火
-			 hp -= 10;
+			 hp -= 1;
 			 Ishurted = true;
 		}
 

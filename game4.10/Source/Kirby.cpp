@@ -512,33 +512,25 @@ namespace game_framework {
 		}
 		else
 		{
-
-			if (isMovingLeft){
-				if (m->isSlope(GetX1() - 9, GetY2() + 1)) {
-					if (isRunning)
-						y -= STEP_SIZE * 2;
-					else
-						y -= STEP_SIZE;
-				}
-			}
-
-
-			if (isMovingRight) {
-				if (m->isSlope(GetX2() - 9, GetY2() + 1)) {
-					if (isRunning)
-						y -= STEP_SIZE * 2;
-					else
-						y -= STEP_SIZE;
-				}
-			}
-
-
 			if (isMovingLeft && !isSuck && !isSwallow && !isAttack)
 			{
 				rightOrLeft = false;        //設定面向左邊
+				// 上坡
+				if (m->isSlope(GetX1() - 1, GetY2()) && !isMovingDown && (isFly || !isMovingUp)) {
+					if (isRunning && !isFly)
+					{
+						x -= STEP_SIZE * 2;
+						y -= STEP_SIZE * 2;
+					}
+					else
+					{
+						x -= STEP_SIZE;
+						y -= STEP_SIZE;
+					}
+				}
 				//先判斷左邊是否可走且沒有按Down，狀態要是向左飛行中或正常向左走
 				//為了防止變身後卡比變高導致牆壁失效，將判斷撞牆的點設在Y2-10
-				if (m->isEmpty(GetX1() - STEP_SIZE, GetY2()-10) && !isMovingDown && (isFly || !isMovingUp))
+				else if (m->isEmpty(GetX1() - STEP_SIZE, GetY2() - 10) && !isMovingDown && (isFly || !isMovingUp))
 				{
 					if (x <= 0) //邊界
 						x = 0;
@@ -546,18 +538,27 @@ namespace game_framework {
 						x -= STEP_SIZE * 2;
 					else
 						x -= STEP_SIZE;
-
-					
 				}
-
-				
 			}
 			else if (isMovingRight && !isSuck && !isSwallow && !isAttack)
 			{
 				rightOrLeft = true;          //設定面向右邊
+				// 上坡
+				if (m->isSlope(GetX2() - 1, GetY2()) && !isMovingDown && (isFly || !isMovingUp)) {
+					if (isRunning && !isFly)
+					{
+						x += STEP_SIZE * 2;
+						y -= STEP_SIZE * 2;
+					}
+					else
+					{
+						x += STEP_SIZE;
+						y -= STEP_SIZE;
+					}
+				}
 				//先判斷右邊是否可走且沒有按Down，狀態要是向右飛行中或正常向右走
 				//為了防止變身後卡比變高導致牆壁失效，將判斷撞牆的點設在Y2-10
-				if (m->isEmpty(GetX2() + STEP_SIZE, GetY2() - 10) && !isMovingDown && (isFly || !isMovingUp))
+				else if (m->isEmpty(GetX2() + STEP_SIZE, GetY2() - 10) && !isMovingDown && (isFly || !isMovingUp))
 				{
 					if (x >= m->GetWidth() - width)  //邊界
 						x = m->GetWidth() - width;
@@ -565,12 +566,7 @@ namespace game_framework {
 						x += STEP_SIZE * 2;
 					else
 						x += STEP_SIZE;
-
-					
 				}
-
-				
-
 			}
 			if (isMovingUp && !isBig)
 			{
@@ -617,7 +613,7 @@ namespace game_framework {
 			y += 1;
 		else
 		{
-			if (isLanding == true && !isFly)
+			if (isLanding == true && !isFly && !m->isSlope(GetX1(), GetY2() + 11) && !m->isSlope(GetX2(), GetY2() + 11))
 			{
 				CAudio::Instance()->Play(landing);
 				isLanding = false;
@@ -1012,7 +1008,7 @@ namespace game_framework {
 				if (starDistance <= 360)
 					isBig = false;
 			}
-			else if (isSwallow || (isMovingDown && !m->isEmpty(GetX2() - originR.Width() / 2, GetY2() + 1)))   //吞食
+			else if (isSwallow || (isMovingDown && !m->isEmpty(GetX1() + width / 2, GetY2() + 1)))   //吞食
 			{
 				isSwallow = true;
 				if (rightOrLeft)
@@ -1034,7 +1030,9 @@ namespace game_framework {
 					swallowL.Reset();
 				}
 			}
-			else if (m->isEmpty(GetX1(), GetY2() + 1) && m->isEmpty(GetX2(), GetY2() + 1))  //自由落體
+			//自由落體
+			//兩腳地都必須空，且不是走在斜坡，才會顯示降落的圖
+			else if (!isFly && m->isEmpty(GetX1(), GetY2() + 1) && m->isEmpty(GetX2(), GetY2() + 1) && !m->isSlope(GetX1(), GetY2() + 11) && !m->isSlope(GetX2(), GetY2() + 11))
 			{
 				if (rightOrLeft)
 					bigLandingR.ShowBitmap();
@@ -1162,7 +1160,9 @@ namespace game_framework {
 					flyL.OnMove();
 				}
 			}
-			else if (!isFly && m->isEmpty(GetX1(), GetY2() + 1) && m->isEmpty(GetX2(), GetY2() + 1))  //自由落體
+			//自由落體
+			//兩腳地都必須空，且不是走在斜坡，才會顯示降落的圖
+			else if (!isFly && m->isEmpty(GetX1(), GetY2() + 1) && m->isEmpty(GetX2(), GetY2() + 1) && !m->isSlope(GetX1(), GetY2() + 11) && !m->isSlope(GetX2(), GetY2() + 11))
 			{
 				if (rightOrLeft)
 					landingR.ShowBitmap();
@@ -1176,7 +1176,7 @@ namespace game_framework {
 				else
 					downAttackL.ShowBitmap();
 			}
-			else if (isMovingDown && !m->isEmpty(GetX2() - originR.Width() / 2, GetY2() + 1))   //縮小
+			else if (isMovingDown && !m->isEmpty(GetX1() + width / 2, GetY2() + 1))   //縮小
 			{
 				if (rightOrLeft)
 					downR.ShowBitmap();
@@ -1366,7 +1366,9 @@ namespace game_framework {
 					Spark_flyL.OnMove();
 				}
 			}
-			else if (!isFly && m->isEmpty(GetX1(), GetY2() + 1) && m->isEmpty(GetX2(), GetY2() + 1))  //自由落體
+			//自由落體
+			//兩腳地都必須空，且不是走在斜坡，才會顯示降落的圖
+			else if (!isFly && m->isEmpty(GetX1(), GetY2() + 1) && m->isEmpty(GetX2(), GetY2() + 1) && !m->isSlope(GetX1(), GetY2() + 11) && !m->isSlope(GetX2(), GetY2() + 11))
 			{
 				if (rightOrLeft)
 				{
@@ -1604,7 +1606,9 @@ namespace game_framework {
 					fire_flyL.OnMove();
 				}
 			}
-			else if (!isFly && m->isEmpty(GetX1(), GetY2() + 1) && m->isEmpty(GetX2(), GetY2() + 1))  //自由落體
+			//自由落體
+			//兩腳地都必須空，且不是走在斜坡，才會顯示降落的圖
+			else if (!isFly && m->isEmpty(GetX1(), GetY2() + 1) && m->isEmpty(GetX2(), GetY2() + 1) && !m->isSlope(GetX1(), GetY2() + 11) && !m->isSlope(GetX2(), GetY2() + 11))
 			{
 				if (rightOrLeft)
 				{
