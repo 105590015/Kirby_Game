@@ -55,7 +55,10 @@ namespace game_framework {
 		if((x - kx < 2) || (x - kx > 2) && (y - ky < -2) && (y - ky > 2)) // 確認星星離開卡比
 			time--;
 		if (time == 0)
+		{
+			CAudio::Instance()->Play(lostAbility);
 			isAlive = false;
+		}
 		if (temp < 150.0 && isSuck)
 		{
 			if (x > kx)

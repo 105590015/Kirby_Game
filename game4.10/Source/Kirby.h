@@ -8,7 +8,6 @@ namespace game_framework {
 	/////////////////////////////////////////////////////////////////////////////
 	// 卡比的所有資料
 	/////////////////////////////////////////////////////////////////////////////
-
 	class Kirby
 	{
 	public:
@@ -63,25 +62,6 @@ namespace game_framework {
 		CMovingBitmap fire_exhaleR, fire_exhaleL;
 		CAnimation fire_originR, fire_originL, fire_downR, fire_downL, fire_goR, fire_goL, fire_jumpR, fire_jumpL, fire_landingR, fire_landingL, fire_downAttackR, fire_downAttackL, fire_flyR, fire_prepareFlyR, fire_flyL, fire_prepareFlyL, fire_runR, fire_runL, fire_attackR, fire_attackL, attack1, attack2, attack3;
 
-		enum COPY_AUDIO_ID {		// 定義各種音效的編號
-			AUDIO_BACKGROUND,       // 0
-			jump,                   // 1
-			landing,                // 2
-			kick,                   // 3
-			die,                    // 4
-			fly,                    // 5
-			hurted,                 // 6
-			run,                    // 7
-			suck,                   // 8
-			gasSound,               // 9
-			starSound,              // 10
-			swallow,                // 11
-			spark,                  // 12
-			fire,                   // 13
-			stone,                  // 14
-			start                   // 15
-		};
-
 		Gas gas;
 		Star star;
 		LostAbility lost;
@@ -126,5 +106,26 @@ namespace game_framework {
 		int count;                  // 計數是否一秒
 		int height;                 // 記錄當下的身高
 		int width;                  // 記錄當下的寬度
+
+		enum COPY_AUDIO_ID {		// 定義各種音效的編號
+			AUDIO_BACKGROUND,       // 0
+			jump,                   // 1
+			landing,                // 2
+			kick,                   // 3
+			die,                    // 4
+			fly,                    // 5
+			hurted,                 // 6
+			run,                    // 7
+			suck,                   // 8
+			gasSound,               // 9
+			starSound,              // 10
+			swallow,                // 11
+			spark,                  // 12
+			fire,                   // 13
+			stone,                  // 14
+			start,                  // 15
+			enemyDie,               // 16
+			lostAbility             // 17
+		};
 	};
 }

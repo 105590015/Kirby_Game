@@ -411,6 +411,21 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 		airplane.LoadBitmap();
 
 	CAudio::Instance()->Load(AUDIO_BACKGROUND, "Sounds\\Kirby_background.mp3");  //背景音樂
+	CAudio::Instance()->Load(jump, "Sounds\\jump.wav");
+	CAudio::Instance()->Load(landing, "Sounds\\landing.wav");
+	CAudio::Instance()->Load(kick, "Sounds\\kick.wav");
+	CAudio::Instance()->Load(die, "Sounds\\die.wav");
+	CAudio::Instance()->Load(fly, "Sounds\\fly.wav");
+	CAudio::Instance()->Load(hurted, "Sounds\\hurted.wav");
+	CAudio::Instance()->Load(run, "Sounds\\run.wav");
+	CAudio::Instance()->Load(suck, "Sounds\\suck.wav");
+	CAudio::Instance()->Load(gasSound, "Sounds\\gas.wav");
+	CAudio::Instance()->Load(starSound, "Sounds\\star.wav");
+	CAudio::Instance()->Load(swallow, "Sounds\\swallow.wav");
+	CAudio::Instance()->Load(spark, "Sounds\\spark.wav");
+	CAudio::Instance()->Load(fire, "Sounds\\fire.wav");
+	CAudio::Instance()->Load(enemyDie, "Sounds\\enemyDie.wav");
+	CAudio::Instance()->Load(lostAbility, "Sounds\\lostAbility.wav");
 }
 
 void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)

@@ -74,7 +74,9 @@ namespace game_framework {
 		spark,                  // 12
 		fire,                   // 13
 		stone,                  // 14
-		start                   // 15
+		start,                  // 15
+		enemyDie,               // 16
+		lostAbility             // 17
 	};
 
 	/////////////////////////////////////////////////////////////////////////////
