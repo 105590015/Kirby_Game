@@ -154,7 +154,7 @@ void CGameStateInit::OnShow()
 		pDC->SetBkColor(RGB(0, 0, 0));
 		pDC->SetTextColor(RGB(255 , 255, 0));
 		pDC->TextOut(60, 100, "操作 : ");
-		pDC->TextOut(90, 130, "↑ : 吸氣飛翔、進入傳送們   ↓ : 蹲下");
+		pDC->TextOut(90, 130, "↑ : 吸氣飛翔、進入傳送們   ↓ : 蹲下、吸怪後變身");
 		pDC->TextOut(90, 160, "← : 左移   → : 右移");
 		pDC->TextOut(90, 190, "Z : 攻擊(吸怪、吐氣、吐星星及變身的攻擊)");
 		pDC->TextOut(90, 220, "X : 跳躍");
@@ -338,6 +338,10 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 		if (mapNum == 4) {
 			door4[0].OnMove();
 			door4[1].OnMove();
+
+			for (int m = 0; m < 3; m++)
+				monster[m]->OnMove(index, &kirby);
+
 			for (int i = 0; i < 2; i++) {
 				if (door4[i].IsEnter(&kirby)) {
 					Istransiting = true;
@@ -357,6 +361,7 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 	if (Transition.GetCurrentBitmapNumber() == 7) {
 		mapNum = gate->GetMapNum();
 		index = &map[mapNum];
+		ResetMonster();
 		kirby.SetXY(gate->GetNextDoor().GetX() - 50, gate->GetNextDoor().GetY2()-kirby.GetHeight());
 	}
 }
@@ -395,6 +400,10 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 		monster[7] = &spark1[1];
 		monster[8] = &spark1[2];
 		monster[9] = &spark1[3];
+		fire4[0].LoadBitmap();
+		spark4[0].LoadBitmap();
+		normalMonster4[0].LoadBitmap();
+
 		for (int m = 0; m < 10; m++)
 			monster[m]->LoadBitmap();
 		for (int i = 0; i < 10;i++)
@@ -556,7 +565,7 @@ void CGameStateRun::OnRButtonUp(UINT nFlags, CPoint point)	// 處理滑鼠的動作
 
 void CGameStateRun::ResetMonster()
 {
-
+	if (mapNum == 1) {
 		normalMonster1[0].Initialize(947, 467);
 		normalMonster1[1].Initialize(2459, 517);
 		normalMonster1[2].Initialize(2903, 517);
@@ -568,8 +577,31 @@ void CGameStateRun::ResetMonster()
 		fire1[0].Initialize(417, 467);
 		fire1[1].Initialize(3745, 477);
 
+		monster[0] = &fire1[0];
+		monster[1] = &fire1[1];
+		monster[2] = &normalMonster1[0];
+		monster[3] = &normalMonster1[1];
+		monster[4] = &normalMonster1[2];
+		monster[5] = &normalMonster1[3];
+		monster[6] = &spark1[0];
+		monster[7] = &spark1[1];
+		monster[8] = &spark1[2];
+		monster[9] = &spark1[3];
+	}
+
+	if (mapNum == 4) {
+
 		fire4[0].Initialize(410, 400);
-	
+
+		spark4[0].Initialize(1125, 525);
+
+		normalMonster4[0].Initialize(1600, 525);
+
+		monster[0] = &fire4[0];
+		monster[1] = &spark4[0];
+		monster[2] = &normalMonster4[0];
+		
+	}
 
 
 }
@@ -595,8 +627,6 @@ void CGameStateRun::OnShow()
 		for (int m = 0; m < 10; m++)
 			monster[m]->OnShow(index, &kirby);
 	}
-	else
-		ResetMonster();
 
 	if (mapNum == 2) {
 		airplane.OnShow(index,&kirby);
@@ -615,6 +645,9 @@ void CGameStateRun::OnShow()
 	if(mapNum == 4) {
 		for (int i = 0; i < 2; i++)
 			door4[i].OnShow(index);
+
+		for (int m = 0; m < 3; m++)
+			monster[m]->OnShow(index, &kirby);
 	}
 
 	if(kirby.IsAlive()) kirby.OnShow(index);

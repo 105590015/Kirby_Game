@@ -527,13 +527,32 @@ namespace game_framework {
 		else
 		{
 
+			if (isMovingLeft){
+				if (m->isSlope(GetX1() - 9, GetY2() + 1)) {
+					if (isRunning)
+						y -= STEP_SIZE * 2;
+					else
+						y -= STEP_SIZE;
+				}
+			}
+
+
+			if (isMovingRight) {
+				if (m->isSlope(GetX2() - 9, GetY2() + 1)) {
+					if (isRunning)
+						y -= STEP_SIZE * 2;
+					else
+						y -= STEP_SIZE;
+				}
+			}
+
 
 			if (isMovingLeft && !isSuck && !isSwallow && !isAttack)
 			{
 				rightOrLeft = false;        //設定面向左邊
 				//先判斷左邊是否可走且沒有按Down，狀態要是向左飛行中或正常向左走
 				//為了防止變身後卡比變高導致牆壁失效，將判斷撞牆的點設在Y2-10
-				if (m->isEmpty(GetX1() - STEP_SIZE, GetY2() - 10) && !isMovingDown && (isFly || !isMovingUp))
+				if (m->isEmpty(GetX1() - STEP_SIZE, GetY2()-10) && !isMovingDown && (isFly || !isMovingUp))
 				{
 					if (x <= 0) //邊界
 						x = 0;
@@ -542,12 +561,7 @@ namespace game_framework {
 					else
 						x -= STEP_SIZE;
 
-					if (m->isSlope(GetX1() - 10, GetY2())) {
-						if (isRunning)
-							y -= STEP_SIZE * 2;
-						else
-							y -= STEP_SIZE;
-					}
+					
 				}
 
 				
@@ -566,12 +580,7 @@ namespace game_framework {
 					else
 						x += STEP_SIZE;
 
-					if (m->isSlope(GetX2() + 10, GetY2())) {
-						if (isRunning)
-							y -= STEP_SIZE * 2;
-						else
-							y -= STEP_SIZE;
-					}
+					
 				}
 
 				

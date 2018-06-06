@@ -126,8 +126,8 @@ namespace game_framework {
 		Map *index;
 		Enemy *monster[10];                             // й╟кл
 		Enemy *Boss;
-		NormalMonster normalMonster1[5],normalMonster4;
-		Spark spark1[4],spark4;
+		NormalMonster normalMonster1[5],normalMonster4[1];
+		Spark spark1[4],spark4[1];
 		Fire  fire1[2], fire4[1];
 		Tree tree;
 		King_Airplane airplane;

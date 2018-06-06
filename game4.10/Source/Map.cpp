@@ -135,45 +135,45 @@ namespace game_framework {
 		//}
 		//set.close();
 
-		//for (int i = 0; i < mapSize_Y; i++) {
-		//	for (int j = 0; j < mapSize_X; j++) {
-		//		int x = j * 10 - sx; // 算出第(i, j)這一格的 x 螢幕座標
-		//		int y = i * 10 - sy; // 算出第(i, j)這一格的 y 螢幕座標
-		//		if (mx >= x && mx <= x + 10 && my >= y && my <= y + 10) { //判斷滑鼠位置
-		//			if (Lclick) {				//左鍵為設立障礙物
-		//				map[i][j] = 1;
-		//			}
+		for (int i = 0; i < mapSize_Y; i++) {
+			for (int j = 0; j < mapSize_X; j++) {
+				int x = j * 10 - sx; // 算出第(i, j)這一格的 x 螢幕座標
+				int y = i * 10 - sy; // 算出第(i, j)這一格的 y 螢幕座標
+				if (mx >= x && mx <= x + 10 && my >= y && my <= y + 10) { //判斷滑鼠位置
+					if (Lclick) {				//左鍵為設立障礙物
+						map[i][j] = 1;
+					}
 
-		//			//if (Lclick) {				//左鍵為設立可穿透的障礙物
-		//			//	map[i][j] = 2;
-		//			//} 
+					//if (Lclick) {				//左鍵為設立可穿透的障礙物
+					//	map[i][j] = 2;
+					//} 
 
-		//			//if (Lclick) {				//左鍵為設立斜坡
-		//			//	map[i][j] = 3;
-		//			//}
+					if (Lclick) {				//左鍵為設立斜坡
+						map[i][j] = 3;
+					}
 
-		//			if (Rclick) {			//右鍵為取消障礙物
-		//				map[i][j] = 0;
-		//			}
-		//		}
-		//		switch (map[i][j]) {
-		//			case 1:
-		//				ball_1.SetTopLeft(x, y); // 指定第(i, j)這一格的座標
-		//				ball_1.ShowBitmap();
-		//				break;
-		//			case 2:
-		//				ball_2.SetTopLeft(x, y);
-		//				ball_2.ShowBitmap();
-		//				break;
+					if (Rclick) {			//右鍵為取消障礙物
+						map[i][j] = 0;
+					}
+				}
+				switch (map[i][j]) {
+					case 1:
+						ball_1.SetTopLeft(x, y); // 指定第(i, j)這一格的座標
+						ball_1.ShowBitmap();
+						break;
+					case 2:
+						ball_2.SetTopLeft(x, y);
+						ball_2.ShowBitmap();
+						break;
 
-		//			case 3:
-		//				ball_3.SetTopLeft(x, y);
-		//				ball_3.ShowBitmap();
-		//				break;
+					case 3:
+						ball_3.SetTopLeft(x, y);
+						ball_3.ShowBitmap();
+						break;
 
-		//		}
-		//	}
-		//}
+				}
+			}
+		}
 	}
 
 	void Map::SetXY(int nx, int ny)
