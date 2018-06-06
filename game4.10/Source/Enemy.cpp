@@ -73,7 +73,11 @@ namespace game_framework {
 		if (kirby->IsSuck() && (x - kirby->GetX1() > 2 || x - kirby->GetX1() < -2 || y - kirby->GetY1() > 2 || y - kirby->GetY1() < -2))
 			is_alive = true;
 		else if (hp <= 0)
+		{
+			CAudio::Instance()->Play(enemyDie);
 			is_alive = false;
+		}
+			
 	}
 
 	void Enemy::Sucked(Kirby* kirby)

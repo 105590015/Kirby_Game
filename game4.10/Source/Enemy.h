@@ -27,5 +27,26 @@ namespace game_framework {
 		bool Ishurted;
 		bool HitRectangle(int tx1, int ty1, int tx2, int ty2);   // 是否碰到參數範圍的矩形
 		double ComputeDistance(int tx1, int ty1);                   // 計算距離
+	private:
+		enum COPY_AUDIO_ID {		// 定義各種音效的編號
+			AUDIO_BACKGROUND,       // 0
+			jump,                   // 1
+			landing,                // 2
+			kick,                   // 3
+			die,                    // 4
+			fly,                    // 5
+			hurted,                 // 6
+			run,                    // 7
+			suck,                   // 8
+			gasSound,               // 9
+			starSound,              // 10
+			swallow,                // 11
+			spark,                  // 12
+			fire,                   // 13
+			stone,                  // 14
+			start,                  // 15
+			enemyDie,               // 16
+			lostAbility             // 17
+		};
 	};
 }
