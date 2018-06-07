@@ -32,7 +32,7 @@ namespace game_framework {
 		CAnimation door;			// 地圖
 		CAnimation Gate;
 	private:
-		bool Enter=false;    //滑鼠左鍵與右鍵是否按下 預設為否
+		bool Enter=false;    //是否在門按上 預設為否
 		int x, y;							// 左上角座標
 		int mapNum;				//記錄此門傳送到幾號地圖
 		int map;				//現在所在地圖

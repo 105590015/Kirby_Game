@@ -226,35 +226,41 @@ void CGameStateRun::OnBeginState()
 	map[2].Initialize();
 	map[3].Initialize();
 	map[4].Initialize();
+
+	Mirror_L.SetTopLeft(608, -100);
+	Mirror_R.SetTopLeft(608, -100);
 	
 	kirby.Initialize(640,400);
 
 	door[0].Initialize(123,  37, 1, 0, &door1[0]);
-	door[1].Initialize(621,  37, 1, 0, &door1[0]);
-	door[2].Initialize(1118,  37, 1, 0, &door1[0]);
-	door[3].Initialize(83, 328, 3, 0, &door3);
-	door[4].Initialize(248, 369, 2, 0, &door2);
+	door[1].Initialize(621,  37, 2, 0, &door2);
+	door[2].Initialize(1118,  37, 4, 0, &door4[0]);
+	door[3].Initialize(83, 328, 4, 0, &door4[1]);
+	door[4].Initialize(248, 369, 4, 0, &door4[0]);
 	door[5].Initialize(993, 367, 1, 0, &door1[0]);
 	door[6].Initialize(1159, 326, 1, 0, &door1[1]);
-	door[7].Initialize(207, 575, 1, 0, &door1[0]);
-	door[8].Initialize(620, 614, 4, 0, &door4[0]);
+	door[7].Initialize(207, 575, 1, 0, &door1[1]);
+	door[8].Initialize(620, 614, 3, 0, &door3);
 	door[9].Initialize(1036, 574, 4, 0, &door4[1]);
 
 	door1[0].Initialize(30, 425, 0,1, &door[5]);
 	door1[1].Initialize(4450, 350, 0, 1, &door[6]);
 
 
-	door2.Initialize(320, 240, 0, 2, &door[4]);
+	door2.Initialize(320, 240, 0, 2, &door[1]);
 
-	door3.Initialize(150, 350, 0, 3, &door[3]);
+	door3.Initialize(150, 350, 0, 3, &door[8]);
 
-	door4[0].Initialize(48, 435, 0, 4, &door[8]);
-	door4[1].Initialize(3140, 240 , 0, 4, &door[9]);
+	door4[0].Initialize(48, 435, 0, 4, &door[4]);
+	door4[1].Initialize(3140, 240 , 0, 4, &door[3]);
 
 	ResetMonster();
 
 	tree.Initialize(450, 100);
 	airplane.Initialize(450, 60);
+
+	Mirror_L_Y = -10;
+	Mirror_R_Y = -10;
 
 	mapNum = 0;
 	index = &map[mapNum];
@@ -267,11 +273,32 @@ void CGameStateRun::OnBeginState()
 void CGameStateRun::OnMove()							// 移動遊戲元素
 {
 	index->OnMove(kirby.GetX1(), kirby.GetY1());
+
+	
+
 	if (Istransiting) {
 		Transition.OnMove();
 		Transition.SetDelayCount(4);
 	}
 	
+	else if (MovingMirror) {
+		map[0].SetXY(320, 160);
+		Mirror_R.OnMove();
+		Mirror_L.OnMove();
+		if (Show_Mirror_R && Mirror_R_Y != 327) {
+			Mirror_R_Y += 1;
+			Mirror_R.SetTopLeft(map[0].ScreenX(608), map[0].ScreenY(Mirror_R_Y));
+		}
+		else if (Show_Mirror_L && Mirror_L_Y != 327 ) {
+			Mirror_L_Y += 1;
+			Mirror_L.SetTopLeft(map[0].ScreenX(608), map[0].ScreenY(Mirror_L_Y));
+		}
+		else {
+			MovingMirror = false;
+		}
+
+	}
+
 	else {
 		
 		if (kirby.IsAlive())
@@ -288,6 +315,15 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 					//index = &map[1];
 					//kirby.SetXY(door.GetNextX()-50,door.GetNextY());
 				}
+			}
+
+			if (Show_Mirror_L) {
+				Mirror_L.SetTopLeft(map[0].ScreenX(608), map[0].ScreenY(Mirror_L_Y));
+				Mirror_L.OnMove();
+			}
+			if (Show_Mirror_R) {
+				Mirror_R.SetTopLeft(map[0].ScreenX(608), map[0].ScreenY(Mirror_R_Y));
+				Mirror_R.OnMove();
 			}
 		}
 		if (mapNum == 1) {
@@ -312,13 +348,28 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 			airplane.OnMove(index,&kirby);
 			if (!airplane.IsAlive())
 			{
-				door2.OnMove();
-				if (door2.IsEnter(&kirby)) {
+				
+				if (!Show_Mirror_R) {
+					MovingMirror = true;
+					Show_Mirror_R = true;
 					Istransiting = true;
 					Transition.Reset();
-					gate = &door2;
-
+					Mirror_L.Reset();
+					Mirror_R.Reset();
 				}
+
+				else {
+					door2.OnMove();
+
+					if (door2.IsEnter(&kirby)) {
+						Istransiting = true;
+						Transition.Reset();
+						gate = &door2;
+
+					}
+				}
+
+				
 			}
 		}
 
@@ -326,12 +377,22 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 			tree.OnMove(index,&kirby);
 
 			if (!tree.IsAlive()) {
-				door3.OnMove();
-				if (door3.IsEnter(&kirby)) {
+
+				if (!Show_Mirror_L) {
+					MovingMirror = true;
+					Show_Mirror_L = true;
 					Istransiting = true;
 					Transition.Reset();
-					gate = &door3;
+				}
 
+				else {
+					door3.OnMove();
+					if (door3.IsEnter(&kirby)) {
+						Istransiting = true;
+						Transition.Reset();
+						gate = &door3;
+
+					}
 				}
 			}
 		}
@@ -359,7 +420,7 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 		Istransiting = false;
 	}
 
-	if (Transition.GetCurrentBitmapNumber() == 7) {
+	if (Transition.GetCurrentBitmapNumber() == 7  && !MovingMirror) {
 		mapNum = gate->GetMapNum();
 		index = &map[mapNum];
 		ResetMonster();
@@ -384,6 +445,16 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 		Transition.AddBitmap(".//Map//Transition_5.bmp", RGB(0, 0, 0));
 		Transition.AddBitmap(".//Map//Transition_6.bmp", RGB(0, 0, 0));
 		Transition.AddBitmap(".//Map//Transition_7.bmp", RGB(0, 0, 0));
+
+		Mirror_L.AddBitmap(".//RES//Door//mirror_L_0.bmp", RGB(255, 255, 255));
+		Mirror_L.AddBitmap(".//RES//Door//mirror_L_1.bmp", RGB(255, 255, 255));
+		Mirror_L.AddBitmap(".//RES//Door//mirror_L_2.bmp", RGB(255, 255, 255));
+		Mirror_L.AddBitmap(".//RES//Door//mirror_L_3.bmp", RGB(255, 255, 255));
+
+		Mirror_R.AddBitmap(".//RES//Door//mirror_R_0.bmp", RGB(255, 255, 255));
+		Mirror_R.AddBitmap(".//RES//Door//mirror_R_1.bmp", RGB(255, 255, 255));
+		Mirror_R.AddBitmap(".//RES//Door//mirror_R_2.bmp", RGB(255, 255, 255));
+		Mirror_R.AddBitmap(".//RES//Door//mirror_R_3.bmp", RGB(255, 255, 255));
 		
 		map[0].LoadBitmap(".//Map//foreground.bmp", RGB(255, 255, 255), ".//Map//background.bmp", ".//Map//map.txt");
 		map[1].LoadBitmap(".//Map//map1.bmp", RGB(255, 255, 255), ".//Map//background_1.bmp", ".//Map//map1.txt");
@@ -634,6 +705,13 @@ void CGameStateRun::OnShow()
 	if (mapNum == 0) {
 		for (int i = 0; i < 10;i++)
 			door[i].OnShow(index);
+
+		if (Show_Mirror_L) {
+			Mirror_L.OnShow();
+		}
+		if (Show_Mirror_R) {
+			Mirror_R.OnShow();
+		}
 		
 	}
 
@@ -670,7 +748,25 @@ void CGameStateRun::OnShow()
 	else if(kirby.GetY1()<=1) GotoGameState(GAME_STATE_OVER);
 	else kirby.Die(index);
 
+	
 
+	
+	
+	if (MovingMirror && Transition.GetCurrentBitmapNumber()>6) {
+		map[0].SetXY(320, 160);
+		map[0].OnShow();
+
+		if (Show_Mirror_L) {
+			Mirror_L.SetTopLeft(map[0].ScreenX(608), map[0].ScreenY(Mirror_L_Y));
+			Mirror_L.OnShow();
+		}
+
+		if (Show_Mirror_R) {
+			Mirror_R.SetTopLeft(map[0].ScreenX(608), map[0].ScreenY(Mirror_R_Y));
+			Mirror_R.OnShow();
+		}
+	}
+	
 	if (Istransiting) {
 		Transition.OnShow();
 	}
