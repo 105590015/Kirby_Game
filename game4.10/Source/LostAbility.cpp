@@ -37,7 +37,7 @@ namespace game_framework {
 		y = sy;
 		type = t;
 		direction = rand() % 4;  // 左下.左上.右上.右下四個方向隨機
-		time = 240;              // 顯示8秒
+		time = 150;              // 顯示5秒
 		isAlive = true;
 	}
 

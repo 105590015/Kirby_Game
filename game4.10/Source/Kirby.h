@@ -45,6 +45,7 @@ namespace game_framework {
 		void SetRun(bool);				  // 設定是否按下C
 		void SetXY(int nx, int ny);		  // 設定左上角的座標
 		void SetEat(int t);		          // 設定吃了什麼怪物
+		void Restore();                   // 密技:血回到滿
 		Gas* GetGas();
 		Star* GetStar();
 	protected:	
