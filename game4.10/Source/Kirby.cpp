@@ -528,19 +528,6 @@ namespace game_framework {
 						y -= STEP_SIZE;
 					}
 				}
-				// 下坡
-				else if (m->isSlope(GetX2() + 1, GetY2() + 1) && !isMovingDown && (isFly || !isMovingUp)) {
-					if (isRunning && !isFly)
-					{
-						x -= STEP_SIZE * 2;
-						y += STEP_SIZE * 2;
-					}
-					else
-					{
-						x -= STEP_SIZE;
-						y += STEP_SIZE;
-					}
-				}
 				//先判斷左邊是否可走且沒有按Down，狀態要是向左飛行中或正常向左走
 				//為了防止變身後卡比變高導致牆壁失效，將判斷撞牆的點設在Y2-10
 				else if (m->isEmpty(GetX1() - STEP_SIZE, GetY2() - 10) && !isMovingDown && (isFly || !isMovingUp))
@@ -552,12 +539,25 @@ namespace game_framework {
 					else
 						x -= STEP_SIZE;
 				}
+				// 下坡
+				else if (m->isSlope(GetX2(), GetY2() + 1) && !isMovingDown && (isFly || !isMovingUp)) {
+					if (isRunning && !isFly)
+					{
+						x -= STEP_SIZE * 2;
+						y += STEP_SIZE * 2;
+					}
+					else
+					{
+						x -= STEP_SIZE;
+						y += STEP_SIZE;
+					}
+				}
 			}
 			else if (isMovingRight && !isSuck && !isSwallow && !isAttack)
 			{
 				rightOrLeft = true;          //設定面向右邊
 				// 上坡
-				if (m->isSlope(GetX2() - 1, GetY2()) && !isMovingDown && (isFly || !isMovingUp)) {
+				if (m->isSlope(GetX2() + 1, GetY2()) && !isMovingDown && (isFly || !isMovingUp)) {
 					if (isRunning && !isFly)
 					{
 						x += STEP_SIZE * 2;
@@ -567,19 +567,6 @@ namespace game_framework {
 					{
 						x += STEP_SIZE;
 						y -= STEP_SIZE;
-					}
-				}
-				// 下坡
-				else if (m->isSlope(GetX1() - 1, GetY2() + 1) && !isMovingDown && (isFly || !isMovingUp)) {
-					if (isRunning && !isFly)
-					{
-						x += STEP_SIZE * 2;
-						y += STEP_SIZE * 2;
-					}
-					else
-					{
-						x += STEP_SIZE;
-						y += STEP_SIZE;
 					}
 				}
 				//先判斷右邊是否可走且沒有按Down，狀態要是向右飛行中或正常向右走
@@ -593,6 +580,19 @@ namespace game_framework {
 					else
 						x += STEP_SIZE;
 				}
+				// 下坡
+				else if (m->isSlope(GetX1(), GetY2() + 1) && !isMovingDown && (isFly || !isMovingUp)) {
+					if (isRunning && !isFly)
+					{
+						x += STEP_SIZE * 2;
+						y += STEP_SIZE * 2;
+					}
+					else
+					{
+						x += STEP_SIZE;
+						y += STEP_SIZE;
+					}
+				}	
 			}
 			if (isMovingUp && !isBig)
 			{
