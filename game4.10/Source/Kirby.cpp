@@ -528,19 +528,8 @@ namespace game_framework {
 						y -= STEP_SIZE;
 					}
 				}
-				//先判斷左邊是否可走且沒有按Down，狀態要是向左飛行中或正常向左走
-				//為了防止變身後卡比變高導致牆壁失效，將判斷撞牆的點設在Y2-10
-				else if (m->isEmpty(GetX1() - STEP_SIZE, GetY2() - 10) && !isMovingDown && (isFly || !isMovingUp))
-				{
-					if (x <= 0) //邊界
-						x = 0;
-					else if (isRunning && !isFly && !m->isEmpty(GetX1() + width / 2, GetY2() + 1))
-						x -= STEP_SIZE * 2;
-					else
-						x -= STEP_SIZE;
-				}
-				// 下坡
-				else if (m->isSlope(GetX2(), GetY2() + 1) && !isMovingDown && (isFly || !isMovingUp)) {
+				// 下坡，前腳(左腳)離開斜坡(下方不是空的)就不要在下移了，不然會衝進土裡
+				else if (m->isSlope(GetX2(), GetY2() + 1) && m->isEmpty(GetX1(), GetY2() + 1) && !isMovingDown && (isFly || !isMovingUp)) {
 					if (isRunning && !isFly)
 					{
 						x -= STEP_SIZE * 2;
@@ -551,6 +540,17 @@ namespace game_framework {
 						x -= STEP_SIZE;
 						y += STEP_SIZE;
 					}
+				}
+				//先判斷左邊是否可走且沒有按Down，狀態要是向左飛行中或正常向左走
+				//為了防止變身後卡比變高導致牆壁失效，將判斷撞牆的點設在Y2-10
+				else if (m->isEmpty(GetX1() - STEP_SIZE, GetY2() - 10) && !isMovingDown && (isFly || !isMovingUp))
+				{
+					if (x <= 0) //邊界
+						x = 0;
+					else if (isRunning && !isFly && !m->isEmpty(GetX1() + width / 2, GetY2() + 1))
+						x -= STEP_SIZE * 2;
+					else
+						x -= STEP_SIZE;
 				}
 			}
 			else if (isMovingRight && !isSuck && !isSwallow && !isAttack)
@@ -569,19 +569,8 @@ namespace game_framework {
 						y -= STEP_SIZE;
 					}
 				}
-				//先判斷右邊是否可走且沒有按Down，狀態要是向右飛行中或正常向右走
-				//為了防止變身後卡比變高導致牆壁失效，將判斷撞牆的點設在Y2-10
-				else if (m->isEmpty(GetX2() + STEP_SIZE, GetY2() - 10) && !isMovingDown && (isFly || !isMovingUp))
-				{
-					if (x >= m->GetWidth() - width)  //邊界
-						x = m->GetWidth() - width;
-					else if (isRunning && !isFly && !m->isEmpty(GetX2() - width / 2, GetY2() + 1))
-						x += STEP_SIZE * 2;
-					else
-						x += STEP_SIZE;
-				}
-				// 下坡
-				else if (m->isSlope(GetX1(), GetY2() + 1) && !isMovingDown && (isFly || !isMovingUp)) {
+				// 下坡，前腳(右腳)離開斜坡(下方不是空的)就不要在下移了，不然會衝進土裡
+				else if (m->isSlope(GetX1(), GetY2() + 1) && m->isEmpty(GetX2(), GetY2() + 1) && !isMovingDown && (isFly || !isMovingUp)) {
 					if (isRunning && !isFly)
 					{
 						x += STEP_SIZE * 2;
@@ -593,6 +582,17 @@ namespace game_framework {
 						y += STEP_SIZE;
 					}
 				}	
+				//先判斷右邊是否可走且沒有按Down，狀態要是向右飛行中或正常向右走
+				//為了防止變身後卡比變高導致牆壁失效，將判斷撞牆的點設在Y2-10
+				else if (m->isEmpty(GetX2() + STEP_SIZE, GetY2() - 10) && !isMovingDown && (isFly || !isMovingUp))
+				{
+					if (x >= m->GetWidth() - width)  //邊界
+						x = m->GetWidth() - width;
+					else if (isRunning && !isFly && !m->isEmpty(GetX2() - width / 2, GetY2() + 1))
+						x += STEP_SIZE * 2;
+					else
+						x += STEP_SIZE;
+				}
 			}
 			if (isMovingUp && !isBig)
 			{
@@ -783,6 +783,11 @@ namespace game_framework {
 		x = nx; y = ny;
 	}
 
+	void Kirby::Restore()
+	{
+		hp = 6;
+	}
+
 	void Kirby::SetEat(int t)
 	{
 		eat = t;
@@ -818,7 +823,7 @@ namespace game_framework {
 			gas.SetAlive(false);
 
 		//------星星------
-		if (isBig && isAttack && !isSuck)
+		if (isBig && isAttack && !isSuck && !star.IsAlive())
 		{
 			star.SetXY(x, y);
 			star.SetAlive(true);
@@ -1025,13 +1030,17 @@ namespace game_framework {
 				else
 					bigJumpL.ShowBitmap();
 			}
-			else if (isAttack || (starDistance < 376 && starDistance > 356))  //吐怪
+			// || (starDistance < 376 && starDistance > 346)是為了讓吐怪的圖能顯示久一點到大概1秒(每秒跑30次OnShow迴圈)
+			else if (isAttack || (starDistance < 376 && starDistance > 346))  //吐怪
 			{
+				// isAttack要設為false，避免吐怪完馬上吸怪的bug
+				isAttack = false;
 				if (rightOrLeft)
 					threwR.ShowBitmap();
 				else
 					threwL.ShowBitmap();
-				if (starDistance <= 360)
+				// 在吐氣的圖顯示結束前將卡比變回原形
+				if (starDistance <= 350)
 					isBig = false;
 			}
 			else if (isSwallow || (isMovingDown && !m->isEmpty(GetX1() + width / 2, GetY2() + 1)))   //吞食
@@ -1090,7 +1099,7 @@ namespace game_framework {
 		}
 		else
 		{
-			if (isAttack && !isFly && !isMovingDown && (starDistance < 276 || !star.IsAlive()))  //吸怪
+			if (isAttack && !isFly && !isMovingDown)  //吸怪
 			{
 				isSuck = true;
 				if (rightOrLeft)
@@ -1119,6 +1128,8 @@ namespace game_framework {
 			}
 			else if ((isAttack || isExhale) && isFly)   //吐氣
 			{
+				// isAttack要設為false，避免吐氣完馬上吸怪的bug
+				isAttack = false;
 				isExhale = true;
 				exhaleDelay--;
 				if (rightOrLeft)
@@ -1326,6 +1337,8 @@ namespace game_framework {
 			}
 			else if ((isAttack || isExhale) && isFly)   //吐氣
 			{
+				// isAttack要設為false，避免吐氣完馬上吸怪的bug
+				isAttack = false;
 				isExhale = true;
 				exhaleDelay--;
 				if (rightOrLeft)
@@ -1566,6 +1579,8 @@ namespace game_framework {
 			}
 			else if ((isAttack || isExhale) && isFly)   //吐氣
 			{
+				// isAttack要設為false，避免吐氣完馬上吸怪的bug
+				isAttack = false;
 				isExhale = true;
 				exhaleDelay--;
 				if (rightOrLeft)

@@ -153,14 +153,16 @@ void CGameStateInit::OnShow()
 		fp=pDC->SelectObject(&f);					// 選用 font f
 		pDC->SetBkColor(RGB(0, 0, 0));
 		pDC->SetTextColor(RGB(255 , 255, 0));
-		pDC->TextOut(35, 100, "操作 : ");
-		pDC->TextOut(65, 130, "↑ : 吸氣飛翔、進入傳送們   ↓ : 蹲下、變身");
-		pDC->TextOut(65, 160, "← : 左移   → : 右移");
-		pDC->TextOut(65, 190, "Z : 攻擊(吸怪、吐氣、吐星星及變身的攻擊)");
-		pDC->TextOut(65, 220, "X : 跳躍");
-		pDC->TextOut(65, 250, "C : 跑步(按住加左右移)");
-		pDC->TextOut(65, 310, "打敗兩隻魔王，拿回碎片拯救世界吧!卡比!");
-		pDC->TextOut(220, 340, "(按下空白鍵開始)");
+		pDC->TextOut(35, 50, "操作 : ");
+		pDC->TextOut(65, 80, "↑ : 吸氣飛翔、進入傳送們   ↓ : 蹲下、變身");
+		pDC->TextOut(65, 110, "← : 左移   → : 右移");
+		pDC->TextOut(65, 140, "Z : 攻擊(吸怪、吐氣、吐星星及變身的攻擊)");
+		pDC->TextOut(65, 170, "X : 跳躍");
+		pDC->TextOut(65, 200, "C : 跑步(按住加左右移)");
+		pDC->TextOut(35, 260, "密技 : ");
+		pDC->TextOut(65, 290, "S : 血量補滿");
+		pDC->TextOut(55, 350, "打敗兩隻魔王，拿回碎片拯救世界吧 ! 卡比");
+		pDC->TextOut(220, 380, "(按下空白鍵開始)");
 		pDC->SelectObject(fp);						// 放掉 font f (千萬不要漏了放掉)
 		CDDraw::ReleaseBackCDC();					// 放掉 Back Plain 的 CDC*/
 	}
@@ -448,6 +450,8 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 	const char KEY_Jump = 0x58;    // keyboard X鍵
 	const char KEY_Attack = 0x5A;  // keyboard Z鍵
 	const char KEY_Run = 0x43;     // keyboard C鍵
+	const char KEY_Restore = 0x53;     // keyboard S鍵
+	
 	if (nChar == KEY_LEFT)
 		kirby.SetMovingLeft(true);
 	if (nChar == KEY_RIGHT)
@@ -504,6 +508,8 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 		kirby.SetJump(true);
 	if (nChar == KEY_ESC)
 		PostMessage(AfxGetMainWnd()->m_hWnd, WM_CLOSE, 0, 0);	// 關閉遊戲
+	if (nChar == KEY_Restore)
+		kirby.Restore();
 }
 
 void CGameStateRun::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
@@ -666,9 +672,16 @@ void CGameStateRun::OnShow()
 			monster[m]->OnShow(index, &kirby);
 	}
 
-	if(kirby.IsAlive()) kirby.OnShow(index);
-	else if(kirby.GetY1()<=1) GotoGameState(GAME_STATE_OVER);
-	else kirby.Die(index);
+	if(kirby.IsAlive()) 
+		kirby.OnShow(index);
+	else if (kirby.GetY1() <= 1)
+	{
+		// 卡比死掉就不用播消失能力的音效
+		CAudio::Instance()->Stop(lostAbility);
+		GotoGameState(GAME_STATE_OVER);
+	}
+	else 
+		kirby.Die(index);
 
 
 	if (Istransiting) {
