@@ -76,7 +76,8 @@ namespace game_framework {
 		stone,                  // 14
 		start,                  // 15
 		enemyDie,               // 16
-		lostAbility             // 17
+		lostAbility,            // 17
+		ending                  // 18
 	};
 
 	/////////////////////////////////////////////////////////////////////////////
@@ -142,12 +143,15 @@ namespace game_framework {
 		Door *gate;
 		int mapNum;							//設定現在為第幾號地圖
 		int Mirror_L_Y,Mirror_R_Y;
+		int end_Y;
 		CAnimation Transition;
 		CAnimation Mirror_L, Mirror_R;
-		bool Istransiting=false;
+		CMovingBitmap end;
+		bool Istransiting = false;
 		bool MovingMirror = false;
 		bool Show_Mirror_L = false;
 		bool Show_Mirror_R = false;
+		bool isEnd = false;
 	};
 
 	/////////////////////////////////////////////////////////////////////////////

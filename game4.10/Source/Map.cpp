@@ -156,7 +156,7 @@ namespace game_framework {
 					//	map[i][j] = 0;
 					//}
 				}
-				switch (map[i][j]) {
+				/*switch (map[i][j]) {
 					case 1:
 						ball_1.SetTopLeft(x, y); // 指定第(i, j)這一格的座標
 						ball_1.ShowBitmap();
@@ -171,7 +171,7 @@ namespace game_framework {
 						ball_3.ShowBitmap();
 						break;
 
-				}
+				}*/
 			}
 		}
 	}

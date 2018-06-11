@@ -264,6 +264,8 @@ void CGameStateRun::OnBeginState()
 	Mirror_L_Y = -10;
 	Mirror_R_Y = -10;
 
+	end_Y = 0;
+
 	mapNum = 0;
 	index = &map[mapNum];
 	
@@ -282,7 +284,6 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 		Transition.OnMove();
 		Transition.SetDelayCount(4);
 	}
-	
 	else if (MovingMirror) {
 		map[0].SetXY(320, 160);
 		Mirror_R.OnMove();
@@ -298,9 +299,23 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 		else {
 			MovingMirror = false;
 		}
-
 	}
-
+	else if (isEnd)
+	{
+		end_Y--;
+		if (end_Y == -1)
+		{
+			CAudio::Instance()->Stop(AUDIO_BACKGROUND);
+			CAudio::Instance()->Play(ending);
+		}
+		else if (end_Y == -1050)
+		{
+			CAudio::Instance()->Stop(ending);
+			CAudio::Instance()->Play(AUDIO_BACKGROUND);
+			isEnd = false;
+			end_Y = 1;
+		}
+	}
 	else {
 		
 		if (kirby.IsAlive())
@@ -458,6 +473,8 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 		Mirror_R.AddBitmap(".//RES//Door//mirror_R_2.bmp", RGB(255, 255, 255));
 		Mirror_R.AddBitmap(".//RES//Door//mirror_R_3.bmp", RGB(255, 255, 255));
 		
+		end.LoadBitmap(".//RES//end.bmp");
+
 		map[0].LoadBitmap(".//Map//foreground.bmp", RGB(255, 255, 255), ".//Map//background.bmp", ".//Map//map.txt");
 		map[1].LoadBitmap(".//Map//map1.bmp", RGB(255, 255, 255), ".//Map//background_1.bmp", ".//Map//map1.txt");
 		map[2].LoadBitmap(".//Map//Boss_map.bmp", RGB(255, 255, 255), ".//Map//background_2.bmp", ".//Map//map2.txt");
@@ -509,6 +526,7 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	CAudio::Instance()->Load(fire, "Sounds\\fire.wav");
 	CAudio::Instance()->Load(enemyDie, "Sounds\\enemyDie.wav");
 	CAudio::Instance()->Load(lostAbility, "Sounds\\lostAbility.wav");
+	CAudio::Instance()->Load(ending, "Sounds\\ending.mp3");
 }
 
 void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
@@ -556,18 +574,21 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 	if (nChar == KEY_Attack)
 	{
 		kirby.SetAttack(true);
-		if(kirby.IsFly())
-			CAudio::Instance()->Play(gasSound);
-		else if(kirby.IsDown())
-			CAudio::Instance()->Play(kick);
-		else if(kirby.GetType()==0 && !kirby.IsBig())
-			CAudio::Instance()->Play(suck);
-		else if(kirby.GetType() == 0 && kirby.IsBig())
-			CAudio::Instance()->Play(starSound);
-		else if(kirby.GetType()==1)
-			CAudio::Instance()->Play(spark);
-		else if(kirby.GetType()==2)
-			CAudio::Instance()->Play(fire);
+		if (!Show_Mirror_L && !Show_Mirror_R)
+		{
+			if (kirby.IsFly())
+				CAudio::Instance()->Play(gasSound);
+			else if (kirby.IsDown())
+				CAudio::Instance()->Play(kick);
+			else if (kirby.GetType() == 0 && !kirby.IsBig())
+				CAudio::Instance()->Play(suck);
+			else if (kirby.GetType() == 0 && kirby.IsBig())
+				CAudio::Instance()->Play(starSound);
+			else if (kirby.GetType() == 1)
+				CAudio::Instance()->Play(spark);
+			else if (kirby.GetType() == 2)
+				CAudio::Instance()->Play(fire);
+		}
 	}
 	if (nChar == KEY_Run)
 	{
@@ -707,6 +728,8 @@ void CGameStateRun::OnShow()
 
 
 	//map.OnShow();
+	end.SetTopLeft(0, end_Y);
+
 	index->OnShow();
 	if (mapNum == 0) {
 		for (int i = 0; i < 10;i++)
@@ -718,31 +741,27 @@ void CGameStateRun::OnShow()
 		if (Show_Mirror_R) {
 			Mirror_R.OnShow();
 		}
-		
-	}
 
-	if (mapNum == 1) {
+	}
+	else if (mapNum == 1) {
 		for (int i = 0; i < 2;i++)
 			door1[i].OnShow(index);
 		for (int m = 0; m < 10; m++)
 			monster[m]->OnShow(index, &kirby);
 	}
-
-	if (mapNum == 2) {
+	else if (mapNum == 2) {
 		airplane.OnShow(index,&kirby);
 		if(!airplane.IsAlive())
 			door2.OnShow(index);
 	}
-
-	if (mapNum == 3) {
+	else if (mapNum == 3) {
 		tree.OnShow(index,&kirby);
 
 		if (!tree.IsAlive()) {
 			door3.OnShow(index);
 		}
 	}
-
-	if(mapNum == 4) {
+	else if(mapNum == 4) {
 		for (int i = 0; i < 2; i++)
 			door4[i].OnShow(index);
 
@@ -756,14 +775,15 @@ void CGameStateRun::OnShow()
 	{
 		// 卡比死掉就不用播消失能力的音效
 		CAudio::Instance()->Stop(lostAbility);
+		// 鏡子重置
+		Show_Mirror_L = false;
+		Show_Mirror_R = false;
+		Mirror_L_Y = -10;
+		Mirror_R_Y = -10;
 		GotoGameState(GAME_STATE_OVER);
 	}
 	else 
 		kirby.Die(index);
-
-	
-
-	
 	
 	if (MovingMirror && Transition.GetCurrentBitmapNumber()>6) {
 		map[0].SetXY(320, 160);
@@ -783,5 +803,10 @@ void CGameStateRun::OnShow()
 	if (Istransiting) {
 		Transition.OnShow();
 	}
+
+	if (Show_Mirror_L && Show_Mirror_R && Mirror_L_Y == 327 && Mirror_R_Y == 327 && end_Y == 0)
+		isEnd = true;
+	if (isEnd)
+		end.ShowBitmap();
 }
 }

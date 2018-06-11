@@ -126,7 +126,8 @@ namespace game_framework {
 			stone,                  // 14
 			start,                  // 15
 			enemyDie,               // 16
-			lostAbility             // 17
+			lostAbility,            // 17
+			ending                  // 18
 		};
 	};
 }
