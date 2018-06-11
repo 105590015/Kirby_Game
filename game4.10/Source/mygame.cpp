@@ -278,7 +278,8 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 {
 	index->OnMove(kirby.GetX1(), kirby.GetY1());
 
-	
+	Mirror_R.OnMove();
+	Mirror_L.OnMove();
 
 	if (Istransiting) {
 		Transition.OnMove();
@@ -286,8 +287,7 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 	}
 	else if (MovingMirror) {
 		map[0].SetXY(320, 160);
-		Mirror_R.OnMove();
-		Mirror_L.OnMove();
+		
 		if (Show_Mirror_R && Mirror_R_Y != 327) {
 			Mirror_R_Y += 1;
 			Mirror_R.SetTopLeft(map[0].ScreenX(608), map[0].ScreenY(Mirror_R_Y));
@@ -334,14 +334,14 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 				}
 			}
 
-			if (Show_Mirror_L) {
-				Mirror_L.SetTopLeft(map[0].ScreenX(608), map[0].ScreenY(Mirror_L_Y));
+			/*if (Show_Mirror_L) {
+				
 				Mirror_L.OnMove();
 			}
 			if (Show_Mirror_R) {
-				Mirror_R.SetTopLeft(map[0].ScreenX(608), map[0].ScreenY(Mirror_R_Y));
+				
 				Mirror_R.OnMove();
-			}
+			}*/
 		}
 		if (mapNum == 1) {
 
@@ -736,9 +736,11 @@ void CGameStateRun::OnShow()
 			door[i].OnShow(index);
 
 		if (Show_Mirror_L) {
+			Mirror_L.SetTopLeft(map[0].ScreenX(608), map[0].ScreenY(Mirror_L_Y));
 			Mirror_L.OnShow();
 		}
 		if (Show_Mirror_R) {
+			Mirror_R.SetTopLeft(map[0].ScreenX(608), map[0].ScreenY(Mirror_R_Y));
 			Mirror_R.OnShow();
 		}
 
