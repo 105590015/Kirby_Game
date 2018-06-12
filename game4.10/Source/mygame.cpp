@@ -574,7 +574,7 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 	if (nChar == KEY_Attack)
 	{
 		kirby.SetAttack(true);
-		if (!Show_Mirror_L && !Show_Mirror_R)
+		if (!MovingMirror)
 		{
 			if (kirby.IsFly())
 				CAudio::Instance()->Play(gasSound);
