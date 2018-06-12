@@ -156,7 +156,7 @@ void CGameStateInit::OnShow()
 		pDC->TextOut(35, 50, "操作 : ");
 		pDC->TextOut(65, 80, "↑ : 吸氣飛翔、進入傳送們   ↓ : 蹲下、變身");
 		pDC->TextOut(65, 110, "← : 左移   → : 右移");
-		pDC->TextOut(65, 140, "Z : 攻擊(吸怪、吐氣、吐星星及變身的攻擊)");
+		pDC->TextOut(65, 140, "Z : 攻擊、吸怪   ↓ + Z : 踢擊");
 		pDC->TextOut(65, 170, "X : 跳躍");
 		pDC->TextOut(65, 200, "C : 跑步(按住加左右移)");
 		pDC->TextOut(35, 260, "密技 : ");
