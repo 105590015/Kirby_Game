@@ -21,6 +21,7 @@ namespace game_framework {
 		velocity = 2;
 		is_alive = true;
 		is_sucked = false;
+		IsKing = false;
 	}
 
 	int NormalMonster::GetX2()
@@ -100,8 +101,7 @@ namespace game_framework {
 		if (is_alive)
 		{
 			Hurted(kirby);
-			Sucked(kirby);
-			
+			Sucked(kirby);		
 			if(!is_sucked)
 				Attack(m, kirby);
 			if (is_sucked)

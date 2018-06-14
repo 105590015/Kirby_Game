@@ -17,8 +17,8 @@ namespace game_framework {
 		void OnMove(int,int);               // 地圖移動
 		void OnShow();						// 將圖形貼到畫面
 		void SetXY(int nx, int ny);	        // 設定螢幕畫面左上角的座標
-		bool isEmpty(int x, int y);         // 判斷碰壁;
-		bool isEmpty_2(int x, int y);         // 判斷碰壁;
+		bool isEmpty(int x, int y);         // 判斷碰壁
+		bool isEmpty_2(int x, int y);       // 判斷碰壁
 		bool isSlope(int, int);
 		void SetMouse(int ,int);			//設定滑鼠座標
 		void IsLclick(bool);				//設定左鍵按下
@@ -26,17 +26,14 @@ namespace game_framework {
 	protected:
 		CMovingBitmap background;			// 地圖
 		CMovingBitmap foreground;
-		CMovingBitmap ball_1,ball_2,ball_3;					//顯示地形圖
+		CMovingBitmap ball_1,ball_2,ball_3;	//顯示地形圖
 
 	private:
 		bool Lclick=false, Rclick=false;    //滑鼠左鍵與右鍵是否按下 預設為否
 		int mx, my;							//滑鼠座標
-		int sx, sy;							// 左上角座標
+		int sx, sy;							//左上角座標
 		int mapSize_X, mapSize_Y;			//地圖所切的格數
 		int map[1000][1000];
-		string Mapfile;
-		
+		string Mapfile;	
 	};
-
-
 }

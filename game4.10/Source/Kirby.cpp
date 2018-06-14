@@ -1043,7 +1043,7 @@ namespace game_framework {
 				if (starDistance <= 350)
 					isBig = false;
 			}
-			else if (isSwallow || (isMovingDown && !m->isEmpty(GetX1() + width / 2, GetY2() + 1)))   //§]­¹
+			else if (isSwallow || (isMovingDown && (!m->isEmpty(GetX1(), GetY2() + 1) || !m->isEmpty(GetX2(), GetY2() + 1))))   //§]­¹
 			{
 				isSwallow = true;
 				if (rightOrLeft)

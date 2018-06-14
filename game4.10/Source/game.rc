@@ -62,36 +62,7 @@ END
 // Bitmap
 //
 
-IDB_BALL                BITMAP                  "..\\res\\ball.bmp"
-
-IDB_0                   BITMAP                  "..\\res\\bmp0.bmp"
-
-IDB_1                   BITMAP                  "..\\res\\bmp1.bmp"
-
-IDB_2                   BITMAP                  "..\\res\\bmp2.bmp"
-
-IDB_3                   BITMAP                  "..\\res\\bmp3.bmp"
-
-IDB_4                   BITMAP                  "..\\res\\bmp4.bmp"
-
-IDB_5                   BITMAP                  "..\\res\\bmp5.bmp"
-
-IDB_6                   BITMAP                  "..\\res\\bmp6.bmp"
-
-IDB_7                   BITMAP                  "..\\res\\bmp7.bmp"
-
-IDB_8                   BITMAP                  "..\\res\\bmp8.bmp"
-
-IDB_9                   BITMAP                  "..\\res\\bmp9.bmp"
-
-IDB_MINUS               BITMAP                  "..\\res\\bmp10.bmp"
-
 IDB_CONTINUE            BITMAP                  "..\\res\\continue.bmp"
-
-IDB_HELP                BITMAP                  "..\\res\\help.bmp"
-
-IDB_LOADING             BITMAP                  "..\\res\\loading.bmp"
-
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -204,14 +175,14 @@ STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "About game"
 FONT 8, "MS Sans Serif", 0, 0, 0x0
 BEGIN
-    ICON            IDR_MAINFRAME,IDC_STATIC,11,17,20,20
-    LTEXT           "Game Framework Version 4.8",IDC_STATIC,39,10,119,8,SS_NOPREFIX
-    LTEXT           "Copyright (C) 2002-2012",IDC_STATIC,39,23,119,8
-    DEFPUSHBUTTON   "OK",IDOK,172,7,39,14,WS_GROUP
-    LTEXT           "Liense: GPL",IDC_STATIC,39,35,119,8
-    PUSHBUTTON      "ReadMe",IDC_README,172,24,39,13,WS_GROUP
-    LTEXT           "Author: Woei-Kae Chen, CSIE Department, NTUT",IDC_STATIC,39,47,159,8
-    LTEXT           "http://www.ntut.edu.tw/~wkchen/game",IDC_STATIC,39,60,159,8
+ICON            IDR_MAINFRAME, IDC_STATIC, 11, 17, 20, 20
+LTEXT           "Kirby", IDC_STATIC, 39, 10, 119, 8, SS_NOPREFIX
+LTEXT           "Object-Oriented Programming 2018", IDC_STATIC, 39, 23, 119, 8
+DEFPUSHBUTTON   "OK", IDOK, 172, 7, 39, 14, WS_GROUP
+LTEXT           "This application is only for academic",IDC_STATIC,39,35,119,8
+PUSHBUTTON      "ReadMe", IDC_README, 172, 24, 39, 13, WS_GROUP
+LTEXT           "Author: Yan-Ting Lin, CSIE Department, NTUT", IDC_STATIC, 39, 47, 159, 8
+LTEXT           "        You-Tian Chou, CSIE Department, NTUT", IDC_STATIC, 48, 60, 159, 8
 END
 
 

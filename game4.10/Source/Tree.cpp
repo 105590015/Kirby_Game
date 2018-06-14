@@ -8,7 +8,6 @@
 
 namespace game_framework {
 	Tree::Tree() :Enemy() {
-
 	}
 
 	int Tree::GetX2() {
@@ -49,6 +48,7 @@ namespace game_framework {
 		is_sucked = false;
 		IsAttacking = false;
 		RightOrLeft = true;
+		IsKing = true;
 
 		index = &normal;
 		stone[0].Init(0, 0);
