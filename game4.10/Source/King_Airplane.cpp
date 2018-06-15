@@ -154,6 +154,7 @@ namespace game_framework {
 		is_alive = true;
 		is_sucked = false;
 		RightOrLeft = false;
+		IsKing = true;
 	}
 
 	void King_Airplane::Attack(Map* m, Kirby* kirby)

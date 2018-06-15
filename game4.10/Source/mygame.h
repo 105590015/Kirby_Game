@@ -38,9 +38,6 @@
  *      3. Use ShowInitProgress(percent) to display loading progress.
 */
 
-#include "CEraser.h"
-#include "CBall.h"
-#include "CBouncingBall.h"
 #include "Kirby.h"
 #include "Map.h"
 #include "NormalMonster.h"
@@ -139,7 +136,6 @@ namespace game_framework {
 		Door door2;
 		Door door3;
 		Door door4[2];
-
 		Door *gate;
 		int mapNum;							//設定現在為第幾號地圖
 		int Mirror_L_Y,Mirror_R_Y;
@@ -170,5 +166,4 @@ namespace game_framework {
 	private:
 		int counter;	// 倒數之計數器
 	};
-
 }

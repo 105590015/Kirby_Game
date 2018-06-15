@@ -8,7 +8,6 @@ namespace game_framework {
 	{
 	public:
 		Fire();
-
 		void LoadBitmap();
 		void OnShow(Map*, Kirby*);
 		void OnMove(Map*, Kirby*);
@@ -16,11 +15,8 @@ namespace game_framework {
 		void Attack(Map*, Kirby*);
 		int GetX2();
 		int GetY2();
-
 	private:
-
 		bool IsAttacking;
-
 		int counter;
 		int tempX, tempY;
 		int midX, midY;		

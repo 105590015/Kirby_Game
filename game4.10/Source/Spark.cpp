@@ -8,7 +8,6 @@
 
 namespace game_framework {
 	Spark::Spark():Enemy() {
-
 	}
 
 	int Spark::GetX2() {
@@ -86,12 +85,12 @@ namespace game_framework {
 		is_sucked = false;
 		IsRising = false;
 		IsAttacking = false;
+		IsKing = false;
 		init_velocity = 15;
 		RightOrLeft = true;
 		StepSize = 1;
 		index =& Stand_R;
 		velocity = init_velocity;
-
 	}
 
 	void Spark::Attack(Map *m, Kirby* k) {
@@ -99,10 +98,6 @@ namespace game_framework {
 			k->Hurted(m);
 		if(IsAttacking && HitSpark(k->GetX1(), k->GetY1(), k->GetX2(), k->GetY2()) && !k->IsKick())
 			k->Hurted(m);
-	}
-
-	void Spark::Jump(Kirby* k) {
-
 	}
 
 	void Spark::OnMove(Map* m,Kirby* k) {
@@ -183,7 +178,6 @@ namespace game_framework {
 					else {
 						IsRising = false; // 當速度 <= 0，上升終止，下次改為下降
 						velocity = 1;	// 下降的初速(velocity)為1
-
 					}
 				}
 
@@ -224,8 +218,6 @@ namespace game_framework {
 					}
 				}
 
-				
-
 				if (counter > 200) {
 					counter = 0;
 					IsAttacking = false;
@@ -235,24 +227,13 @@ namespace game_framework {
 
 			ATK.OnMove();
 			index->OnMove();
-			
 		}
-
-		else
-		{
-
-		}
-
-		
-
 	}
 	void Spark::OnShow(Map* m, Kirby* k) {
 		die.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
 		if (is_alive) {
-
 			index->SetTopLeft(m->ScreenX(x), m->ScreenY(y));
 			index->OnShow();
-
 			if (IsAttacking) {
 				ATK.SetTopLeft(m->ScreenX(midX-ATK.Width()/2),m->ScreenY(midY-ATK.Height()/2));
 				ATK.OnShow();

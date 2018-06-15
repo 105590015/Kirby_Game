@@ -24,9 +24,10 @@ namespace game_framework {
 		bool is_alive;				// 是否活著
 		bool is_sucked;             // 是否被吸
 		bool RightOrLeft;           // 判斷左右
-		bool Ishurted;
+		bool Ishurted;              // 受傷與否
+		bool IsKing;                // 是不是王
 		bool HitRectangle(int tx1, int ty1, int tx2, int ty2);   // 是否碰到參數範圍的矩形
-		double ComputeDistance(int tx1, int ty1);                   // 計算距離
+		double ComputeDistance(int tx1, int ty1);                // 計算距離
 	private:
 		enum COPY_AUDIO_ID {		// 定義各種音效的編號
 			AUDIO_BACKGROUND,       // 0

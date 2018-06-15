@@ -82,6 +82,8 @@ namespace game_framework {
 
 	void Enemy::Sucked(Kirby* kirby)
 	{
+		if (IsKing)
+			return;
 		if (ComputeDistance(kirby->GetX1(), kirby->GetY1()) < 150.0 && kirby->IsSuck() && ((kirby->IsRight() && x - kirby->GetX1() >= 0) || (!kirby->IsRight() && x - kirby->GetX2() <= 0)))
 		{
 			hp -= 10;

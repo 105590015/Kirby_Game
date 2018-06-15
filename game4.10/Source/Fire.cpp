@@ -9,10 +9,7 @@
 namespace game_framework {
 
 	Fire::Fire(): Enemy() {
-
 	}
-
-
 
 	int Fire::GetX2() {
 		return x + index->Width();
@@ -30,9 +27,8 @@ namespace game_framework {
 		counter = 0;
 		is_alive = true;
 		is_sucked = false;
-
+		IsKing = false;
 		IsAttacking = false;	
-
 		RightOrLeft = true;
 		index = &Walk_L;
 	}
@@ -83,10 +79,8 @@ namespace game_framework {
 
 	void Fire::OnMove(Map* m,Kirby* k) {
 		if (is_alive) {
-
 			Hurted(k);
 			Sucked(k);
-
 			if (ComputeDistance(k->GetX1(), k->GetY1()) < 200.0) {
 				if (x - k->GetX1() > 0)
 					RightOrLeft = false;
@@ -100,7 +94,6 @@ namespace game_framework {
 				index = &Walk_L;
 
 			if (is_sucked) {
-
 				if (RightOrLeft)
 					index = &Sucked_R;
 				else
@@ -122,8 +115,6 @@ namespace game_framework {
 					k->SetEat(2);
 				}
 			}
-
-
 			else {
 				Attack(m, k);
 				if (!RightOrLeft)
@@ -183,7 +174,6 @@ namespace game_framework {
 					y += 1;
 				}
 			}
-
 			index->OnMove();
 		}
 	}
@@ -197,11 +187,9 @@ namespace game_framework {
 
 	void Fire::OnShow(Map* m, Kirby* k) {
 		die.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
-
 		if (is_alive) {
 			index->SetTopLeft(m->ScreenX(x), m->ScreenY(y));
 			index->OnShow();
-
 			if (index == &Attack_R)
 			{
 				attack.SetTopLeft(m->ScreenX(x + 58), m->ScreenY(y - 8));

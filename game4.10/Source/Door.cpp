@@ -77,9 +77,7 @@ namespace game_framework {
 		Gate.AddBitmap(".\\RES\\Door\\Gate_6.bmp", RGB(255, 255, 255));
 		Gate.AddBitmap(".\\RES\\Door\\Gate_7.bmp", RGB(255, 255, 255));
 		Gate.AddBitmap(".\\RES\\Door\\Gate_8.bmp", RGB(255, 255, 255));
-		Gate.AddBitmap(".\\RES\\Door\\Gate_9.bmp", RGB(255, 255, 255));
-
-		
+		Gate.AddBitmap(".\\RES\\Door\\Gate_9.bmp", RGB(255, 255, 255));		
 	}
 
 	void Door::OnMove() {
@@ -93,7 +91,6 @@ namespace game_framework {
 			door.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
 			door.OnShow();
 		}
-
 		else {  //其餘為有星星的門
 			Gate.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
 			Gate.OnShow();

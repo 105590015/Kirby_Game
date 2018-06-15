@@ -21,5 +21,4 @@ namespace game_framework {
 		CMovingBitmap bomb;
 		CAnimation fire;
 	};
-
 }

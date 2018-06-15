@@ -154,14 +154,15 @@ void CGameStateInit::OnShow()
 		pDC->SetBkColor(RGB(0, 0, 0));
 		pDC->SetTextColor(RGB(255 , 255, 0));
 		pDC->TextOut(35, 50, "操作 : ");
-		pDC->TextOut(65, 80, "↑ : 吸氣飛翔、進入傳送們   ↓ : 蹲下、變身");
+		pDC->TextOut(65, 80, "↑ : 吸氣飛翔、進入傳送門   ↓ : 蹲下、變身");
 		pDC->TextOut(65, 110, "← : 左移   → : 右移");
-		pDC->TextOut(65, 140, "Z : 攻擊(吸怪、吐氣、吐星星及變身的攻擊)");
+		pDC->TextOut(65, 140, "Z : 攻擊、吸怪   ↓ + Z : 踢擊");
 		pDC->TextOut(65, 170, "X : 跳躍");
 		pDC->TextOut(65, 200, "C : 跑步(按住加左右移)");
+		pDC->TextOut(65, 230, "Esc : 關閉遊戲");
 		pDC->TextOut(35, 260, "密技 : ");
 		pDC->TextOut(65, 290, "S : 血量補滿");
-		pDC->TextOut(55, 350, "打敗兩隻魔王，拿回碎片拯救世界吧 ! 卡比");
+		pDC->TextOut(35, 350, "打敗兩隻魔王，拿回碎片拯救世界吧 ! 卡比");
 		pDC->TextOut(220, 380, "(按下空白鍵開始)");
 		pDC->SelectObject(fp);						// 放掉 font f (千萬不要漏了放掉)
 		CDDraw::ReleaseBackCDC();					// 放掉 Back Plain 的 CDC*/
@@ -320,43 +321,31 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 		
 		if (kirby.IsAlive())
 			kirby.OnMove(index);
+
 		if (mapNum == 0)
 		{
 			for (int i = 0; i < 10; i++) {
 				door[i].OnMove();
 				if (door[i].IsEnter(&kirby)) {
+					door[i].SetEnter(false);
 					Istransiting = true;
 					Transition.Reset();
 					gate = &door[i];
-					//mapNum = door.GetMapNum();
-					//index = &map[1];
-					//kirby.SetXY(door.GetNextX()-50,door.GetNextY());
 				}
 			}
-
-			/*if (Show_Mirror_L) {
-				
-				Mirror_L.OnMove();
-			}
-			if (Show_Mirror_R) {
-				
-				Mirror_R.OnMove();
-			}*/
 		}
-		if (mapNum == 1) {
 
+		if (mapNum == 1) {
 			for (int m = 0; m < 10; m++)
 				monster[m]->OnMove(index, &kirby);
 
 			for (int i = 0; i < 2; i++) {
 				door1[i].OnMove();
 				if (door1[i].IsEnter(&kirby)) {
+					door1[i].SetEnter(false);
 					Istransiting = true;
 					Transition.Reset();
 					gate = &door1[i];
-					//mapNum = door1.GetMapNum();
-					//index = &map[0];
-					//kirby.SetXY(door1.GetNextX()-50, door1.GetNextY());
 				}
 			}
 		}
@@ -365,7 +354,6 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 			airplane.OnMove(index,&kirby);
 			if (!airplane.IsAlive())
 			{
-				
 				if (!Show_Mirror_R) {
 					MovingMirror = true;
 					Show_Mirror_R = true;
@@ -374,41 +362,34 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 					Mirror_L.Reset();
 					Mirror_R.Reset();
 				}
-
 				else {
 					door2.OnMove();
-
 					if (door2.IsEnter(&kirby)) {
+						door2.SetEnter(false);
 						Istransiting = true;
 						Transition.Reset();
 						gate = &door2;
-
 					}
 				}
-
-				
 			}
 		}
 
 		if (mapNum == 3) {
 			tree.OnMove(index,&kirby);
-
 			if (!tree.IsAlive()) {
-
 				if (!Show_Mirror_L) {
 					MovingMirror = true;
 					Show_Mirror_L = true;
 					Istransiting = true;
 					Transition.Reset();
 				}
-
 				else {
 					door3.OnMove();
 					if (door3.IsEnter(&kirby)) {
+						door3.SetEnter(false);
 						Istransiting = true;
 						Transition.Reset();
 						gate = &door3;
-
 					}
 				}
 			}
@@ -423,14 +404,13 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 
 			for (int i = 0; i < 2; i++) {
 				if (door4[i].IsEnter(&kirby)) {
+					door4[i].SetEnter(false);
 					Istransiting = true;
 					Transition.Reset();
 					gate = &door4[i];
 				}
 			}
 		}
-
-
 	}
 
 	if (Transition.IsFinalBitmap()) {
@@ -447,68 +427,67 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 
 void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 {		
-		Transition.AddBitmap(".//Map//Transition_7.bmp", RGB(0, 0, 0));
-		Transition.AddBitmap(".//Map//Transition_6.bmp", RGB(0, 0, 0));
-		Transition.AddBitmap(".//Map//Transition_5.bmp", RGB(0, 0, 0));
-		Transition.AddBitmap(".//Map//Transition_4.bmp", RGB(0, 0, 0));
-		Transition.AddBitmap(".//Map//Transition_3.bmp", RGB(0, 0, 0));
-		Transition.AddBitmap(".//Map//Transition_2.bmp", RGB(0, 0, 0));
-		Transition.AddBitmap(".//Map//Transition_1.bmp", RGB(0, 0, 0));
-		Transition.AddBitmap(".//Map//Transition_0.bmp", RGB(0, 0, 0));
-		Transition.AddBitmap(".//Map//Transition_1.bmp", RGB(0, 0, 0));
-		Transition.AddBitmap(".//Map//Transition_2.bmp", RGB(0, 0, 0));
-		Transition.AddBitmap(".//Map//Transition_3.bmp", RGB(0, 0, 0));
-		Transition.AddBitmap(".//Map//Transition_4.bmp", RGB(0, 0, 0));
-		Transition.AddBitmap(".//Map//Transition_5.bmp", RGB(0, 0, 0));
-		Transition.AddBitmap(".//Map//Transition_6.bmp", RGB(0, 0, 0));
-		Transition.AddBitmap(".//Map//Transition_7.bmp", RGB(0, 0, 0));
+	Transition.AddBitmap(".//Map//Transition_7.bmp", RGB(0, 0, 0));
+	Transition.AddBitmap(".//Map//Transition_6.bmp", RGB(0, 0, 0));
+	Transition.AddBitmap(".//Map//Transition_5.bmp", RGB(0, 0, 0));
+	Transition.AddBitmap(".//Map//Transition_4.bmp", RGB(0, 0, 0));
+	Transition.AddBitmap(".//Map//Transition_3.bmp", RGB(0, 0, 0));
+	Transition.AddBitmap(".//Map//Transition_2.bmp", RGB(0, 0, 0));
+	Transition.AddBitmap(".//Map//Transition_1.bmp", RGB(0, 0, 0));
+	Transition.AddBitmap(".//Map//Transition_0.bmp", RGB(0, 0, 0));
+	Transition.AddBitmap(".//Map//Transition_1.bmp", RGB(0, 0, 0));
+	Transition.AddBitmap(".//Map//Transition_2.bmp", RGB(0, 0, 0));
+	Transition.AddBitmap(".//Map//Transition_3.bmp", RGB(0, 0, 0));
+	Transition.AddBitmap(".//Map//Transition_4.bmp", RGB(0, 0, 0));
+	Transition.AddBitmap(".//Map//Transition_5.bmp", RGB(0, 0, 0));
+	Transition.AddBitmap(".//Map//Transition_6.bmp", RGB(0, 0, 0));
+	Transition.AddBitmap(".//Map//Transition_7.bmp", RGB(0, 0, 0));
 
-		Mirror_L.AddBitmap(".//RES//Door//mirror_L_0.bmp", RGB(255, 255, 255));
-		Mirror_L.AddBitmap(".//RES//Door//mirror_L_1.bmp", RGB(255, 255, 255));
-		Mirror_L.AddBitmap(".//RES//Door//mirror_L_2.bmp", RGB(255, 255, 255));
-		Mirror_L.AddBitmap(".//RES//Door//mirror_L_3.bmp", RGB(255, 255, 255));
+	Mirror_L.AddBitmap(".//RES//Door//mirror_L_0.bmp", RGB(255, 255, 255));
+	Mirror_L.AddBitmap(".//RES//Door//mirror_L_1.bmp", RGB(255, 255, 255));
+	Mirror_L.AddBitmap(".//RES//Door//mirror_L_2.bmp", RGB(255, 255, 255));
+	Mirror_L.AddBitmap(".//RES//Door//mirror_L_3.bmp", RGB(255, 255, 255));
 
-		Mirror_R.AddBitmap(".//RES//Door//mirror_R_0.bmp", RGB(255, 255, 255));
-		Mirror_R.AddBitmap(".//RES//Door//mirror_R_1.bmp", RGB(255, 255, 255));
-		Mirror_R.AddBitmap(".//RES//Door//mirror_R_2.bmp", RGB(255, 255, 255));
-		Mirror_R.AddBitmap(".//RES//Door//mirror_R_3.bmp", RGB(255, 255, 255));
+	Mirror_R.AddBitmap(".//RES//Door//mirror_R_0.bmp", RGB(255, 255, 255));
+	Mirror_R.AddBitmap(".//RES//Door//mirror_R_1.bmp", RGB(255, 255, 255));
+	Mirror_R.AddBitmap(".//RES//Door//mirror_R_2.bmp", RGB(255, 255, 255));
+	Mirror_R.AddBitmap(".//RES//Door//mirror_R_3.bmp", RGB(255, 255, 255));
 		
-		end.LoadBitmap(".//RES//end.bmp");
+	end.LoadBitmap(".//RES//end.bmp");
 
-		map[0].LoadBitmap(".//Map//foreground.bmp", RGB(255, 255, 255), ".//Map//background.bmp", ".//Map//map.txt");
-		map[1].LoadBitmap(".//Map//map1.bmp", RGB(255, 255, 255), ".//Map//background_1.bmp", ".//Map//map1.txt");
-		map[2].LoadBitmap(".//Map//Boss_map.bmp", RGB(255, 255, 255), ".//Map//background_2.bmp", ".//Map//map2.txt");
-		map[3].LoadBitmap(".//Map//King_foreground.bmp", RGB(255, 255, 255), ".//Map//King_background.bmp", ".//Map//map3.txt");
-		map[4].LoadBitmap(".//Map//foreground_4.bmp", RGB(255, 255, 255), ".//Map//background_4.bmp", ".//Map//map4.txt");
-		kirby.LoadBitmap();
-		monster[0] = &fire1[0];
-		monster[1] = &fire1[1];
-		monster[2] = &normalMonster1[0];
-		monster[3] = &normalMonster1[1];
-		monster[4] = &normalMonster1[2];
-		monster[5] = &normalMonster1[3];
-		monster[6] = &spark1[0];
-		monster[7] = &spark1[1];
-		monster[8] = &spark1[2];
-		monster[9] = &spark1[3];
-		fire4[0].LoadBitmap();
-		spark4[0].LoadBitmap();
-		normalMonster4[0].LoadBitmap();
+	map[0].LoadBitmap(".//Map//foreground.bmp", RGB(255, 255, 255), ".//Map//background.bmp", ".//Map//map.txt");
+	map[1].LoadBitmap(".//Map//map1.bmp", RGB(255, 255, 255), ".//Map//background_1.bmp", ".//Map//map1.txt");
+	map[2].LoadBitmap(".//Map//Boss_map.bmp", RGB(255, 255, 255), ".//Map//background_2.bmp", ".//Map//map2.txt");
+	map[3].LoadBitmap(".//Map//King_foreground.bmp", RGB(255, 255, 255), ".//Map//King_background.bmp", ".//Map//map3.txt");
+	map[4].LoadBitmap(".//Map//foreground_4.bmp", RGB(255, 255, 255), ".//Map//background_4.bmp", ".//Map//map4.txt");
+	kirby.LoadBitmap();
+	monster[0] = &fire1[0];
+	monster[1] = &fire1[1];
+	monster[2] = &normalMonster1[0];
+	monster[3] = &normalMonster1[1];
+	monster[4] = &normalMonster1[2];
+	monster[5] = &normalMonster1[3];
+	monster[6] = &spark1[0];
+	monster[7] = &spark1[1];
+	monster[8] = &spark1[2];
+	monster[9] = &spark1[3];
+	fire4[0].LoadBitmap();
+	spark4[0].LoadBitmap();
+	normalMonster4[0].LoadBitmap();
 
-		for (int m = 0; m < 10; m++)
-			monster[m]->LoadBitmap();
-		for (int i = 0; i < 10;i++)
-			door[i].LoadBitmap();
-		door1[0].LoadBitmap();
-		door1[1].LoadBitmap();
-		door2.LoadBitmap();
-		door3.LoadBitmap();
-		for (int i = 0; i < 2; i++)
-			door4[i].LoadBitmap();
+	for (int m = 0; m < 10; m++)
+		monster[m]->LoadBitmap();
+	for (int i = 0; i < 10;i++)
+		door[i].LoadBitmap();
+	door1[0].LoadBitmap();
+	door1[1].LoadBitmap();
+	door2.LoadBitmap();
+	door3.LoadBitmap();
+	for (int i = 0; i < 2; i++)
+		door4[i].LoadBitmap();
 
-
-		tree.LoadBitmap();
-		airplane.LoadBitmap();
+	tree.LoadBitmap();
+	airplane.LoadBitmap();
 
 	CAudio::Instance()->Load(AUDIO_BACKGROUND, "Sounds\\Kirby_background.mp3");  //背景音樂
 	CAudio::Instance()->Load(jump, "Sounds\\jump.wav");
@@ -574,7 +553,7 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 	if (nChar == KEY_Attack)
 	{
 		kirby.SetAttack(true);
-		if (!Show_Mirror_L && !Show_Mirror_R)
+		if (!MovingMirror)
 		{
 			if (kirby.IsFly())
 				CAudio::Instance()->Play(gasSound);
@@ -596,7 +575,7 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 		if (!kirby.IsFly() && !index->isEmpty((kirby.GetX1() + kirby.GetX2()) / 2, kirby.GetY2() + 1) && kirby.IsMove())
 			CAudio::Instance()->Play(run);
 	}
-	if (nChar == KEY_Jump && !kirby.IsFly() && !index->isEmpty((kirby.GetX2() + kirby.GetX2()) / 2, kirby.GetY2() + 1)) //按下X,卡比不是在飛行且落地才可跳躍
+	if (nChar == KEY_Jump && !kirby.IsFly() && (!index->isEmpty(kirby.GetX1(), kirby.GetY2() + 1) || !index->isEmpty(kirby.GetX2(), kirby.GetY2() + 1))) //按下X,卡比不是在飛行且落地才可跳躍
 		kirby.SetJump(true);
 	if (nChar == KEY_ESC)
 		PostMessage(AfxGetMainWnd()->m_hWnd, WM_CLOSE, 0, 0);	// 關閉遊戲
@@ -622,13 +601,10 @@ void CGameStateRun::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 			for (int i = 0; i < 10;i++)
 				door[i].SetEnter(false);
 		if (mapNum == 1)
-			for (int i = 0; i < 2; i++) {
+			for (int i = 0; i < 2; i++)
 				door1[i].SetEnter(false);
-			}
-
 		if (mapNum == 2)
 			door2.SetEnter(false);
-
 		if (mapNum==3)
 			door3.SetEnter(false);
 		if (mapNum == 4)
@@ -658,8 +634,6 @@ void CGameStateRun::OnMouseMove(UINT nFlags, CPoint point)	// 處理滑鼠的動作
 void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point)  // 處理滑鼠的動作
 {
 	index->IsLclick(true);
-
-
 }
 
 void CGameStateRun::OnLButtonUp(UINT nFlags, CPoint point)	// 處理滑鼠的動作
@@ -704,7 +678,6 @@ void CGameStateRun::ResetMonster()
 	}
 
 	if (mapNum == 4) {
-
 		fire4[0].Initialize(410, 400);
 
 		spark4[0].Initialize(1125, 525);
@@ -714,10 +687,7 @@ void CGameStateRun::ResetMonster()
 		monster[0] = &fire4[0];
 		monster[1] = &spark4[0];
 		monster[2] = &normalMonster4[0];
-		
 	}
-
-
 }
 
 void CGameStateRun::OnShow()
@@ -725,11 +695,7 @@ void CGameStateRun::OnShow()
 	//  注意：Show裡面千萬不要移動任何物件的座標，移動座標的工作應由Move做才對，
 	//        否則當視窗重新繪圖時(OnDraw)，物件就會移動，看起來會很怪。換個術語
 	//        說，Move負責MVC中的Model，Show負責View，而View不應更動Model。
-
-
-	//map.OnShow();
 	end.SetTopLeft(0, end_Y);
-
 	index->OnShow();
 	if (mapNum == 0) {
 		for (int i = 0; i < 10;i++)
@@ -743,7 +709,6 @@ void CGameStateRun::OnShow()
 			Mirror_R.SetTopLeft(map[0].ScreenX(608), map[0].ScreenY(Mirror_R_Y));
 			Mirror_R.OnShow();
 		}
-
 	}
 	else if (mapNum == 1) {
 		for (int i = 0; i < 2;i++)
@@ -758,7 +723,6 @@ void CGameStateRun::OnShow()
 	}
 	else if (mapNum == 3) {
 		tree.OnShow(index,&kirby);
-
 		if (!tree.IsAlive()) {
 			door3.OnShow(index);
 		}
@@ -766,7 +730,6 @@ void CGameStateRun::OnShow()
 	else if(mapNum == 4) {
 		for (int i = 0; i < 2; i++)
 			door4[i].OnShow(index);
-
 		for (int m = 0; m < 3; m++)
 			monster[m]->OnShow(index, &kirby);
 	}
@@ -790,7 +753,6 @@ void CGameStateRun::OnShow()
 	if (MovingMirror && Transition.GetCurrentBitmapNumber()>6) {
 		map[0].SetXY(320, 160);
 		map[0].OnShow();
-
 		if (Show_Mirror_L) {
 			Mirror_L.SetTopLeft(map[0].ScreenX(608), map[0].ScreenY(Mirror_L_Y));
 			Mirror_L.OnShow();
@@ -808,6 +770,7 @@ void CGameStateRun::OnShow()
 
 	if (Show_Mirror_L && Show_Mirror_R && Mirror_L_Y == 327 && Mirror_R_Y == 327 && end_Y == 0)
 		isEnd = true;
+
 	if (isEnd)
 		end.ShowBitmap();
 }
