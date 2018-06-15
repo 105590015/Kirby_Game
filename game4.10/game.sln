@@ -5,7 +5,7 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "game", "game.vcxproj", "{DDD280D7-4B85-4B03-BBC4-C46CA9BECCCB}"
 EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "kirby", "kirby\kirby.vdproj", "{A3947892-FB28-4BD4-A921-4AB05FC595B9}"
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "kirby", "..\kirby\kirby.vdproj", "{B7618D90-CAAF-4C8B-B69A-E756F3B9FF06}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,8 +17,8 @@ Global
 		{DDD280D7-4B85-4B03-BBC4-C46CA9BECCCB}.Debug|Win32.Build.0 = Debug|Win32
 		{DDD280D7-4B85-4B03-BBC4-C46CA9BECCCB}.Release|Win32.ActiveCfg = Release|Win32
 		{DDD280D7-4B85-4B03-BBC4-C46CA9BECCCB}.Release|Win32.Build.0 = Release|Win32
-		{A3947892-FB28-4BD4-A921-4AB05FC595B9}.Debug|Win32.ActiveCfg = Debug
-		{A3947892-FB28-4BD4-A921-4AB05FC595B9}.Release|Win32.ActiveCfg = Release
+		{B7618D90-CAAF-4C8B-B69A-E756F3B9FF06}.Debug|Win32.ActiveCfg = Debug
+		{B7618D90-CAAF-4C8B-B69A-E756F3B9FF06}.Release|Win32.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
