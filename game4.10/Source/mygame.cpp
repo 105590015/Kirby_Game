@@ -734,8 +734,9 @@ void CGameStateRun::OnShow()
 			monster[m]->OnShow(index, &kirby);
 	}
 
-	if(kirby.IsAlive()) 
+	if (kirby.IsAlive()) {
 		kirby.OnShow(index);
+	}
 	else if (kirby.GetY1() <= 1)
 	{
 		// 卡比死掉就不用播消失能力的音效
