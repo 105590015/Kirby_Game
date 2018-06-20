@@ -69,7 +69,7 @@
 #define SIZE_X				 640		// 設定遊戲畫面的解析度為640x480
 #define SIZE_Y				 480		// 註：若不使用標準的解析度，則不能切換到全螢幕
 #define STEP_SIZE			 2          // 設定人物及畫面一步大小
-#define OPEN_AS_FULLSCREEN	 true		// 是否以全螢幕方式開啟遊戲
+#define OPEN_AS_FULLSCREEN	 false		// 是否以全螢幕方式開啟遊戲
 #define SHOW_LOAD_PROGRESS   false		// 是否顯示loading(OnInit)的進度
 #define DEFAULT_BG_COLOR	 RGB(0,0,0)	// 遊戲畫面預設的背景顏色(黑色)
 #define GAME_CYCLE_TIME		 15		    // 每33ms跑一次Move及Show(每秒30次)
