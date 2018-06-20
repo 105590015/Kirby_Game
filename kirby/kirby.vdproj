@@ -1203,12 +1203,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_51805C14812B43A6AC0287D5DF759E9A"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_518A8238F1BE4D6DA39EEC98B2BF6CCC"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -1612,6 +1606,12 @@
         "Entry"
         {
         "MsmKey" = "8:_679F96CEB6B24A2BBDF9F7C8CA5A9AAD"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_67F1B4422ED642FB987D48AC7C7AA788"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -3849,6 +3849,14 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+            }
         }
     }
     "Deployable"
@@ -7830,26 +7838,6 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_51805C14812B43A6AC0287D5DF759E9A"
-            {
-            "SourcePath" = "8:..\\game4.10\\ReadMe.txt"
-            "TargetName" = "8:ReadMe.txt"
-            "Tag" = "8:"
-            "Folder" = "8:_5F35A534FED04BBCBF7A4518966ACBD8"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_518A8238F1BE4D6DA39EEC98B2BF6CCC"
             {
             "SourcePath" = "8:..\\game4.10\\RES\\Kirby\\BKB_R_14.bmp"
@@ -9196,6 +9184,26 @@
             "TargetName" = "8:FireKirby_FlyPrepare_L_3.bmp"
             "Tag" = "8:"
             "Folder" = "8:_2FB01EF5FD0749238E38B821A43F2FD0"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_67F1B4422ED642FB987D48AC7C7AA788"
+            {
+            "SourcePath" = "8:..\\game4.10\\ReadMe.txt"
+            "TargetName" = "8:ReadMe.txt"
+            "Tag" = "8:"
+            "Folder" = "8:_5F35A534FED04BBCBF7A4518966ACBD8"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -16680,15 +16688,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Kirby"
-        "ProductCode" = "8:{70976543-4264-4E80-B447-8CDD858C128F}"
-        "PackageCode" = "8:{08C8432D-0345-4A2A-9A76-E9CD5C896CB2}"
-        "UpgradeCode" = "8:{1FCFBDED-4F1B-4316-9691-A43C5FB07AF5}"
+        "ProductCode" = "8:{C4950C43-ABB6-4BB5-8242-267085A382DD}"
+        "PackageCode" = "8:{6F3F3E91-CD9C-484D-81C7-0D0E8D02EE81}"
+        "UpgradeCode" = "8:{643E28B2-A5A4-4018-87D1-5B9D81B05460}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:FALSE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:3.0.3"
+        "ProductVersion" = "8:3.0.4"
         "Manufacturer" = "8:NTUT-CSIE-2018Games"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -16828,7 +16836,7 @@
                     "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_0530A2E6C70544B5AB06F2FD84E20E64"
                     {
                     "Sequence" = "3:100"
-                    "DisplayName" = "8:已經完成"
+                    "DisplayName" = "8:Finished"
                     "UseDynamicProperties" = "11:TRUE"
                     "IsDependency" = "11:FALSE"
                     "SourcePath" = "8:<VsdDialogDir>\\VsdAdminFinishedDlg.wid"
@@ -16859,7 +16867,7 @@
                     "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_FB6336532A2E43CF912045FB7B45D571"
                     {
                     "Sequence" = "3:100"
-                    "DisplayName" = "8:已經完成"
+                    "DisplayName" = "8:Finished"
                     "UseDynamicProperties" = "11:TRUE"
                     "IsDependency" = "11:FALSE"
                     "SourcePath" = "8:<VsdDialogDir>\\VsdFinishedDlg.wid"
@@ -16903,7 +16911,7 @@
                     "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_3520E1A13B0F4E68B555F7A2B2CF5AFA"
                     {
                     "Sequence" = "3:100"
-                    "DisplayName" = "8:歡迎"
+                    "DisplayName" = "8:Welcome"
                     "UseDynamicProperties" = "11:TRUE"
                     "IsDependency" = "11:FALSE"
                     "SourcePath" = "8:<VsdDialogDir>\\VsdAdminWelcomeDlg.wid"
@@ -16951,7 +16959,7 @@
                     "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_9B600A504E0241BA86A89098670AAEA4"
                     {
                     "Sequence" = "3:200"
-                    "DisplayName" = "8:安裝資料夾"
+                    "DisplayName" = "8:Installation Folder"
                     "UseDynamicProperties" = "11:TRUE"
                     "IsDependency" = "11:FALSE"
                     "SourcePath" = "8:<VsdDialogDir>\\VsdAdminFolderDlg.wid"
@@ -16973,7 +16981,7 @@
                     "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_9E8EEB8127664A4581BB488E9285671A"
                     {
                     "Sequence" = "3:300"
-                    "DisplayName" = "8:確認安裝"
+                    "DisplayName" = "8:Confirm Installation"
                     "UseDynamicProperties" = "11:TRUE"
                     "IsDependency" = "11:FALSE"
                     "SourcePath" = "8:<VsdDialogDir>\\VsdAdminConfirmDlg.wid"
@@ -17016,7 +17024,7 @@
                     "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_D03344AEAB8947D4B07A96BE2E2ABC9B"
                     {
                     "Sequence" = "3:100"
-                    "DisplayName" = "8:進度"
+                    "DisplayName" = "8:Progress"
                     "UseDynamicProperties" = "11:TRUE"
                     "IsDependency" = "11:FALSE"
                     "SourcePath" = "8:<VsdDialogDir>\\VsdAdminProgressDlg.wid"
@@ -17060,7 +17068,7 @@
                     "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_1E09C1464A6743AEB7126D52AF5026ED"
                     {
                     "Sequence" = "3:100"
-                    "DisplayName" = "8:進度"
+                    "DisplayName" = "8:Progress"
                     "UseDynamicProperties" = "11:TRUE"
                     "IsDependency" = "11:FALSE"
                     "SourcePath" = "8:<VsdDialogDir>\\VsdProgressDlg.wid"
@@ -17104,7 +17112,7 @@
                     "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_7F61FAB680EF4B4A8A59B0763C544349"
                     {
                     "Sequence" = "3:300"
-                    "DisplayName" = "8:確認安裝"
+                    "DisplayName" = "8:Confirm Installation"
                     "UseDynamicProperties" = "11:TRUE"
                     "IsDependency" = "11:FALSE"
                     "SourcePath" = "8:<VsdDialogDir>\\VsdConfirmDlg.wid"
@@ -17126,7 +17134,7 @@
                     "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_941C11D9B8394EB8892606A6374F148A"
                     {
                     "Sequence" = "3:200"
-                    "DisplayName" = "8:安裝資料夾"
+                    "DisplayName" = "8:Installation Folder"
                     "UseDynamicProperties" = "11:TRUE"
                     "IsDependency" = "11:FALSE"
                     "SourcePath" = "8:<VsdDialogDir>\\VsdFolderDlg.wid"
@@ -17161,7 +17169,7 @@
                     "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_FB8B0DD0A6C0430CA0216461FBF9E61C"
                     {
                     "Sequence" = "3:100"
-                    "DisplayName" = "8:歡迎"
+                    "DisplayName" = "8:Welcome"
                     "UseDynamicProperties" = "11:TRUE"
                     "IsDependency" = "11:FALSE"
                     "SourcePath" = "8:<VsdDialogDir>\\VsdWelcomeDlg.wid"
