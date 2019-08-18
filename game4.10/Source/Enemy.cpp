@@ -11,6 +11,10 @@ namespace game_framework {
 	{
 	}
 
+	Enemy::~Enemy()
+	{
+	}
+
 	int Enemy::GetX1()
 	{
 		return x;
@@ -40,16 +44,16 @@ namespace game_framework {
 			Ishurted = true;
 		}
 		// 被空氣砲擊中
-		else if (kirby->GetGas()->IsAlive() && HitRectangle(kirby->GetGas()->GetX1() + 10, kirby->GetGas()->GetY1() + 10, kirby->GetGas()->GetX2() - 10, kirby->GetGas()->GetY2() - 10)) {
+		else if (kirby->GetBullet() != nullptr && HitRectangle(kirby->GetBullet()->GetX1() + 10, kirby->GetBullet()->GetY1() + 10, kirby->GetBullet()->GetX2() - 10, kirby->GetBullet()->GetY2() - 10)) {
 			hp -= 10;
 			Ishurted = true;
-			kirby->GetGas()->SetAlive(false);
+			kirby->DeleteBullet();
 		}
 		// 被星星擊中
-		else if (kirby->GetStar()->IsAlive() && HitRectangle(kirby->GetStar()->GetX1() + 10, kirby->GetStar()->GetY1() + 10, kirby->GetStar()->GetX2() - 10, kirby->GetStar()->GetY2() - 10)) {
+		else if (kirby->GetBullet() != nullptr && HitRectangle(kirby->GetBullet()->GetX1() + 10, kirby->GetBullet()->GetY1() + 10, kirby->GetBullet()->GetX2() - 10, kirby->GetBullet()->GetY2() - 10)) {
 			hp -= 20;
 			Ishurted = true;
-			kirby->GetStar()->SetAlive(false);
+			kirby->DeleteBullet();
 		}
 			
 		// 被電
@@ -103,6 +107,16 @@ namespace game_framework {
 		return is_alive;
 	}
 
+	bool Enemy::IsSucked()
+	{
+		return is_sucked;
+	}
+
+	bool Enemy::IsRight()
+	{
+		return RightOrLeft;
+	}
+
 	void Enemy::OnShow(Map *m, Kirby *kirby)
 	{
 	}
@@ -115,7 +129,7 @@ namespace game_framework {
 	{
 	}
 
-	void Enemy::Attack(Kirby* kirby)
+	void Enemy::Attack(Map *m, Kirby* kirby)
 	{
 	}
 

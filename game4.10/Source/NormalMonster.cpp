@@ -5,6 +5,7 @@
 #include "audio.h"
 #include "gamelib.h"
 #include "NormalMonster.h"
+#include "Monster_State.h"
 
 namespace game_framework {
 	NormalMonster::NormalMonster() : Enemy()
@@ -22,6 +23,7 @@ namespace game_framework {
 		is_alive = true;
 		is_sucked = false;
 		IsKing = false;
+		monsterState = new WalkLeftState();
 	}
 
 	int NormalMonster::GetX2()
@@ -66,34 +68,8 @@ namespace game_framework {
 		isSuckedL.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
 		isSuckedR.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
 		die.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
-		if (is_alive)
-		{
-			if (!is_sucked && !RightOrLeft)
-			{
-				goLeft.OnShow();
-				goLeft.OnMove();
-			}
-			else if (!is_sucked && RightOrLeft)
-			{
-				goRight.OnShow();
-				goRight.OnMove();
-			}
-			else if (is_sucked && !((x - kirby->GetX1() >= -1) && (x - kirby->GetX1() <= 1)) || !((y - kirby->GetY1() >= -1) && (y - kirby->GetY1() <= 1)))
-			{
-				if(!RightOrLeft)
-					isSuckedL.ShowBitmap();
-				else
-					isSuckedR.ShowBitmap();
-			}				
-		}
-		else
-		{
-			if (!die.IsFinalBitmap() && !is_sucked)
-			{
-				die.OnShow();
-				die.OnMove();
-			}
-		}
+		if (monsterState != nullptr)
+			monsterState->HandleDraw(m, kirby, this);
 	}
 
 	void NormalMonster::OnMove(Map *m, Kirby *kirby)

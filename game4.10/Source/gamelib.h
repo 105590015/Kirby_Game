@@ -1,16 +1,17 @@
+#pragma once
 /*
  * gamelib.h: 本檔案儲遊戲相關的class的interface
  * Copyright (C) 2002-2008 Woei-Kae Chen <wkc@csie.ntut.edu.tw>
  *
- * This file is part of game, a free game development framework for windows.
+ * This file is part re; you can redistribute it and/or modify
+ * it under the terms oof game, a free game development framework for windows.
  *
- * game is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
+ * game is free softwa later version.
  *
  * game is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * but WITHOUT ANY WARRAf the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) anyNTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
@@ -94,6 +95,7 @@ enum GAME_STATES {
 #include <list>
 #include <vector>
 #include <map>
+#include <string>
 using namespace std;
 
 /////////////////////////////////////////////////////////////////////////////

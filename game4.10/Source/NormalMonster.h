@@ -2,6 +2,7 @@
 #include "Enemy.h"
 #include "Map.h"
 #include "Kirby.h"
+
 namespace game_framework {
 
 	class NormalMonster:public Enemy
@@ -15,10 +16,18 @@ namespace game_framework {
 		void OnShow(Map *m, Kirby *kirby);      // 顯示
 		void OnMove(Map *m, Kirby *kirby);      // 移動
 		void Attack(Map *m, Kirby* kirby);      // 攻擊
+		friend class MonsterState;
+		friend class WalkLeftState;
+		friend class WalkRightState;
+		friend class IsSuckedState;
+		friend class DieState;
+		void SetMonsterState(MonsterState *state) {monsterState = state;}; //設定怪物狀態
 	protected:
 		CMovingBitmap isSuckedR, isSuckedL;
 		CAnimation goLeft, goRight, die;
+
 	private:
 		int count, velocity;
+		MonsterState *monsterState;
 	};
 }

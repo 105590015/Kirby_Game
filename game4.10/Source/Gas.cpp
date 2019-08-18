@@ -28,21 +28,16 @@ namespace game_framework {
 
 	void Gas::OnMove(Map *m, bool direction)
 	{
-		if (isAlive)
-		{
-			if (direction && m->isEmpty(GetX2() + STEP_SIZE*2, GetY2() - gas.Height() / 2))
-				x += STEP_SIZE*2;
-			else if(!direction && m->isEmpty(GetX2() - STEP_SIZE*2, GetY2() - gas.Height() / 2))
-				x -= STEP_SIZE*2;
-		}
+		if (direction && m->isEmpty(GetX2() + STEP_SIZE*2, GetY2() - gas.Height() / 2))
+			x += STEP_SIZE*2;
+		else if(!direction && m->isEmpty(GetX2() - STEP_SIZE*2, GetY2() - gas.Height() / 2))
+			x -= STEP_SIZE*2;
 	}
 
 	void Gas::OnShow(Map *m)
 	{
 		gas.SetTopLeft(m->ScreenX(x), m->ScreenY(y));
-		if (isAlive && m->isEmpty(GetX2() + STEP_SIZE*2, GetY2() - gas.Height() / 2) && m->isEmpty(GetX2() - STEP_SIZE*2, GetY2() - gas.Height() / 2))
+		if (m->isEmpty(GetX2() + STEP_SIZE*2, GetY2() - gas.Height() / 2) && m->isEmpty(GetX2() - STEP_SIZE*2, GetY2() - gas.Height() / 2))
 			gas.ShowBitmap();
-		else
-			isAlive = false;
 	}
 }

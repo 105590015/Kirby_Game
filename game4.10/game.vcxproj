@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -23,25 +23,26 @@
     <RootNamespace>game</RootNamespace>
     <Keyword>MFCProj</Keyword>
     <ProjectName />
+    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='UnitTest|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseOfMfc>Dynamic</UseOfMfc>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseOfMfc>Dynamic</UseOfMfc>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseOfMfc>Dynamic</UseOfMfc>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Template|Win32'">
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -229,6 +230,7 @@
     </Bscmake>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <None Include="packages.config" />
     <None Include="RES\bmp0.bmp" />
     <None Include="RES\bmp1.bmp" />
     <None Include="RES\bmp10.bmp" />
@@ -281,6 +283,11 @@
     <ClCompile Include="Source\King_Bomb.cpp" />
     <ClCompile Include="Source\King_Stone.cpp" />
     <ClCompile Include="Source\Kirby.cpp" />
+    <ClCompile Include="Source\KirbyType.cpp" />
+    <ClCompile Include="Source\Kirby_fire.cpp" />
+    <ClCompile Include="Source\Kirby_normal.cpp" />
+    <ClCompile Include="Source\Kirby_somethingInMouth.cpp" />
+    <ClCompile Include="Source\Kirby_spark.cpp" />
     <ClCompile Include="Source\LostAbility.cpp" />
     <ClCompile Include="Source\MainFrm.cpp">
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -288,6 +295,7 @@
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='UnitTest|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <ClCompile Include="Source\Map.cpp" />
+    <ClCompile Include="Source\Monster_State.cpp" />
     <ClCompile Include="Source\NormalMonster.cpp" />
     <ClCompile Include="Source\Spark.cpp" />
     <ClCompile Include="Source\Star.cpp" />
@@ -316,6 +324,7 @@
   <ItemGroup>
     <ClInclude Include="Source\audio.h" />
     <ClInclude Include="Source\Bullet.h" />
+    <ClInclude Include="Source\BulletFactory.h" />
     <ClInclude Include="Source\Door.h" />
     <ClInclude Include="Source\Enemy.h" />
     <ClInclude Include="Source\Fire.h" />
@@ -323,13 +332,20 @@
     <ClInclude Include="Source\gameDoc.h" />
     <ClInclude Include="Source\gameView.h" />
     <ClInclude Include="Source\Gas.h" />
+    <ClInclude Include="Source\Header.h" />
     <ClInclude Include="Source\King_Airplane.h" />
     <ClInclude Include="Source\King_Bomb.h" />
     <ClInclude Include="Source\King_Stone.h" />
     <ClInclude Include="Source\Kirby.h" />
+    <ClInclude Include="Source\KirbyType.h" />
+    <ClInclude Include="Source\Kirby_fire.h" />
+    <ClInclude Include="Source\Kirby_normal.h" />
+    <ClInclude Include="Source\Kirby_somethingInMouth.h" />
+    <ClInclude Include="Source\Kirby_spark.h" />
     <ClInclude Include="Source\LostAbility.h" />
     <ClInclude Include="Source\MainFrm.h" />
     <ClInclude Include="Source\Map.h" />
+    <ClInclude Include="Source\Monster_State.h" />
     <ClInclude Include="Source\NormalMonster.h" />
     <ClInclude Include="Source\Resource.h" />
     <ClInclude Include="Source\Spark.h" />
@@ -441,10 +457,19 @@
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
+    <Import Project="packages\googletest.redist.1.8.3\build\native\googletest.redist.targets" Condition="Exists('packages\googletest.redist.1.8.3\build\native\googletest.redist.targets')" />
+    <Import Project="packages\googletest.1.8.3\build\native\googletest.targets" Condition="Exists('packages\googletest.1.8.3\build\native\googletest.targets')" />
   </ImportGroup>
   <ProjectExtensions>
     <VisualStudio>
       <UserProperties RESOURCE_FILE="Source\game.rc" />
     </VisualStudio>
   </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('packages\googletest.redist.1.8.3\build\native\googletest.redist.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\googletest.redist.1.8.3\build\native\googletest.redist.targets'))" />
+    <Error Condition="!Exists('packages\googletest.1.8.3\build\native\googletest.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\googletest.1.8.3\build\native\googletest.targets'))" />
+  </Target>
 </Project>

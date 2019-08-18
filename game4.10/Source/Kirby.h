@@ -3,6 +3,11 @@
 #include "Gas.h"
 #include "Star.h"
 #include "LostAbility.h"
+#include "KirbyType.h"
+#include "Kirby_normal.h"
+#include "Kirby_spark.h"
+#include "Kirby_fire.h"
+#include "Kirby_somethingInMouth.h"
 
 namespace game_framework {
 	/////////////////////////////////////////////////////////////////////////////
@@ -12,6 +17,7 @@ namespace game_framework {
 	{
 	public:
 		Kirby();
+		~Kirby();
 		int  GetX1();					  // 左上角 x 座標
 		int  GetY1();				  	  // 左上角 y 座標
 		int  GetX2();			          // 右下角 x 座標
@@ -46,27 +52,16 @@ namespace game_framework {
 		void SetXY(int nx, int ny);		  // 設定左上角的座標
 		void SetEat(int t);		          // 設定吃了什麼怪物
 		void Restore();                   // 密技:血回到滿
-		Gas* GetGas();
-		Star* GetStar();
+		Bullet* GetBullet();
+		void DeleteBullet();
 	protected:	
 		CMovingBitmap blood6, blood5, blood4, blood3, blood2, blood1, blood0;
-		// 普通卡比
-		CMovingBitmap originR, originL, exhaleR, exhaleL, jumpR, jumpL, downR, downL, landingR, landingL, downAttackR, downAttackL, GG;
-		CAnimation goL, goR, flyR, prepareFlyR, flyL, prepareFlyL, hurtedL, hurtedR, runL, runR, suckR, suckL;
-		// 含東西卡比
-		CMovingBitmap bigOriginR, bigOriginL, bigJumpR, bigJumpL, bigLandingR, bigLandingL, threwR, threwL;
-		CAnimation bigGoL, bigGoR, swallowR, swallowL;
-		// 雷電卡比
-		CMovingBitmap Spark_exhaleR, Spark_exhaleL;
-		CAnimation Spark_originR, Spark_originL, Spark_downR, Spark_downL, Spark_goR, Spark_goL, Spark_jumpR, Spark_jumpL, Spark_landingR, Spark_landingL, Spark_downAttackR, Spark_downAttackL, Spark_flyR, Spark_prepareFlyR, Spark_flyL, Spark_prepareFlyL, Spark_runR, Spark_runL, Spark_attackR, Spark_attackL;
-		// 火焰卡比
-		CMovingBitmap fire_exhaleR, fire_exhaleL;
-		CAnimation fire_originR, fire_originL, fire_downR, fire_downL, fire_goR, fire_goL, fire_jumpR, fire_jumpL, fire_landingR, fire_landingL, fire_downAttackR, fire_downAttackL, fire_flyR, fire_prepareFlyR, fire_flyL, fire_prepareFlyL, fire_runR, fire_runL, fire_attackR, fire_attackL, attack1, attack2, attack3;
+		CMovingBitmap GG;
 
-		Gas gas;
-		Star star;
+		Bullet* bullet;
 		LostAbility lost;
 		int x, y;					// 左上角座標
+		int flyCount;               // 飛行圖片顯示計數
 		bool isMovingDown;			// 是否正在往下移動
 		bool isMovingLeft;			// 是否正在往左移動
 		bool isMovingRight;			// 是否正在往右移動
@@ -86,19 +81,14 @@ namespace game_framework {
 		bool rightOrLeft;           // 判斷左右
 	private:
 		void ShowKirby(Map *m);     // 顯示普通卡比
-		void ShowSparkKirby(Map *m);// 顯示雷電卡比
-		void ShowFireKirby(Map *m); // 顯示火焰卡比
 		int exhaleDelay;            // 吐氣的時間
 		int jumpDistance;           // 跳躍的距離
 		int kickDistance;           // 踢擊的距離
-		int gasDistance;            // 氣體飛行距離
-		int starDistance;           // 星星飛行距離
+		int bulletDistance;			// 吐出物體飛行距離
 		bool bulletDirection;       // 吐出物體方向
 		bool isInvincible;          // 是否無敵
 		int InvincibleTime;         // 無敵時間
 		void Attack(Map *m);        // 普通卡比攻擊
-		void Spark_Attack(Map *m);  // 雷電卡比攻擊
-		void Fire_Attack(Map *m);   // 火焰卡比攻擊
 		void Transform();           // 變身
 		int hp;                     // 血量
 		int type;                   // 型態
@@ -107,6 +97,12 @@ namespace game_framework {
 		int count;                  // 計數是否一秒
 		int height;                 // 記錄當下的身高
 		int width;                  // 記錄當下的寬度
+
+		Kirby_normal* kirby_normal;
+		Kirby_fire* kirby_fire;
+		Kirby_spark* kirby_spark;
+		Kirby_somethingInMouth* kirby_somethingInMouth;
+		KirbyType* kirbyType;
 
 		enum COPY_AUDIO_ID {		// 定義各種音效的編號
 			AUDIO_BACKGROUND,       // 0

@@ -1,24 +1,28 @@
 #pragma once
 #include "Map.h"
 #include "Kirby.h"
+
 namespace game_framework {
 
 	class Enemy
 	{
 	public:
 		Enemy();
+		~Enemy();
 		int GetX1();                                  // 左上角 x 座標
 		int GetY1();                                  // 左上角 y 座標
 		void Hurted(Kirby* kirby);                    // 被攻擊
 		void Sucked(Kirby* kirby);                    // 被吸
 		void SetAlive(bool flag);                     // 設定死活
 		bool IsAlive();                               // 是否活著
+		bool IsSucked();							  // 是否正在被吸
+		bool IsRight();								  // 是否朝向右方，否則代表左方
 		virtual int GetX2();                          // 右下角 x 座標
 		virtual int GetY2();                          // 右下角 y 座標
 		virtual void OnShow(Map *m, Kirby *kirby);    // 顯示
 		virtual void OnMove(Map *m, Kirby* kirby);    // 移動
 		virtual void LoadBitmap();                    // 讀圖
-		virtual void Attack(Kirby* kirby);            // 攻擊
+		virtual void Attack(Map *m, Kirby* kirby);    // 攻擊
 	protected:
 		int x, y, hp;				// 左上角座標.血量
 		bool is_alive;				// 是否活著
